@@ -12,5 +12,9 @@ public:
 		std::cout << "EngineCtrlDefaultIf destructor called!" << std::endl;
 	}
 
+	virtual void preInit() {};
+
+	virtual void postInit() {};
+
 };
 }
