@@ -14,10 +14,8 @@ int main ()
 
 	EngineCtrl::EngineCtrlDefault engineCtrl0(err, "engineControl");
 	engineCtrl0.preInit();
+	engineCtrl0.postInit();
 
 
-
-	char c;
-	std::cin >> c;
 	return 0;
 };

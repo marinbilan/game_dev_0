@@ -1,5 +1,4 @@
 #include "engineCtrlDefault.h"
-// #include "error.h"
 
 
 EngineCtrl::EngineCtrlDefault::EngineCtrlDefault(Common::Error& err, const std::string& name) : m_name(name)
@@ -21,12 +20,17 @@ void EngineCtrl::EngineCtrlDefault::preInit()
 	// Create defaultInit 
 	Common::Error err;
 	defaultInit0 = new Init::InitDefault(err, "DefaultInit0");
-
 	defaultInit0->preInit();
+
+	// Create cmdPrompt
+	cmdPrompt0 = new Common::CmdPrompt(err, "CmdPrompt0");
 }
 
 void EngineCtrl::EngineCtrlDefault::postInit()
 {
 	std::cout << "postInit function called!" << std::endl;
+
+	cmdPrompt0->runCmdPrompt();
+	
 }
 

@@ -8,6 +8,14 @@
 #include "error.h"
 #include "commonIf.h"
 
+#include "modelIf.h"
+#include "staticModel.h"
+#include "errorModel.h"
+#include "meshIf.h"
+#include "defaultMesh.h"
+
+
+#define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
 namespace Common
 {
@@ -22,6 +30,20 @@ template <class T> void* constructor(Error& err, const std::string& arg0)
 class Factory
 {
 public:
+	// Singleton stuff
+	static Factory& getInstance()
+	{
+		static Factory instance;
+		return instance;
+	}
+
+	Factory(Factory const&) = delete;
+	void operator=(Factory const&) = delete;
+
+	~Factory() {};
+	//
+
+
 	// 1] Type of constructor  (two args - Error&, std::string)  
 	template <class T>
 	void registerClass(std::string const& ConstructorName)
@@ -36,6 +58,7 @@ public:
 		if (i == m_classesMap.end()) return 0; // or throw or whatever you want  
 		return i->second(err, arg0);
 	}
+
 
 	// Methods 
 	void showMeSeededClasses()
@@ -56,26 +79,33 @@ public:
 		}
 	}
 
-	// Container Stuff 
-	// SET
-	/*
-	void storeInContainer(std::shared_ptr<DefaultMesh>& arg0)
+	void showMeModelIfObjects()
 	{
-			std::cout << typeid(arg0).name() << std::endl;
-			m_vecOfDefaultMeshIf.push_back(std::dynamic_pointer_cast<DefaultMeshIf>(arg0));
+		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
+		{
+			std::cout << " commonIf object: " << (*it)->getName() << std::endl;
+
+		}
+	}
+
+	// Container Stuff
+	// STORE
+	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0)
+	{
+		m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(arg0));
+		m_vecOfCommonIf.push_back(std::dynamic_pointer_cast<CommonIf>(arg0));
+	}
+
+
+	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0)
+	{
+			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg0));
 			m_vecOfCommonIf.push_back(std::dynamic_pointer_cast<CommonIf>(arg0));
 	}
 
-	void storeInContainer(std::shared_ptr<DefaultLight>& arg0)
-	{
-			std::cout << typeid(arg0).name() << std::endl;
-			m_vecOfDefaultLightIf.push_back(std::dynamic_pointer_cast<DefaultLightIf>(arg0));
-			m_vecOfCommonIf.push_back(std::dynamic_pointer_cast<CommonIf>(arg0));
-	}
-	*/
 
 	// GET
-	std::shared_ptr<CommonIf>& getCommonIf(std::string& arg0)
+	std::shared_ptr<CommonIf>& getCommonIf(Error& err, const std::string& arg0)
 	{
 		for (auto it = m_vecOfCommonIf.begin(); it != m_vecOfCommonIf.end(); ++it)
 		{
@@ -86,37 +116,50 @@ public:
 			}
 
 		}
+
 	}
-	/*
-		std::shared_ptr<DefaultMeshIf>& getDefaultMeshIf(std::string& arg0)
-		{
-			for (auto it = m_vecOfDefaultMeshIf.begin(); it != m_vecOfDefaultMeshIf.end(); ++it)
-			{
-				if (!(*it)->getName().compare(arg0))
-				{
-					std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-					return *it;
-				}
 
+	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
+	{
+		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
+		{
+			if (!(*it)->getName().compare(arg0))
+			{
+				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+				return *it;
 			}
 		}
-	*/
-	/*
-		std::shared_ptr<DefaultLightIf>& getDefaultLightIf(std::string& arg0)
-		{
-			for (auto it = m_vecOfDefaultLightIf.begin(); it != m_vecOfDefaultLightIf.end(); ++it)
-			{
-				if (!(*it)->getName().compare(arg0))
-				{
-					std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-					return *it;
-				}
 
+		Error err;
+		err.setError("ERROR: Unbale to find object! Returning default!");
+		err.printError();
+
+		return errorModel;
+	}
+
+	
+	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0)
+	{
+		for (auto it = m_vecOfMeshIf.begin(); it != m_vecOfMeshIf.end(); ++it)
+		{
+			if (!(*it)->getName().compare(arg0))
+			{
+				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+				return *it;
 			}
+
 		}
-	*/
+	}
 
 private:
+	
+	// Singleton Factory - Constructor private
+	Factory() 
+	{
+		Error err;
+		errorModel = std::make_shared<Model::ErrorModel>(err, "errorModel");
+	};
+
 	// Factory Stuff 
 	typedef void*(*constructor_t)(Error&, const std::string&);
 	typedef std::map<std::string, constructor_t> mapType;
@@ -125,11 +168,12 @@ private:
 	// Container Stuff  
 	std::vector<std::shared_ptr<CommonIf>> m_vecOfCommonIf;
 
-	//	std::vector<std::shared_ptr<DefaultMeshIf>> m_vecOfDefaultMeshIf;
-	//	std::vector<std::shared_ptr<DefaultLightIf>> m_vecOfDefaultLightIf;
+	std::vector<std::shared_ptr<Model::ModelIf>> m_vecOfModelIf;
+	std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfMeshIf;
+
+	// Error Objects
+	std::shared_ptr<Model::ModelIf> errorModel;
 };
 
 }
-
-Common::Factory defaultFactory;
-#define REGISTER_CLASS(ConstructorName) defaultFactory.registerClass<ConstructorName>(#ConstructorName)  
+ 

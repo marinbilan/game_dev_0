@@ -13,7 +13,7 @@ public:
 		std::cout << "Calling CommonIf Destructor" << std::endl;
 	}
 
-	virtual const std::string& getName() { }
+	virtual const std::string& getName() { return " ... called from CommonIf"; }
 };
 
 }

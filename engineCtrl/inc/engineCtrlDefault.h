@@ -8,6 +8,8 @@
 
 #include "initIf.h"
 #include "initDefault.h"
+#include "cmdPrompt.h"
+
 
 namespace EngineCtrl
 {
@@ -24,6 +26,9 @@ public:
 
 private:
 	std::string m_name;
+
+	// TODO: uniquePtr
 	Init::InitIf* defaultInit0;
+	Common::CmdPrompt* cmdPrompt0;
 };
 }
