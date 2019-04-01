@@ -4,7 +4,6 @@
 
 namespace Common
 {
-
 class CommonIf
 {
 public:

@@ -6,13 +6,17 @@
 #include <vector>  
 
 #include "error.h"
-#include "commonIf.h"
 
 #include "modelIf.h"
 #include "staticModel.h"
-#include "errorModel.h"
 #include "meshIf.h"
 #include "defaultMesh.h"
+#include "shaderIf.h"
+#include "defaultShader.h"
+
+#include "errorModel.h"
+#include "errorMesh.h"
+#include "errorShader.h"
 
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
@@ -58,7 +62,7 @@ public:
 		if (i == m_classesMap.end()) return 0; // or throw or whatever you want  
 		return i->second(err, arg0);
 	}
-
+	// ---- ----
 
 	// Methods 
 	void showMeSeededClasses()
@@ -70,55 +74,50 @@ public:
 		}
 	}
 
-	void showMeCommonIfObjects()
-	{
-		for (auto it = m_vecOfCommonIf.begin(); it != m_vecOfCommonIf.end(); ++it)
-		{
-			std::cout << " commonIf object: " << (*it)->getName() << std::endl;
-
-		}
-	}
-
 	void showMeModelIfObjects()
 	{
 		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
 		{
-			std::cout << " commonIf object: " << (*it)->getName() << std::endl;
+			std::cout << " Model object: " << (*it)->getName() << std::endl;
 
 		}
 	}
 
+	void showMeMeshIfObjects()
+	{
+		for (auto it = m_vecOfMeshIf.begin(); it != m_vecOfMeshIf.end(); ++it)
+		{
+			std::cout << " Mesh object: " << (*it)->getName() << std::endl;
+
+		}
+	}
+
+	void showMeShaderIfObjects()
+	{
+		for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
+		{
+			std::cout << " Shader object: " << (*it)->getName() << std::endl;
+
+		}
+	}
 	// Container Stuff
 	// STORE
 	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0)
 	{
 		m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(arg0));
-		m_vecOfCommonIf.push_back(std::dynamic_pointer_cast<CommonIf>(arg0));
 	}
-
 
 	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0)
 	{
 			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg0));
-			m_vecOfCommonIf.push_back(std::dynamic_pointer_cast<CommonIf>(arg0));
 	}
 
+	void storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0)
+	{
+		m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(arg0));
+	}
 
 	// GET
-	std::shared_ptr<CommonIf>& getCommonIf(Error& err, const std::string& arg0)
-	{
-		for (auto it = m_vecOfCommonIf.begin(); it != m_vecOfCommonIf.end(); ++it)
-		{
-			if (!(*it)->getName().compare(arg0))
-			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-				return *it;
-			}
-
-		}
-
-	}
-
 	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
 	{
 		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
@@ -130,13 +129,8 @@ public:
 			}
 		}
 
-		Error err;
-		err.setError("ERROR: Unbale to find object! Returning default!");
-		err.printError();
-
 		return errorModel;
 	}
-
 	
 	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0)
 	{
@@ -147,17 +141,33 @@ public:
 				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
 				return *it;
 			}
-
 		}
+
+		return errorMesh;
 	}
 
-private:
-	
+	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
+	{
+		for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
+		{
+			if (!(*it)->getName().compare(arg0))
+			{
+				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+				return *it;
+			}
+		}
+
+		return errorShader;
+	}
+
+private:	
 	// Singleton Factory - Constructor private
 	Factory() 
 	{
 		Error err;
 		errorModel = std::make_shared<Model::ErrorModel>(err, "errorModel");
+		errorMesh = std::make_shared<Mesh::ErrorMesh>(err, "errorMesh");
+		errorShader = std::make_shared<Shader::ErrorShader>(err, "errorShader");
 	};
 
 	// Factory Stuff 
@@ -166,13 +176,14 @@ private:
 	mapType m_classesMap;
 
 	// Container Stuff  
-	std::vector<std::shared_ptr<CommonIf>> m_vecOfCommonIf;
-
 	std::vector<std::shared_ptr<Model::ModelIf>> m_vecOfModelIf;
 	std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfMeshIf;
+	std::vector<std::shared_ptr<Shader::ShaderIf>> m_vecOfShaderIf;
 
 	// Error Objects
 	std::shared_ptr<Model::ModelIf> errorModel;
+	std::shared_ptr<Mesh::MeshIf> errorMesh;
+	std::shared_ptr<Shader::ShaderIf> errorShader;
 };
 
 }

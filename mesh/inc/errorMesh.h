@@ -1,19 +1,19 @@
 #pragma once
+#include "meshIf.h"
 
 #include "error.h"
-#include "modelIf.h"
 
 
-namespace Model
+namespace Mesh
 {
-class ErrorModel : public ModelIf
+class ErrorMesh : public MeshIf
 {
 public:
-	ErrorModel(Common::Error& err, const std::string& name) {};
+	ErrorMesh(Common::Error& err, const std::string& name) {};
 
-	~ErrorModel() {};
+	~ErrorMesh() {};
 
-    void render() {};
+	void render() {};
 
 	// ModelIf
 	void preInit() {};
@@ -26,7 +26,7 @@ public:
 
 	void cmdPrompt(const std::string& arg0) 
 	{
-		std::cout << "ERROR: ErrorModel cmdPrompt called!" << std::endl;
+		std::cout << "ERROR: ErrorMesh called!" << std::endl;
 	};
 
 private:

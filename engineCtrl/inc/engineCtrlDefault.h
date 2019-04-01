@@ -1,10 +1,10 @@
 #pragma once
+#include "engineCtrlIf.h"
+
 #include <iostream>
 #include <string>
 
 #include "error.h"
-
-#include "engineCtrlIf.h"
 
 #include "initIf.h"
 #include "initDefault.h"
@@ -21,14 +21,13 @@ public:
 	~EngineCtrlDefault();
 
 	void preInit();
-
 	void postInit();
 
 private:
-	std::string m_name;
+std::string m_name;
 
-	// TODO: uniquePtr
-	Init::InitIf* defaultInit0;
-	Common::CmdPrompt* cmdPrompt0;
+// TODO: uniquePtr
+Init::InitIf* defaultInit0;
+Common::CmdPrompt* cmdPrompt0;
 };
 }

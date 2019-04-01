@@ -7,7 +7,6 @@
 
 namespace Common
 {
-
 class CmdPrompt
 {
 public:
@@ -16,13 +15,12 @@ public:
 	~CmdPrompt();
 
 	void preInit();
-
 	void postInit();
 
 	void runCmdPrompt();
 
 private:
-	std::string m_name;
-    std::string m_error;
+std::string m_name;
+std::string m_error;
 };
 }

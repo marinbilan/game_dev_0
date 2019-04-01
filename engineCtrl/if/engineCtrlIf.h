@@ -13,7 +13,6 @@ public:
 	}
 
 	virtual void preInit() {};
-
 	virtual void postInit() {};
 
 };

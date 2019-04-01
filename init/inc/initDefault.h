@@ -1,9 +1,11 @@
 #pragma once
+#include "initIf.h"
+
 #include <iostream>
 #include <string>
 
-#include "initIf.h"
 #include "error.h"
+
 
 namespace Init
 {
@@ -20,9 +22,13 @@ public:
 
 	void registerClass();
 
-	void createDefaultObject();
+	void createModels();
+
+	void createMeshes();
+
+	void createShaders();
 
 private:
-	std::string m_name;
+std::string m_name;
 };
 }

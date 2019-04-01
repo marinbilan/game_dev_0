@@ -29,36 +29,24 @@ void Common::CmdPrompt::postInit()
 
 void Common::CmdPrompt::runCmdPrompt()
 {
-	std::cout << " ---- CmdPrompt runCmdPrompt function called!" << std::endl;
-
 	std::string commandLineString;
 	std::smatch match;
 
 	Common::Error err;
+	
+	std::cout << " - Available objects: " << std::endl;
+	Common::Factory::getInstance().showMeModelIfObjects();
+	Common::Factory::getInstance().showMeMeshIfObjects();
+	Common::Factory::getInstance().showMeShaderIfObjects();
 
 	do
 	{
 		std::cout << "> ";
 		std::getline(std::cin, commandLineString);
 
-		/*
-		if (!commandLineString.compare("showmeobjects"))
-		{
-			Common::Factory::getInstance().showMeCommonIfObjects();
-		}
-		else if (!commandLineString.compare("DefaultModel"))
-		{
-			Common::Factory::getInstance().showMeModelIfObjects();
-		}
-		else if (!commandLineString.compare("smartModel_0"))
-		{
-			Common::Factory::getInstance().getCommonIf(err, commandLineString)->cmdPrompt(commandLineString);
-		}
-		*/
-
-		// cmd signature
-		// 
 		Common::Factory::getInstance().getModelIf(commandLineString)->cmdPrompt(commandLineString);
-		
+		Common::Factory::getInstance().getMeshIf(commandLineString)->cmdPrompt(commandLineString);
+		Common::Factory::getInstance().getShaderIf(commandLineString)->cmdPrompt(commandLineString);
+
 	} while (commandLineString != "exit");
 }

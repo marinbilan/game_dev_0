@@ -13,10 +13,14 @@ public:
 	}
 
 	virtual void preInit() {};
-
 	virtual void postInit() {};
 
-	virtual const std::string& getName() { return "not implemented in ModelIf"; }
+	virtual void render() {};
+
+	virtual const std::string& getName() 
+	{ 
+		return "not implemented in ModelIf"; 
+	}
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{

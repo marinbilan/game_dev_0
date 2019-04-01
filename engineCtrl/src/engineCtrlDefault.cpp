@@ -30,6 +30,7 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 {
 	std::cout << "postInit function called!" << std::endl;
 
+	defaultInit0->postInit();
 	cmdPrompt0->runCmdPrompt();
 	
 }

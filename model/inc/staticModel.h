@@ -1,32 +1,35 @@
 #pragma once
-
-#include "error.h"
 #include "modelIf.h"
-#include "commonIf.h"
+
+#include <memory>
+#include "error.h"
+#include "meshIf.h"
 
 namespace Model
 {
-class StaticModel : public ModelIf, public Common::CommonIf
+class StaticModel : public ModelIf
 {
 public:
 	StaticModel(Common::Error& err, const std::string& name);
 
 	~StaticModel();
 
+    void render();
+
 	// ModelIf
 	void preInit();
 	void postInit();
 
-	// ModelIf and CommonIf
 	const std::string& getName() 
 	{ 
 		return m_name; 
 	}
 
-	// Impl of ModelIf
 	void cmdPrompt(const std::string& arg0);
 
 private:
-	std::string m_name;
+std::string m_name;
+
+std::shared_ptr<Mesh::MeshIf> defaultMeshIf0;
 };
 }

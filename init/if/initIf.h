@@ -13,11 +13,14 @@ public:
 	}
 
 	virtual void preInit() {};
-
 	virtual void postInit() {};
 
 	virtual void registerClass() {};
 
-	virtual void createDefaultObject() {};
+	virtual void createModels() {};
+
+	virtual void createMeshes() {};
+
+	virtual void createShaders() {};
 };
 }
