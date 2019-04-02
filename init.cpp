@@ -2,19 +2,74 @@
 
 #include "error.h"
 
-// EngineCtrl
 #include "engineCtrlIf.h"
 #include "engineCtrlDefault.h"
 
-
+#include "glew.h"
+#include "glfw3.h"
 
 int main ()
 {
+	/* Initialize the library */
+	if (!glfwInit())
+		return -1;
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 8);
+
+	/* Create a windowed mode window and its OpenGL context */
+	GLFWwindow* window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	if (!window)
+	{
+		std::cout << "Error: Failed to create GLFW window" << std::endl;
+		glfwTerminate();
+		return -1;
+	}
+
+	/* Make the window's context current */
+	glfwMakeContextCurrent(window);
+	// glfwSetKeyCallback(window, key_callback);
+	// glfwSetCursorPosCallback(window, mouse_callback);
+	// glfwSetCharModsCallback(window, characterModCallback);
+
+	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	// Initialize GLEW to setup the OpenGL Function pointers
+	if (glewInit() != GLEW_OK)
+	{
+		std::cout << "Failed to initialize GLEW" << std::endl;
+	}
+
+
 	Common::Error err;
 
 	EngineCtrl::EngineCtrlDefault engineCtrl0(err, "engineControl");
 	engineCtrl0.preInit();
 	engineCtrl0.postInit();
+	
+
+
+
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(window))
+	{
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
+
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
+
+
+
+
+
+
 
 
 	return 0;
