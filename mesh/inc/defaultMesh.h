@@ -14,11 +14,13 @@ public:
 
 	~DefaultMesh();
 
-	void render();
-
 	// ModelIf
 	void preInit();
 	void postInit();
+
+	void shaderIdsInit();
+
+	void render();
 
 	const std::string& getName() 
 	{ 
@@ -30,5 +32,29 @@ public:
 private:
 std::string m_name;
 std::shared_ptr<Shader::ShaderIf> defaultShaderIf;
+
+// Shader Variables
+// glm::mat4   projectionMatrix;
+
+
+// ---- Shader IDs ----
+// VERTEX SHADER
+GLuint positionsID;
+GLuint textureCoordsID;
+GLuint normalsID;
+
+GLuint projectionMatrixID;
+GLuint viewMatrixID;
+GLuint viewMatrixInvID;
+GLuint modelMatrixID;
+
+GLuint lightPositionID;
+GLuint planeID;
+
+// FRAGMENT SHADER
+GLuint lightColourID;
+GLuint shineDamperID;
+GLuint reflectivityID;
+GLuint modelTextureID;
 };
 }

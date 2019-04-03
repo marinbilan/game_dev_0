@@ -65,100 +65,28 @@ public:
 	// ---- ----
 
 	// Methods 
-	void showMeSeededClasses()
-	{
-		mapType::iterator it;
-		for (it = m_classesMap.begin(); it != m_classesMap.end(); ++it)
-		{
-			std::cout << " - " << it->first << std::endl;
-		}
-	}
+	void showMeSeededClasses();
 
-	void showMeModelIfObjects()
-	{
-		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
-		{
-			std::cout << " Model object: " << (*it)->getName() << std::endl;
+	void showMeModelIfObjects();
 
-		}
-	}
+	void showMeMeshIfObjects();
 
-	void showMeMeshIfObjects()
-	{
-		for (auto it = m_vecOfMeshIf.begin(); it != m_vecOfMeshIf.end(); ++it)
-		{
-			std::cout << " Mesh object: " << (*it)->getName() << std::endl;
+	void showMeShaderIfObjects();
 
-		}
-	}
-
-	void showMeShaderIfObjects()
-	{
-		for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
-		{
-			std::cout << " Shader object: " << (*it)->getName() << std::endl;
-
-		}
-	}
 	// Container Stuff
 	// STORE
-	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0)
-	{
-		m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(arg0));
-	}
+	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0);
 
-	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0)
-	{
-			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg0));
-	}
+	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0);
 
-	void storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0)
-	{
-		m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(arg0));
-	}
+	void storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0);
 
 	// GET
-	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
-	{
-		for (auto it = m_vecOfModelIf.begin(); it != m_vecOfModelIf.end(); ++it)
-		{
-			if (!(*it)->getName().compare(arg0))
-			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-				return *it;
-			}
-		}
-
-		return errorModel;
-	}
+	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);
 	
-	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0)
-	{
-		for (auto it = m_vecOfMeshIf.begin(); it != m_vecOfMeshIf.end(); ++it)
-		{
-			if (!(*it)->getName().compare(arg0))
-			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-				return *it;
-			}
-		}
+	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
 
-		return errorMesh;
-	}
-
-	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
-	{
-		for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
-		{
-			if (!(*it)->getName().compare(arg0))
-			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
-				return *it;
-			}
-		}
-
-		return errorShader;
-	}
+	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
 
 private:	
 	// Singleton Factory - Constructor private

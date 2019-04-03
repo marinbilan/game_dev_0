@@ -29,6 +29,15 @@ void Common::Factory::showMeMeshIfObjects()
 	}
 }
 
+void Common::Factory::showMeShaderIfObjects()
+{
+	for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
+	{
+		std::cout << " Shader object: " << (*it)->getName() << std::endl;
+
+	}
+}
+
 // Container Stuff
 // STORE
 void Common::Factory::storeInContainer(std::shared_ptr<Model::StaticModel>& arg0)
@@ -39,6 +48,11 @@ void Common::Factory::storeInContainer(std::shared_ptr<Model::StaticModel>& arg0
 void Common::Factory::storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0)
 {
 	m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg0));
+}
+
+void Common::Factory::storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0)
+{
+	m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(arg0));
 }
 
 // GET
@@ -70,3 +84,16 @@ std::shared_ptr<Mesh::MeshIf>& Common::Factory::getMeshIf(const std::string& arg
 	return errorMesh;
 }
 
+std::shared_ptr<Shader::ShaderIf>& Common::Factory::getShaderIf(const std::string& arg0)
+{
+	for (auto it = m_vecOfShaderIf.begin(); it != m_vecOfShaderIf.end(); ++it)
+	{
+		if (!(*it)->getName().compare(arg0))
+		{
+			std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+			return *it;
+		}
+	}
+
+	return errorShader;
+}

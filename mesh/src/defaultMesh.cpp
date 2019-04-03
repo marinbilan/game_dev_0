@@ -27,13 +27,48 @@ void Mesh::DefaultMesh::render()
 
 void Mesh::DefaultMesh::preInit()
 {
-
+	shaderIdsInit();
 }
 
 
 void Mesh::DefaultMesh::postInit()
 {
 	std::cout << "postInit function called!" << std::endl;
+}
+
+void Mesh::DefaultMesh::shaderIdsInit()
+{
+/*
+	std::cout << "shaderIdsInit function called!" << std::endl;
+
+	shaderProgramID = createShader(VertexShader, FragmentShader);
+	// [ VERTEX SHADER ]
+	//   ATTRIBUTEs
+	positionsID = glGetAttribLocation(shaderProgramID, "position");
+	textureCoordsID = glGetAttribLocation(shaderProgramID, "textureCoordinates");
+	normalsID = glGetAttribLocation(shaderProgramID, "normal");
+	// [ UNIFORMs ]
+	projectionMatrixID = glGetUniformLocation(shaderProgramID, "projectionMatrix");
+	viewMatrixID = glGetUniformLocation(shaderProgramID, "viewMatrix");
+	viewMatrixInvID = glGetUniformLocation(shaderProgramID, "viewMatrixInv");
+	modelMatrixID = glGetUniformLocation(shaderProgramID, "transformationMatrix");
+
+	lightPositionID = glGetUniformLocation(shaderProgramID, "lightPosition");
+	planeID = glGetUniformLocation(shaderProgramID, "plane");
+	// [ FRAGMENT SHADER ]
+	//   UNIFORMs
+	lightColourID = glGetUniformLocation(shaderProgramID, "lightColour");
+	shineDamperID = glGetUniformLocation(shaderProgramID, "shineDamper");
+	reflectivityID = glGetUniformLocation(shaderProgramID, "reflectivity");
+	modelTextureID = glGetUniformLocation(shaderProgramID, "modelTexture");
+	//
+	// Set Projection Matrix
+	// 
+	// projectionMatrix = glm::perspective(glm::radians(60.0f), projMatrixWidth / projMatrixHeight, 0.1f, 1000.f);
+	glUseProgram(shaderProgramID);
+	// glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projectionMatrix[0][0]);
+	glUseProgram(0);
+*/
 }
 
 
