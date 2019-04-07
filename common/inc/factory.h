@@ -13,10 +13,12 @@
 #include "defaultMesh.h"
 #include "shaderIf.h"
 #include "defaultShader.h"
-
-#include "errorModel.h"
-#include "errorMesh.h"
-#include "errorShader.h"
+#include "loaderIf.h"
+#include "modelLoader.h"
+#include "textureLoader.h"
+#include "gpuObjectIf.h"
+#include "modelGPUObject.h"
+#include "textureGPUObject.h"
 
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
@@ -64,38 +66,45 @@ public:
 	}
 	// ---- ----
 
-	// Methods 
+
+	// ---- [1] ---- 
 	void showMeSeededClasses();
 
 	void showMeModelIfObjects();
-
 	void showMeMeshIfObjects();
-
 	void showMeShaderIfObjects();
+	void showMeLoaderIfObjects();
+	void showMeGPUIfObjects();
 
+	// TODO: Create Template functions out of this!
 	// Container Stuff
-	// STORE
+	// STORE 
+	// ---- [2] ---- 
 	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0);
-
 	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0);
-
 	void storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0);
+	// LoaderIf
+	void storeInContainer(std::shared_ptr<Loader::ModelLoader>& arg0);
+	void storeInContainer(std::shared_ptr<Loader::TextureLoader>& arg0);
+	// GPUObjectIf
+	void storeInContainer(std::shared_ptr<GPUObject::ModelGPUObject>& arg0);
+	void storeInContainer(std::shared_ptr<GPUObject::TextureGPUObject>& arg0);
+
 
 	// GET
-	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);
-	
+	// ---- [3] ---- 
+	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);	
 	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
-
 	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
+	// LoaderIf
+	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0);
+	// GPUObjectIf
+	std::shared_ptr<GPUObject::GPUObjectIf>& getGPUObjectIf(const std::string& arg0);
 
 private:	
 	// Singleton Factory - Constructor private
 	Factory() 
 	{
-		Error err;
-		errorModel = std::make_shared<Model::ErrorModel>(err, "errorModel");
-		errorMesh = std::make_shared<Mesh::ErrorMesh>(err, "errorMesh");
-		errorShader = std::make_shared<Shader::ErrorShader>(err, "errorShader");
 	};
 
 	// Factory Stuff 
@@ -103,16 +112,14 @@ private:
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
 
-	// Container Stuff  
-	std::vector<std::shared_ptr<Model::ModelIf>> m_vecOfModelIf;
-	std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfMeshIf;
-	std::vector<std::shared_ptr<Shader::ShaderIf>> m_vecOfShaderIf;
-
-	// Error Objects
-	std::shared_ptr<Model::ModelIf> errorModel;
-	std::shared_ptr<Mesh::MeshIf> errorMesh;
-	std::shared_ptr<Shader::ShaderIf> errorShader;
+	//
+	// Container Stuff 
+	//
+	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
+	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
+	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
+	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
+	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
 };
-
 }
  

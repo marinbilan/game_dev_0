@@ -8,6 +8,22 @@
 #include "glew.h"
 #include "glfw3.h"
 
+
+// TEST
+// Assimp
+#include "Importer.hpp"
+#include "postprocess.h"
+#include "mesh.h"
+#include "scene.h"
+
+// GLM
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp" // For projection matrix
+
+// FreeImage 
+#include "FreeImage.h"
+
+
 int main ()
 {
 	/* Initialize the library */

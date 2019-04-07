@@ -16,11 +16,10 @@ public:
 	virtual void postInit() {};
 
 	virtual void registerClass() {};
-
 	virtual void createModels() {};
-
 	virtual void createMeshes() {};
-
 	virtual void createShaders() {};
+
+	virtual void createLoaders() {};
 };
 }

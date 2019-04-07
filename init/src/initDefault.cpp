@@ -5,10 +5,20 @@
 
 #include "modelIf.h"
 #include "staticModel.h"
+
 #include "meshIf.h"
 #include "defaultMesh.h"
+
 #include "shaderIf.h"
 #include "defaultShader.h"
+
+#include "loaderIf.h"
+#include "modelLoader.h"
+#include "textureLoader.h"
+
+#include "gpuObjectIf.h"
+#include "modelGPUObject.h"
+#include "textureGPUObject.h"
 
 
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
@@ -29,12 +39,10 @@ void Init::InitDefault::preInit()
 	// ...
 	//
 	registerClass();
-
 	createModels();
-
 	createMeshes();
-
 	createShaders();
+	createLoaders();
 }
 
 
@@ -54,8 +62,12 @@ void Init::InitDefault::registerClass()
 	REGISTER_CLASS(Mesh::DefaultMesh);
 	REGISTER_CLASS(Shader::DefaultShader);
 
+	REGISTER_CLASS(Loader::ModelLoader);
+	REGISTER_CLASS(Loader::TextureLoader);
+	REGISTER_CLASS(GPUObject::ModelGPUObject);
+	REGISTER_CLASS(GPUObject::TextureGPUObject);
+
 	Common::Factory::getInstance().showMeSeededClasses();
-	
 }
 
 
@@ -85,8 +97,21 @@ void Init::InitDefault::createMeshes()
 void Init::InitDefault::createShaders()
 {
 	Common::Error err;
-	std::shared_ptr<Shader::DefaultShader> smartMesh_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
-	Common::Factory::getInstance().storeInContainer(smartMesh_0);
-	std::shared_ptr<Shader::DefaultShader> smartMesh_1((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_1"));
-	Common::Factory::getInstance().storeInContainer(smartMesh_1);
+
+	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
+	Common::Factory::getInstance().storeInContainer(smartShader_0);
+	std::shared_ptr<Shader::DefaultShader> smartShader_1((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_1"));
+	Common::Factory::getInstance().storeInContainer(smartShader_1);
+}
+
+
+void Init::InitDefault::createLoaders()
+{
+	Common::Error err;
+
+	std::shared_ptr<Loader::ModelLoader> modelLoader_0((Loader::ModelLoader*)Common::Factory::getInstance().constructObject("Loader::ModelLoader", err, "modelLoader_0"));
+	Common::Factory::getInstance().storeInContainer(modelLoader_0);
+
+	std::shared_ptr<Loader::TextureLoader> textureLoader_0((Loader::TextureLoader*)Common::Factory::getInstance().constructObject("Loader::TextureLoader", err, "textureLoader_0"));
+	Common::Factory::getInstance().storeInContainer(textureLoader_0);
 }

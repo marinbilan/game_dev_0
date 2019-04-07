@@ -17,16 +17,13 @@ public:
 	~InitDefault();
 
 	void preInit();
-
 	void postInit();
 
 	void registerClass();
-
 	void createModels();
-
 	void createMeshes();
-
 	void createShaders();
+	void createLoaders();
 
 private:
 std::string m_name;

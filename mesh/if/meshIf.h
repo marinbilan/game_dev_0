@@ -12,15 +12,15 @@ public:
 		std::cout << "MeshIf destructor called!" << std::endl;
 	}
 
-	virtual void preInit() {};
-	virtual void postInit() {};
-
-	virtual void render() {};
-
 	virtual const std::string& getName() 
 	{ 
 		return "not implemented in MeshIf"; 
 	}
+
+	virtual void preInit() {};
+	virtual void postInit() {};
+
+	virtual void render() {};
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{

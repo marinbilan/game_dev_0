@@ -34,10 +34,13 @@ void Common::CmdPrompt::runCmdPrompt()
 
 	Common::Error err;
 	
-	std::cout << " - Available objects: " << std::endl;
+	std::cout << " ---- Available objects: " << std::endl;
 	Common::Factory::getInstance().showMeModelIfObjects();
 	Common::Factory::getInstance().showMeMeshIfObjects();
 	Common::Factory::getInstance().showMeShaderIfObjects();
+	Common::Factory::getInstance().showMeLoaderIfObjects();
+	Common::Factory::getInstance().showMeGPUIfObjects();
+	std::cout << " ---- ---- " << std::endl;
 
 	do
 	{
