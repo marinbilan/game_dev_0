@@ -64,42 +64,121 @@ public:
 		if (i == m_classesMap.end()) return 0; // or throw or whatever you want  
 		return i->second(err, arg0);
 	}
-	// ---- ----
+	// ---- xx END xx ----
 
 
-	// ---- [1] ---- 
+	// ---- [0] ---- 
 	void showMeSeededClasses();
 
-	void showMeModelIfObjects();
-	void showMeMeshIfObjects();
-	void showMeShaderIfObjects();
-	void showMeLoaderIfObjects();
-	void showMeGPUIfObjects();
+	// ---- [1] ---- 
+	void showMeObjects(const std::string& objName)
+	{
+		if (!objName.compare("LoaderIf"))
+		{
+			printName(m_vecOfLoaderIf);
+		}
+		else if (!objName.compare("GPUObjectIf"))
+		{
+			printName(m_vecOfGPUObjectIf);
+		}
+		else if (!objName.compare("ModelIf"))
+		{
+			printName(m_vecOfModelIf);
+		}
+		else if (!objName.compare("MeshIf"))
+		{
+			printName(m_vecOfMeshIf);
+		}
+		else if (!objName.compare("ShaderIf"))
+		{
+			printName(m_vecOfShaderIf);
+		}
+		else
+		{
+			std::cout << "ERROR: Object can not be found!" << '\n';
+		}
+	}
 
-	// TODO: Create Template functions out of this!
-	// Container Stuff
-	// STORE 
+	// Generic Object Name Printer
+	template<class T>
+	void printName(T& vec0)
+	{
+		for (auto it = vec0.begin(); it != vec0.end(); ++it)
+		{
+			std::cout << "- PRINT NAME TEST -" << (*it)->getName() << '\n';
+		}
+	}
+
+
+	// SET
 	// ---- [2] ---- 
-	void storeInContainer(std::shared_ptr<Model::StaticModel>& arg0);
-	void storeInContainer(std::shared_ptr<Mesh::DefaultMesh>& arg0);
-	void storeInContainer(std::shared_ptr<Shader::DefaultShader>& arg0);
-	// LoaderIf
-	void storeInContainer(std::shared_ptr<Loader::ModelLoader>& arg0);
-	void storeInContainer(std::shared_ptr<Loader::TextureLoader>& arg0);
-	// GPUObjectIf
-	void storeInContainer(std::shared_ptr<GPUObject::ModelGPUObject>& arg0);
-	void storeInContainer(std::shared_ptr<GPUObject::TextureGPUObject>& arg0);
+	template<class T>
+	void storeInContainer(const std::string& objName, T& arg1)
+	{
+		// LoaderIf
+		if (!objName.compare("LoaderIf"))
+		{
+			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(arg1));
+		}
+		// GPUObjectIf
+		else if (!objName.compare("GPUObjectIf"))
+		{
+			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(arg1));
+		}
+		// ModelIf
+		else if (!objName.compare("ModelIf"))
+		{
+			m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(arg1));
+		}
+		// MeshIf
+		else if (!objName.compare("MeshIf"))
+		{
+			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg1));
+		}
+		// ShaderIf
+		else if (!objName.compare("ShaderIf"))
+		{
+			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(arg1));
+		}
+		else
+		{
+			std::cout << "ERROR: Can not store object in container" << "\n";
+		}
+	}
 
 
 	// GET
 	// ---- [3] ---- 
-	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);	
-	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
-	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
 	// LoaderIf
 	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0);
 	// GPUObjectIf
 	std::shared_ptr<GPUObject::GPUObjectIf>& getGPUObjectIf(const std::string& arg0);
+	// ModelIf
+	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);	
+	// MeshIf
+	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
+	// ShaderIf
+	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
+
+
+	// Generic getter 
+	template<class T>
+	auto getObjectFromVec(T& vec0, const std::string& arg1) -> decltype(vec0.at(0))
+	{
+		for (auto it = vec0.begin(); it != vec0.end(); ++it)
+		{
+			if (!(*it)->getName().compare(arg1))
+			{
+				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+				return *it;
+			}
+		}
+
+		// If can't find element in vector, return first
+		std::cout << "ERROR: Can not find element in vector! " << '\n';
+		return vec0[0];
+	}
+
 
 private:	
 	// Singleton Factory - Constructor private
@@ -115,11 +194,12 @@ private:
 	//
 	// Container Stuff 
 	//
+	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
+	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
+
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
 	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
-	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
-	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
 };
 }
  

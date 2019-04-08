@@ -78,7 +78,7 @@ void Init::InitDefault::createModels()
 	// Create                                                                                                             Model::StaticModel"       .. /modelPath/    smartModel_0
 	// Model object
 	std::shared_ptr<Model::StaticModel> smartModel_0((Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0"));
-	Common::Factory::getInstance().storeInContainer(smartModel_0);
+	Common::Factory::getInstance().storeInContainer("ModelIf", smartModel_0);
 
 
 	// Test
@@ -90,7 +90,7 @@ void Init::InitDefault::createMeshes()
 {
 	Common::Error err;
 	std::shared_ptr<Mesh::DefaultMesh> smartMesh_0((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_0"));
-	Common::Factory::getInstance().storeInContainer(smartMesh_0);
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_0);
 }
 
 
@@ -99,9 +99,9 @@ void Init::InitDefault::createShaders()
 	Common::Error err;
 
 	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
-	Common::Factory::getInstance().storeInContainer(smartShader_0);
+	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
 	std::shared_ptr<Shader::DefaultShader> smartShader_1((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_1"));
-	Common::Factory::getInstance().storeInContainer(smartShader_1);
+	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_1);
 }
 
 
@@ -110,8 +110,8 @@ void Init::InitDefault::createLoaders()
 	Common::Error err;
 
 	std::shared_ptr<Loader::ModelLoader> modelLoader_0((Loader::ModelLoader*)Common::Factory::getInstance().constructObject("Loader::ModelLoader", err, "modelLoader_0"));
-	Common::Factory::getInstance().storeInContainer(modelLoader_0);
+	Common::Factory::getInstance().storeInContainer("LoaderIf", modelLoader_0);
 
 	std::shared_ptr<Loader::TextureLoader> textureLoader_0((Loader::TextureLoader*)Common::Factory::getInstance().constructObject("Loader::TextureLoader", err, "textureLoader_0"));
-	Common::Factory::getInstance().storeInContainer(textureLoader_0);
+	Common::Factory::getInstance().storeInContainer("LoaderIf", textureLoader_0);
 }

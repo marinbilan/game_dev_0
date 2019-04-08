@@ -35,16 +35,18 @@ void Common::CmdPrompt::runCmdPrompt()
 	Common::Error err;
 	
 	std::cout << " ---- Available objects: " << std::endl;
-	Common::Factory::getInstance().showMeModelIfObjects();
-	Common::Factory::getInstance().showMeMeshIfObjects();
-	Common::Factory::getInstance().showMeShaderIfObjects();
-	Common::Factory::getInstance().showMeLoaderIfObjects();
-	Common::Factory::getInstance().showMeGPUIfObjects();
+
+	Common::Factory::getInstance().showMeObjects("LoaderIf");
+	Common::Factory::getInstance().showMeObjects("GPUObjectIf");
+	Common::Factory::getInstance().showMeObjects("ModelIf");
+	Common::Factory::getInstance().showMeObjects("MeshIf");
+	Common::Factory::getInstance().showMeObjects("ShaderIf");
+	
 	std::cout << " ---- ---- " << std::endl;
 
 	do
 	{
-		std::cout << "> ";
+		std::cout << "$ ";
 		std::getline(std::cin, commandLineString);
 
 		Common::Factory::getInstance().getModelIf(commandLineString)->cmdPrompt(commandLineString);
