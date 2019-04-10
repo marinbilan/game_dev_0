@@ -1,5 +1,7 @@
 #include "modelLoader.h"
 
+#include "factory.h"
+
 #include "error.h"
 
 
@@ -7,6 +9,7 @@ Loader::ModelLoader::ModelLoader(Common::Error& err, const std::string& name) : 
 {
 	std::cout << "ModelLoader created!" << std::endl;
 
+	postInit();
 }
 
 
@@ -52,19 +55,26 @@ void Loader::ModelLoader::postInit()
 void Loader::ModelLoader::loadModel()
 {
 	std::cout << "loadModel function called!" << std::endl;
-
+	Common::Error err;
 	// CREATE MODEL
+
+	std::string modelStr("_vanquish/vanquish.3ds");
 	
 	Assimp::Importer Importer;
-	pScene = Importer.ReadFile("dummy", aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	pScene = Importer.ReadFile(modelStr.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	if (pScene)
 	{
+		std::string vanquish("vanquish");
+		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(err, "vanquish");
+
+		std::cout << " xxx INIT OK" << std::endl;		
 		initScene(pScene);
 	}
 	else
 	{
 		// CommonFunctions::INFOCMD(LOG "ERROR parsing: " + modelFolder + modelName + ". " + Importer.GetErrorString());
+		std::cout << " xxx INIT NOK" << std::endl;
 	}	
 }
 
@@ -77,6 +87,9 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
+	std::cout << " xxx VAO = " << VAO  << "_pScene->mNumMeshes = " << _pScene->mNumMeshes << std::endl;
+	m_GPUObjectIf->setVAO(VAO);
+
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model
 	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
@@ -85,6 +98,9 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 
 		initMesh(i, paiMesh);
 	}
+
+	Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
+	std::cout << " NUM OF INSTANCES IN Loader: " << Common::Factory::getInstance().getGPUObjectIf("vanquish").use_count() << "\n";
 }
 
 
@@ -135,12 +151,17 @@ void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
 	// For each Mesh in Model - Create  VBO and IBO
 	GLuint VBO;
 	glGenBuffers(1, &VBO);
+	std::cout << " xxx VBO = " << VBO << std::endl;
+	m_GPUObjectIf->setVBO(VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vert) * vertices.size(), &vertices[0], GL_STATIC_DRAW); // sizeof(Vert) = 32
 
 	GLuint IBO;
 	glGenBuffers(1, &IBO);
+	std::cout << " xxx IBO = " << IBO << std::endl;
+	m_GPUObjectIf->setIBO(IBO);
+	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 }

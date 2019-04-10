@@ -1,6 +1,9 @@
 #pragma once
 #include "loaderIf.h"
 
+#include "gpuObjectIf.h"
+#include "modelGPUObject.h"
+
 #include "error.h"
 
 namespace Loader
@@ -9,7 +12,6 @@ namespace Loader
 struct Vert
 {
 public:
-
 	Vert(glm::vec3 position, glm::vec2 textureCoord, glm::vec3 normal) : 
 	m_position(position),
 	m_texCoords(textureCoord),
@@ -44,5 +46,8 @@ private:
 	std::string m_name;
 
 	const aiScene*    pScene;
+
+	// 
+	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;
 };
 }

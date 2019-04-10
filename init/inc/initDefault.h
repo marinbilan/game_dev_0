@@ -25,6 +25,7 @@ public:
 	void createShaders();
 	void createLoaders();
 
+
 private:
 std::string m_name;
 };

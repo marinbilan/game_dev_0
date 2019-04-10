@@ -43,6 +43,9 @@ void Init::InitDefault::preInit()
 	createMeshes();
 	createShaders();
 	createLoaders();
+
+	// Test
+	std::cout << " NUM OF INSTANCES after LOADER: " << Common::Factory::getInstance().getGPUObjectIf("vanquish").use_count() << "\n";
 }
 
 
@@ -105,13 +108,19 @@ void Init::InitDefault::createShaders()
 }
 
 
+// Create MODELs
 void Init::InitDefault::createLoaders()
 {
 	Common::Error err;
 
-	std::shared_ptr<Loader::ModelLoader> modelLoader_0((Loader::ModelLoader*)Common::Factory::getInstance().constructObject("Loader::ModelLoader", err, "modelLoader_0"));
-	Common::Factory::getInstance().storeInContainer("LoaderIf", modelLoader_0);
+	// Create TEMP ModelLoader and Create all GPUModelObjects
+	std::shared_ptr<Loader::ModelLoader> modelLoader_0( (Loader::ModelLoader*)Common::Factory::getInstance().constructObject("Loader::ModelLoader", err, "modelLoader_0") );
+	// Common::Factory::getInstance().storeInContainer("LoaderIf", modelLoader_0);
+
+	// std::cout << " NUM OF INSTANCES after LOADER: " << Common::Factory::getInstance().getGPUObjectIf("vanquish").use_count() << "\n";
+	Common::Factory::getInstance().getGPUObjectIf("vanquish")->info();
 
 	std::shared_ptr<Loader::TextureLoader> textureLoader_0((Loader::TextureLoader*)Common::Factory::getInstance().constructObject("Loader::TextureLoader", err, "textureLoader_0"));
-	Common::Factory::getInstance().storeInContainer("LoaderIf", textureLoader_0);
+	// Common::Factory::getInstance().storeInContainer("LoaderIf", textureLoader_0);
+
 }

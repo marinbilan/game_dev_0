@@ -47,11 +47,16 @@ void Common::CmdPrompt::runCmdPrompt()
 	do
 	{
 		std::cout << "$ ";
+		// Waiting for command
 		std::getline(std::cin, commandLineString);
+
+		std::cout << " ---- Start " << std::endl;
 
 		Common::Factory::getInstance().getModelIf(commandLineString)->cmdPrompt(commandLineString);
 		Common::Factory::getInstance().getMeshIf(commandLineString)->cmdPrompt(commandLineString);
 		Common::Factory::getInstance().getShaderIf(commandLineString)->cmdPrompt(commandLineString);
+
+		std::cout << " ---- Stop " << std::endl;
 
 	} while (commandLineString != "exit");
 }

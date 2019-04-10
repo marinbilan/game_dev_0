@@ -1,6 +1,8 @@
 #pragma once
 #include "gpuObjectIf.h"
 
+#include <vector>
+
 #include "error.h"
 
 
@@ -18,7 +20,20 @@ public:
 	void preInit();
 	void postInit();
 
+	// modelGPUObjectIf
+	void setVAO(GLuint VAO);
+
+	void setVBO(GLuint VBO);
+
+	void setIBO(GLuint IBO);
+
+	void info();
+
 private:
 	std::string m_name;
+
+	GLuint m_VAO;
+	std::vector<GLuint> m_vecOfVBOs;
+	std::vector<GLuint> m_vecOfIBOs;
 };
 }

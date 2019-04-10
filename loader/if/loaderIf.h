@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <memory>
 
 // OpenGL
 #include "glew.h"

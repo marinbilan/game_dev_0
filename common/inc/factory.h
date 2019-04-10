@@ -7,18 +7,23 @@
 
 #include "error.h"
 
-#include "modelIf.h"
-#include "staticModel.h"
-#include "meshIf.h"
-#include "defaultMesh.h"
-#include "shaderIf.h"
-#include "defaultShader.h"
 #include "loaderIf.h"
 #include "modelLoader.h"
 #include "textureLoader.h"
+
 #include "gpuObjectIf.h"
 #include "modelGPUObject.h"
 #include "textureGPUObject.h"
+
+#include "modelIf.h"
+#include "staticModel.h"
+
+#include "meshIf.h"
+#include "defaultMesh.h"
+
+#include "shaderIf.h"
+#include "defaultShader.h"
+
 
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
@@ -71,31 +76,31 @@ public:
 	void showMeSeededClasses();
 
 	// ---- [1] ---- 
-	void showMeObjects(const std::string& objName)
+	void showMeObjects(const std::string& objNameIf)
 	{
-		if (!objName.compare("LoaderIf"))
+		if (!objNameIf.compare("LoaderIf"))
 		{
 			printName(m_vecOfLoaderIf);
 		}
-		else if (!objName.compare("GPUObjectIf"))
+		else if (!objNameIf.compare("GPUObjectIf"))
 		{
 			printName(m_vecOfGPUObjectIf);
 		}
-		else if (!objName.compare("ModelIf"))
+		else if (!objNameIf.compare("ModelIf"))
 		{
 			printName(m_vecOfModelIf);
 		}
-		else if (!objName.compare("MeshIf"))
+		else if (!objNameIf.compare("MeshIf"))
 		{
 			printName(m_vecOfMeshIf);
 		}
-		else if (!objName.compare("ShaderIf"))
+		else if (!objNameIf.compare("ShaderIf"))
 		{
 			printName(m_vecOfShaderIf);
 		}
 		else
 		{
-			std::cout << "ERROR: Object can not be found!" << '\n';
+			std::cout << "ERROR: objNameIf can not be found!" << '\n';
 		}
 	}
 
@@ -113,42 +118,45 @@ public:
 	// SET
 	// ---- [2] ---- 
 	template<class T>
-	void storeInContainer(const std::string& objName, T& arg1)
+	// args 1] objectName    2] object 
+	void storeInContainer(const std::string& objNameIf, T& derivedObject)
 	{
 		// LoaderIf
-		if (!objName.compare("LoaderIf"))
+		if (!objNameIf.compare("LoaderIf"))
 		{
-			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(arg1));
+			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(derivedObject));
 		}
 		// GPUObjectIf
-		else if (!objName.compare("GPUObjectIf"))
+		else if (!objNameIf.compare("GPUObjectIf"))
 		{
-			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(arg1));
+			std::cout << " xxx Stroing in container xxx " << "\n";
+			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(derivedObject));
 		}
 		// ModelIf
-		else if (!objName.compare("ModelIf"))
+		else if (!objNameIf.compare("ModelIf"))
 		{
-			m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(arg1));
+			m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(derivedObject));
 		}
 		// MeshIf
-		else if (!objName.compare("MeshIf"))
+		else if (!objNameIf.compare("MeshIf"))
 		{
-			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(arg1));
+			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(derivedObject));
 		}
 		// ShaderIf
-		else if (!objName.compare("ShaderIf"))
+		else if (!objNameIf.compare("ShaderIf"))
 		{
-			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(arg1));
+			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
 		else
 		{
-			std::cout << "ERROR: Can not store object in container" << "\n";
+			std::cout << "ERROR: Can not store derivedObject in container" << "\n";
 		}
 	}
 
 
-	// GET
+	// GET - Make this Generic
 	// ---- [3] ---- 
+	// ADD INTERFACE 
 	// LoaderIf
 	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0);
 	// GPUObjectIf
