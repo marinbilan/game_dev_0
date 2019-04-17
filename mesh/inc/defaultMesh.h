@@ -2,7 +2,7 @@
 #include "meshIf.h"
 
 #include "error.h"
-#include "shaderIf.h"
+// #include "shaderIf.h"
 
 
 namespace Mesh
@@ -18,6 +18,8 @@ public:
 	void preInit();
 	void postInit();
 
+	void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf);
+
 	void shaderIdsInit();
 
 	void render();
@@ -31,7 +33,7 @@ public:
 
 private:
 std::string m_name;
-std::shared_ptr<Shader::ShaderIf> defaultShaderIf;
+std::shared_ptr<Shader::ShaderIf> m_shaderIf;
 
 // Shader Variables
 // glm::mat4   projectionMatrix;

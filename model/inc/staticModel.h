@@ -1,9 +1,12 @@
 #pragma once
 #include "modelIf.h"
 
+#include <vector>
 #include <memory>
 #include "error.h"
-#include "meshIf.h"
+
+//#include "gpuObjectIf.h"
+//#include "meshIf.h"
 
 namespace Model
 {
@@ -14,11 +17,14 @@ public:
 
 	~StaticModel();
 
-    void render();
-
 	// ModelIf
 	void preInit();
 	void postInit();
+
+	void setGPUObject(const std::shared_ptr<GPUObject::GPUObjectIf>& gpuObjectIf);
+	void setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf);
+
+    void render();
 
 	const std::string& getName() 
 	{ 
@@ -30,6 +36,9 @@ public:
 private:
 std::string m_name;
 
-std::shared_ptr<Mesh::MeshIf> defaultMeshIf0;
+GLuint m_VAO;
+
+std::shared_ptr<GPUObject::GPUObjectIf> m_gpuObjectIf;
+std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfdefaultMeshIf;
 };
 }

@@ -39,6 +39,12 @@ void GPUObject::ModelGPUObject::setVAO(GLuint VAO)
 }
 
 
+GLuint GPUObject::ModelGPUObject::getVAO()
+{
+	return m_VAO;
+}
+
+
 void GPUObject::ModelGPUObject::setVBO(GLuint VBO)
 {
 	m_vecOfVBOs.push_back(VBO);

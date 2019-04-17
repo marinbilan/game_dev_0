@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "shaderIf.h"
+// #include "defaultShader.h"
 
 namespace Mesh
 {
@@ -21,6 +23,8 @@ public:
 	virtual void postInit() {};
 
 	virtual void render() {};
+
+	virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {};
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{

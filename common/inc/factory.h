@@ -129,7 +129,7 @@ public:
 		// GPUObjectIf
 		else if (!objNameIf.compare("GPUObjectIf"))
 		{
-			std::cout << " xxx Stroing in container xxx " << "\n";
+			std::cout << " xxx Stroing in container GPUObjectIf xxx " << "\n";
 			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(derivedObject));
 		}
 		// ModelIf

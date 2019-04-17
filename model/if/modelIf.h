@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "gpuObjectIf.h"
+#include "meshIf.h"
 
 namespace Model
 {
@@ -14,6 +16,9 @@ public:
 
 	virtual void preInit() {};
 	virtual void postInit() {};
+
+	virtual void setGPUObject(const std::shared_ptr<GPUObject::GPUObjectIf>& gpuObjectIf) {};
+	virtual void setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf) {};
 
 	virtual void render() {};
 

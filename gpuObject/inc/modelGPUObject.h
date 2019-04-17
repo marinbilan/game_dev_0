@@ -22,6 +22,7 @@ public:
 
 	// modelGPUObjectIf
 	void setVAO(GLuint VAO);
+	GLuint getVAO();
 
 	void setVBO(GLuint VBO);
 

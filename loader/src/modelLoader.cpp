@@ -66,7 +66,8 @@ void Loader::ModelLoader::loadModel()
 	if (pScene)
 	{
 		std::string vanquish("vanquish");
-		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(err, "vanquish");
+		// CREATE OBJECT //
+		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(err, "vanquishGPUObject");
 
 		std::cout << " xxx INIT OK" << std::endl;		
 		initScene(pScene);
@@ -100,7 +101,8 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	}
 
 	Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
-	std::cout << " NUM OF INSTANCES IN Loader: " << Common::Factory::getInstance().getGPUObjectIf("vanquish").use_count() << "\n";
+	// STORE OBJECT //
+	std::cout << " NUM OF INSTANCES IN Loader: " << Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject").use_count() << "\n";
 }
 
 

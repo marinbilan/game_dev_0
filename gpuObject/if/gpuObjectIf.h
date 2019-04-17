@@ -27,6 +27,12 @@ public:
 		std::cout << " ERROR: setVAO called from GUPObjectIf" << '\n';
 	}
 
+	virtual GLuint getVAO()
+	{
+		std::cout << " ERROR: getVAO called from GUPObjectIf" << '\n';
+		return 0;
+	}
+
 	virtual void setVBO(GLuint VBO)
 	{
 		std::cout << " ERROR: setVBO called from GUPObjectIf" << '\n';

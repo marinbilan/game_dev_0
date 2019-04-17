@@ -19,9 +19,9 @@ Mesh::DefaultMesh::~DefaultMesh()
 void Mesh::DefaultMesh::render()
 {
 	std::cout << "Mesh::DefaultMesh::render() : " << m_name << std::endl;
-	defaultShaderIf = Common::Factory::getInstance().getShaderIf("smartShader_0");
+	// defaultShaderIf = Common::Factory::getInstance().getShaderIf("smartShader_0");
 
-	std::cout << " TEST TEST: " << defaultShaderIf->getId() << std::endl;
+	// std::cout << " TEST TEST: " << defaultShaderIf->getId() << std::endl;
 };
 
 
@@ -35,6 +35,14 @@ void Mesh::DefaultMesh::postInit()
 {
 	std::cout << "postInit function called!" << std::endl;
 }
+
+
+void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf)
+{
+	std::cout << " [Mesh::DefaultMesh::setShader] ... " << std::endl;
+	m_shaderIf = shaderIf;
+}
+
 
 void Mesh::DefaultMesh::shaderIdsInit()
 {
