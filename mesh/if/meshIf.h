@@ -24,7 +24,9 @@ public:
 
 	virtual void render() {};
 
+	// Setters
 	virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {};
+	virtual void setTextureId(GLuint texId) {};
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{

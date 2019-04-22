@@ -33,7 +33,7 @@ void Loader::TextureLoader::postInit()
 }
 
 
-GLuint Loader::TextureLoader::createTexture(std::string& _textureName)
+GLuint Loader::TextureLoader::createTexture(const std::string& _textureName)
 {
 	width = 0;
 	height = 0;

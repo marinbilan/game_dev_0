@@ -5,6 +5,9 @@
 #include "glfw3.h"
 
 // TODO: Include glm projection matrix
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp" // For projection matrix
+
 
 namespace Shader
 {

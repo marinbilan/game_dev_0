@@ -106,6 +106,7 @@ void Init::InitDefault::createShaders()
 	Common::Error err;
 
 	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
+    smartShader_0->printINFO();
 	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
 
 
@@ -151,6 +152,20 @@ void Init::InitDefault::createLoaders()
 
 	std::shared_ptr<Loader::TextureLoader> textureLoader_0((Loader::TextureLoader*)Common::Factory::getInstance().constructObject("Loader::TextureLoader", err, "textureLoader_0"));
 	Common::Factory::getInstance().storeInContainer("LoaderIf", textureLoader_0);
+
+	GLuint texture0 = textureLoader_0->createTexture("_vanquish/textures/texture0.png");
+	GLuint texture1 = textureLoader_0->createTexture("_vanquish/textures/texture1.png");
+	GLuint texture2 = textureLoader_0->createTexture("_vanquish/textures/texture2.png");
+	GLuint texture3 = textureLoader_0->createTexture("_vanquish/textures/texture3.png");
+	GLuint texture4 = textureLoader_0->createTexture("_vanquish/textures/texture4.png");
+	GLuint texture5 = textureLoader_0->createTexture("_vanquish/textures/texture5.png");
+
+	std::cout << " texture0: " << texture0 << '\n';
+	std::cout << " texture1: " << texture1 << '\n';
+	std::cout << " texture2: " << texture2 << '\n';
+	std::cout << " texture3: " << texture3 << '\n';
+	std::cout << " texture4: " << texture4 << '\n';
+	std::cout << " texture5: " << texture5 << '\n';
 
 	std::cout << " xxx SHOW ME LOADERs xxx" << '\n';
 	Common::Factory::getInstance().showMeObjects("LoaderIf");

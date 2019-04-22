@@ -18,9 +18,22 @@ public:
 	void preInit();
 	void postInit();
 
+	// Setters
 	void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf);
-
 	void shaderIdsInit();
+
+	// pos, tex, normal
+
+	// Matrix stuff
+
+	// lightPosition
+	// planeId
+
+	// lightColour
+	// shineDamper
+	// reflectivity
+	virtual void setTextureId(GLuint texId);
+
 
 	void render();
 
@@ -34,9 +47,7 @@ public:
 private:
 std::string m_name;
 std::shared_ptr<Shader::ShaderIf> m_shaderIf;
-
-// Shader Variables
-// glm::mat4   projectionMatrix;
+GLuint texture0;
 
 
 // ---- Shader IDs ----

@@ -56,13 +56,32 @@ void Model::StaticModel::setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf)
 }
 
 
+// 1 ] Bind VAO glBindVertexArray(VAO); 
+// 2 ] Set Pointers    (glVertexAttribPointer); 
+// 3 ] Enable Pointers (glEnableVertexAttribArray); 
+// For each mesh:
+	// 4.1 ] glBindBuffer(GL_ARRAY_BUFFER)
+	// 4.2 ] glBindBuffer(GL_ELEMENT_ARRAY_BUFFER)
+	// 4.3 ] Active shader glUseProgram(ShaderID);
+	// 4.4 ] Update Uniform(s)
+
+	// 4.5 ] Active Textures
+	// 4.6 ] Bind Textures
+	// 4.7 ] Render mesh (model) (glDrawElements ili another method)
+// 5 ] Disable everything
 void Model::StaticModel::render() 
 {
     std::cout << "Model::StaticModel::render()" << std::endl;
 	std::cout << " VAO: " << m_VAO << std::endl;
 
+	glBindVertexArray(m_VAO);
+
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
+		// glBindBuffer(GL_ARRAY_BUFFER, _staticModel.getVectorOfMeshes()[i].VBO);
+		// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _staticModel.getVectorOfMeshes()[i].IBO);
+
+		// GET SHADER FOR EACH MESH IN MODEL
 		(*it)->render();
 	}
 };

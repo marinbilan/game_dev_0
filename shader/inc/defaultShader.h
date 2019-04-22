@@ -153,7 +153,7 @@ private:
 std::string m_name;
 
 std::string shaderName;
-// glm::mat4   projectionMatrix;
+glm::mat4   projectionMatrix;
 
 GLuint shaderProgramID;
 

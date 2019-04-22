@@ -18,7 +18,7 @@ public:
 	void preInit();
 	void postInit();
 	
-	GLuint createTexture(std::string& _textureName);
+	GLuint createTexture(const std::string& _textureName);
 	
 private:
 	std::string m_name;
