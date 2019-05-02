@@ -116,7 +116,7 @@ void Model::StaticModel::render()
 		// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _staticModel.getVectorOfMeshes()[i].IBO);
 
 		// GET SHADER FOR EACH MESH IN MODEL
-		(*it)->render();
+		(*it)->render(modelMatrix);
 	}
 };
 

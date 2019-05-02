@@ -182,6 +182,13 @@ void Init::InitDefault::createLoaders()
 	std::cout << " texture4: " << texture4 << '\n';
 	std::cout << " texture5: " << texture5 << '\n';
 
+	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(texture0);
+	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(texture1);
+	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(texture2);
+	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(texture3);
+	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
+	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
+
 	std::cout << " xxx SHOW ME LOADERs xxx" << '\n';
 	Common::Factory::getInstance().showMeObjects("LoaderIf");
 }

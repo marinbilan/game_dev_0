@@ -27,7 +27,7 @@ public:
 	virtual void setIBO(GLuint IBO) {};
 	virtual void setNumOfInd(GLuint numOfInd) {};
 
-	virtual void render() {};
+	virtual void render(const glm::mat4& modelMatrix) {};
 
 	// Setters
 	virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {};

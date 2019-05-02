@@ -8,6 +8,29 @@ Camera::CameraDefault::CameraDefault(Common::Error& err, const std::string& name
 	cameraPos =   glm::vec3(375, 25, 420);
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp =    glm::vec3(0.0f, 1.0f, 0.0f);
+
+	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+	std::cout << "  ----- matrix: " << viewMatrix[0][0] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[0][1] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[0][2] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[0][3] << std::endl;
+
+	std::cout << "  ----- matrix: " << viewMatrix[1][0] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[1][1] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[1][2] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[1][3] << std::endl;
+
+	std::cout << "  ----- matrix: " << viewMatrix[2][0] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[2][1] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[2][2] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[2][3] << std::endl;
+
+	std::cout << "  ----- matrix: " << viewMatrix[3][0] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[3][1] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[3][2] << " ";
+	std::cout << "  ----- matrix: " << viewMatrix[3][3] << std::endl;
+	// updateCameraPosition();
 }
 
 
@@ -135,6 +158,7 @@ void Camera::CameraDefault::invertCameraY()
 void Camera::CameraDefault::updateCameraPosition()
 {
 	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
 }
 /*
 void Camera::CameraDefault::updateCameraUniform(Shaders::ShadersIf::ShadersIf* shader)

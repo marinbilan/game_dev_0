@@ -40,7 +40,7 @@ void Mesh::DefaultMesh::setNumOfInd(GLuint numOfInd)
 }
 
 
-void Mesh::DefaultMesh::render()
+void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 {
 	std::cout << " ----> mesh rendered() VBO: " << m_VBO << " IBO: " << m_IBO << " numIndices: " << m_numOfInd <<  '\n';
 
@@ -57,12 +57,15 @@ void Mesh::DefaultMesh::render()
 	// VERTEX SHADER UNIFORMS
 	// Projection matrix updated in shader constructor (Only once)
 	glUniformMatrix4fv(m_shaderIf->getViewMatrixID(), 1, GL_FALSE, &m_cameraIf->getViewMatrix()[0][0]);
+	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][0] << " ";
+	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][1] << " ";
+	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][2] << " ";
+	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][3] << std::endl;
 	m_cameraIf->invertCameraMatrix();
 	glUniformMatrix4fv(m_shaderIf->getViewMatrixInvID(), 1, GL_FALSE, &m_cameraIf->getInvViewMatrix()[0][0]);
 
-	/*
-	glUniformMatrix4fv(_staticModel.getVectorOfMeshes()[i].meshVectorShaderIf->getModelMatrixID(), 1, GL_FALSE, &(_staticModel.getModelMatrix()[0][0]));
-	*/
+	glUniformMatrix4fv(m_shaderIf->getModelMatrixID(), 1, GL_FALSE, &modelMatrix[0][0]);
+	
 
 	glm::vec3 lightPositionModelPTN(385.0f, 77.0f, 385.0f);
 	glm::vec3 lightColorModelPTN(1.0f, 1.0f, 1.0f);

@@ -12,11 +12,10 @@ public:
 
 	~CameraDefault();
 
-	const std::string& getName()
-	{
-		return m_name;
+	const std::string& getName() 
+	{ 
+		return m_name; 
 	}
-
 	void preInit();
 	void postInit();
 

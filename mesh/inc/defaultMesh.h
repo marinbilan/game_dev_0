@@ -30,7 +30,7 @@ public:
 	virtual void setTextureId(GLuint texId);
 
 
-	void render();
+	void render(const glm::mat4& modelMatrix);
 
 	const std::string& getName() 
 	{ 
