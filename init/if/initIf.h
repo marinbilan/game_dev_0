@@ -19,6 +19,7 @@ public:
 	virtual void createModels() {};
 	virtual void createMeshes() {};
 	virtual void createShaders() {};
+	virtual void createCameras() {};
 
 	virtual void createLoaders() {};
 };

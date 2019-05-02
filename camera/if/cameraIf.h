@@ -4,15 +4,22 @@
 #include "glew.h"
 #include "glfw3.h"
 
+#include "glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Camera
 {
 class CameraIf
 {
 public:
-	~CameraIf()
+	virtual ~CameraIf()
 	{
 		std::cout << "CameraIf destructor called!" << std::endl;
+	}
+
+	virtual const std::string& getName()
+	{
+		return "not implemented in CameraIf";
 	}
 
 	virtual void preInit() {};
@@ -41,8 +48,8 @@ public:
 	// virtual void updateCameraUniform(Shaders::ShadersIf::ShadersIf* shader) {};
 	// virtual void updateCameraUniformInv(Shaders::ShadersIf::ShadersIf* shader) {};
 	// NEW
-	// virtual glm::mat4 getViewMatrix() { return glm::mat4(1.0f); }
-	// virtual glm::mat4 getInvViewMatrix() { return glm::mat4(1.0f); }
+	virtual glm::mat4 getViewMatrix() { return glm::mat4(1.0f); }
+	virtual glm::mat4 getInvViewMatrix() { return glm::mat4(1.0f); }
 	virtual void invertCameraMatrix() {}
 	// OPERATORs	
 };

@@ -22,8 +22,28 @@ void Mesh::DefaultMesh::setTextureId(GLuint texId)
 };
 
 
+void Mesh::DefaultMesh::setVBO(GLuint VBO)
+{
+	m_VBO = VBO;
+}
+
+
+void Mesh::DefaultMesh::setIBO(GLuint IBO)
+{
+	m_IBO = IBO;
+}
+
+
+void Mesh::DefaultMesh::setNumOfInd(GLuint numOfInd)
+{
+	m_numOfInd = numOfInd;
+}
+
+
 void Mesh::DefaultMesh::render()
 {
+	std::cout << " ----> mesh rendered() VBO: " << m_VBO << " IBO: " << m_IBO << " numIndices: " << m_numOfInd <<  '\n';
+
 	glUseProgram(m_shaderIf->getShaderProgramID());
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, 0);
@@ -36,13 +56,14 @@ void Mesh::DefaultMesh::render()
 
 	// VERTEX SHADER UNIFORMS
 	// Projection matrix updated in shader constructor (Only once)
+	glUniformMatrix4fv(m_shaderIf->getViewMatrixID(), 1, GL_FALSE, &m_cameraIf->getViewMatrix()[0][0]);
+	m_cameraIf->invertCameraMatrix();
+	glUniformMatrix4fv(m_shaderIf->getViewMatrixInvID(), 1, GL_FALSE, &m_cameraIf->getInvViewMatrix()[0][0]);
+
 	/*
-	glUniformMatrix4fv(_staticModel.getVectorOfMeshes()[i].meshVectorShaderIf->getViewMatrixID(), 1, GL_FALSE, &m_camera.getViewMatrix()[0][0]);
-	m_camera.invertCameraMatrix();
-	glUniformMatrix4fv(_staticModel.getVectorOfMeshes()[i].meshVectorShaderIf->getViewMatrixInvID(), 1, GL_FALSE, &m_camera.getInvViewMatrix()[0][0]);
 	glUniformMatrix4fv(_staticModel.getVectorOfMeshes()[i].meshVectorShaderIf->getModelMatrixID(), 1, GL_FALSE, &(_staticModel.getModelMatrix()[0][0]));
 	*/
-	// TODO: Remove from here
+
 	glm::vec3 lightPositionModelPTN(385.0f, 77.0f, 385.0f);
 	glm::vec3 lightColorModelPTN(1.0f, 1.0f, 1.0f);
 
@@ -86,6 +107,14 @@ void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shade
 }
 
 
+void Mesh::DefaultMesh::setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf)
+{
+	std::cout << " [Mesh::DefaultMesh::setCamera] ... " << std::endl;
+	m_cameraIf = cameraIf;
+
+}
+
+
 void Mesh::DefaultMesh::shaderIdsInit()
 {
 	// shaderProgramID = m_shaderIf->getShaderProgramID();
@@ -122,7 +151,6 @@ void Mesh::DefaultMesh::shaderIdsInit()
 	std::cout << " ---- reflectivityID: " << reflectivityID << '\n';
 	modelTextureID = m_shaderIf->getModelTextureID();
 	std::cout << " ---- modelTextureID: " << modelTextureID << '\n';
-
 }
 
 

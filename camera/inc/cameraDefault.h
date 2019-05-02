@@ -12,12 +12,17 @@ public:
 
 	~CameraDefault();
 
+	const std::string& getName()
+	{
+		return m_name;
+	}
+
 	void preInit();
 	void postInit();
 
 	// FUNCTIONs
-	// virtual glm::vec3 getcameraPosition();
-	/*
+	virtual glm::vec3 getcameraPosition();
+	
 	virtual GLfloat getcameraPositionX();
 	virtual GLfloat getcameraPositionY();
 	virtual GLfloat getcameraPositionZ();
@@ -32,7 +37,7 @@ public:
 	virtual void strafeLeft(GLfloat deltaTime);
 	virtual void strafeRight(GLfloat deltaTime);
 
-	// virtual void camFront(glm::vec3 _cameraFront);
+	virtual void camFront(glm::vec3 _cameraFront);
 
 	virtual void stopTranslate();
 	virtual void invertCameraY();
@@ -42,10 +47,10 @@ public:
 	//
 	// NEW
 	//
-	// virtual glm::mat4 getViewMatrix();
-	// virtual glm::mat4 getInvViewMatrix();
+	
+	virtual glm::mat4 getViewMatrix();
+	virtual glm::mat4 getInvViewMatrix();
 	virtual void invertCameraMatrix();
-	*/
 	// OPERATORs
 
 
@@ -53,14 +58,14 @@ private:
 	std::string m_name;
 
 // MODEL VARIABLEs
-/*
 glm::mat4 viewMatrix;
 glm::mat4 viewMatrixInv;
+
 
 glm::vec3 cameraPos;
 glm::vec3 cameraFront;
 glm::vec3 cameraUp;
-*/
+
 GLfloat distance;
 };
 }

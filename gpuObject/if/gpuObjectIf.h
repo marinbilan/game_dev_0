@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "glew.h"
+#include <vector>
+
 
 namespace GPUObject
 {
@@ -41,6 +43,36 @@ public:
 	virtual void setIBO(GLuint IBO)
 	{
 		std::cout << " ERROR: setIBO called from GUPObjectIf" << '\n';
+	}
+
+	virtual void setNumOfInd(GLuint numOfInd)
+	{
+		std::cout << " ERROR: setNumOfInd called from GUPObjectIf" << '\n';
+	}
+
+	// GET std::vector<GLuint> m_vecOfVBOs
+	virtual std::vector<GLuint>& getVecOfVBOs()
+	{
+		std::cout << " ERROR: getVecOfVBOs called from GUPObjectIf" << '\n';
+
+		std::vector<GLuint> temp {0};
+		return temp;
+	}
+
+	virtual std::vector<GLuint>& getVecOfIBOs()
+	{
+		std::cout << " ERROR: getVecOfVBOs called from GUPObjectIf" << '\n';
+
+		std::vector<GLuint> temp{ 0 };
+		return temp;
+	}
+
+	virtual std::vector<GLuint>& getVecOfNumOfInds()
+	{
+		std::cout << " ERROR: getVecOfVBOs called from GUPObjectIf" << '\n';
+
+		std::vector<GLuint> temp{ 0 };
+		return temp;
 	}
 
 	virtual void info() {}

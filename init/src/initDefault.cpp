@@ -20,6 +20,9 @@
 #include "modelGPUObject.h"
 #include "textureGPUObject.h"
 
+#include "cameraIf.h"
+#include "cameraDefault.h"
+
 
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
 {
@@ -46,6 +49,8 @@ void Init::InitDefault::preInit()
 	createLoaders();
 
 	createModels();
+
+	createCameras();
 
 	// Test
 	std::cout << " NUM OF INSTANCES after LOADER: " << Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject").use_count() << "\n";
@@ -77,6 +82,15 @@ void Init::InitDefault::postInit()
 
 	// Connect GPUObject and SmartModel
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setGPUObject(Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject"));
+	Common::Factory::getInstance().getModelIf("smartModel_0")->connect();
+
+	// Connect Camera and SmartModel
+	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 
 	std::cout << " **** RENDER MODEL **** " << '\n';
 	Common::Factory::getInstance().getModelIf("smartModel_0")->render();
@@ -96,6 +110,7 @@ void Init::InitDefault::registerClass()
 	REGISTER_CLASS(Loader::TextureLoader);
 	REGISTER_CLASS(GPUObject::ModelGPUObject);
 	REGISTER_CLASS(GPUObject::TextureGPUObject);
+	REGISTER_CLASS(Camera::CameraDefault);
 
 	Common::Factory::getInstance().showMeSeededClasses();
 }
@@ -182,4 +197,17 @@ void Init::InitDefault::createModels()
 
 	std::cout << " xxx SHOW ME MODELSs xxx" << '\n';
 	Common::Factory::getInstance().showMeObjects("ModelIf");
+}
+
+void Init::InitDefault::createCameras()
+{
+	Common::Error err;
+
+	// Probaj interface cast
+	// std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
+	std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
+	Common::Factory::getInstance().storeInContainer("CameraIf", smartCamera_0);
+
+	std::cout << " xxx------------------------------- SHOW ME CAMERAs xxx" << '\n';
+	Common::Factory::getInstance().showMeObjects("CameraIf");
 }

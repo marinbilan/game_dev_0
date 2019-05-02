@@ -41,3 +41,9 @@ std::shared_ptr<Shader::ShaderIf>& Common::Factory::getShaderIf(const std::strin
 {
 	return getObjectFromVec(m_vecOfShaderIf, arg0);
 }
+
+
+std::shared_ptr<Camera::CameraIf>& Common::Factory::getCameraIf(const std::string& arg0)
+{
+	return getObjectFromVec(m_vecOfCameraIf, arg0);
+}

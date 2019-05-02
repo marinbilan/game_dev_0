@@ -57,6 +57,30 @@ void GPUObject::ModelGPUObject::setIBO(GLuint IBO)
 }
 
 
+void GPUObject::ModelGPUObject::setNumOfInd(GLuint numOfInd)
+{
+	m_vecOfNumOfInds.push_back(numOfInd);
+}
+
+
+std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfVBOs()
+{
+	return m_vecOfVBOs;
+}
+
+
+std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfIBOs()
+{
+	return m_vecOfIBOs;
+}
+
+
+std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfNumOfInds()
+{
+	return m_vecOfNumOfInds;
+}
+
+
 void GPUObject::ModelGPUObject::info()
 {
 	std::cout << " _ info m_VAO: " << m_VAO << '\n';

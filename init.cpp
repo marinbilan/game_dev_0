@@ -8,6 +8,7 @@
 #include "glew.h"
 #include "glfw3.h"
 
+#include "factory.h"
 
 // TEST
 // Assimp
@@ -35,7 +36,7 @@ int main ()
 	glfwWindowHint(GLFW_SAMPLES, 8);
 
 	/* Create a windowed mode window and its OpenGL context */
-	GLFWwindow* window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "Error: Failed to create GLFW window" << std::endl;
@@ -63,8 +64,8 @@ int main ()
 	engineCtrl0.preInit();
 	engineCtrl0.postInit();
 	
-
-
+	std::cout << " ----> Render from main()" << '\n';
+	Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))

@@ -5,8 +5,6 @@
 #include <memory>
 #include "error.h"
 
-//#include "gpuObjectIf.h"
-//#include "meshIf.h"
 
 namespace Model
 {
@@ -24,6 +22,8 @@ public:
 	void setGPUObject(const std::shared_ptr<GPUObject::GPUObjectIf>& gpuObjectIf);
 	void setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf);
 
+	void connect();
+
     void render();
 
 	const std::string& getName() 
@@ -35,6 +35,13 @@ public:
 
 private:
 std::string m_name;
+
+glm::mat4                 modelMatrix;
+
+glm::vec3                 modelPosition;
+glm::vec3                 modelScale;
+glm::vec3                 modelRotateAround;
+GLfloat                   angle;
 
 GLuint m_VAO;
 

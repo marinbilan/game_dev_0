@@ -4,7 +4,10 @@
 
 Camera::CameraDefault::CameraDefault(Common::Error& err, const std::string& name) : m_name(name)
 {
-	std::cout << "CameraDefault created!" << std::endl;
+	std::cout << " +++++++++++++++++++++++ CameraDefault created!" << std::endl;
+	cameraPos =   glm::vec3(375, 25, 420);
+	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	cameraUp =    glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 
@@ -26,7 +29,7 @@ void Camera::CameraDefault::postInit()
 }
 
 /*
-Camera::Camera::Camera(glm::vec3 _cameraPos, glm::vec3 _cameraFront, glm::vec3 _cameraUp) :
+Camera::CameraDefault::CameraDefault(glm::vec3 _cameraPos, glm::vec3 _cameraFront, glm::vec3 _cameraUp) :
 	cameraPos(_cameraPos), cameraFront(_cameraFront), cameraUp(_cameraUp)
 {
 	//
@@ -38,30 +41,27 @@ Camera::Camera::Camera(glm::vec3 _cameraPos, glm::vec3 _cameraFront, glm::vec3 _
 
 	std::cout << "Camera created!" << std::endl;
 }
+*/
 
-Camera::Camera::~Camera()
-{
-	std::cout << "Camera destructor called!" << std::endl;
-}
 //
 // FUNCTION(s)
 // 
-glm::vec3 Camera::Camera::getcameraPosition()
+glm::vec3 Camera::CameraDefault::getcameraPosition()
 {
 	return cameraPos;
 }
 
-GLfloat Camera::Camera::getcameraPositionX()
+GLfloat Camera::CameraDefault::getcameraPositionX()
 {
 	return cameraPos.x;
 }
 
-GLfloat Camera::Camera::getcameraPositionY()
+GLfloat Camera::CameraDefault::getcameraPositionY()
 {
 	return cameraPos.y;
 }
 
-GLfloat Camera::Camera::getcameraPositionZ()
+GLfloat Camera::CameraDefault::getcameraPositionZ()
 {
 	return cameraPos.z;
 }
@@ -71,48 +71,48 @@ GLfloat Camera::Camera::getcameraPositionZ()
 //	cameraPos = _position;
 //}
 //
-void Camera::Camera::setcameraPositionY(GLfloat _positionY)
+void Camera::CameraDefault::setcameraPositionY(GLfloat _positionY)
 {
 	cameraPos.y = _positionY;
 }
 
-void Camera::Camera::moveForward(GLfloat deltaTime)
+void Camera::CameraDefault::moveForward(GLfloat deltaTime)
 {
 	GLfloat cameraSpeed = 17.0f * deltaTime;
 	cameraPos += cameraSpeed * cameraFront;
 }
 
-void Camera::Camera::moveBack(GLfloat deltaTime)
+void Camera::CameraDefault::moveBack(GLfloat deltaTime)
 {
 	GLfloat cameraSpeed = 17.0f * deltaTime;
 	cameraPos -= cameraSpeed * cameraFront;
 }
 
-void Camera::Camera::strafeLeft(GLfloat deltaTime)
+void Camera::CameraDefault::strafeLeft(GLfloat deltaTime)
 {
 	GLfloat cameraSpeed = 17.0f * deltaTime;
 	cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
-void Camera::Camera::strafeRight(GLfloat deltaTime)
+void Camera::CameraDefault::strafeRight(GLfloat deltaTime)
 {
 	GLfloat cameraSpeed = 17.0f * deltaTime;
 	cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
-void Camera::Camera::camFront(glm::vec3 _cameraFront)
+void Camera::CameraDefault::camFront(glm::vec3 _cameraFront)
 {
 	cameraFront = _cameraFront;
 }
 
-void Camera::Camera::stopTranslate()
+void Camera::CameraDefault::stopTranslate()
 {
 	viewMatrix[3][0] = 0;
 	viewMatrix[3][1] = 0;
 	viewMatrix[3][2] = 0;
 }
 
-void Camera::Camera::invertCameraDown()
+void Camera::CameraDefault::invertCameraDown()
 {
 	distance = 2 * (cameraPos.y - 0.0f);
 	setcameraPositionY(cameraPos.y - distance);
@@ -120,24 +120,24 @@ void Camera::Camera::invertCameraDown()
 	updateCameraPosition();
 }
 
-void Camera::Camera::invertCameraUp()
+void Camera::CameraDefault::invertCameraUp()
 {
 	cameraFront.y = -cameraFront.y;
 	setcameraPositionY(cameraPos.y + distance);
 	updateCameraPosition();
 }
 
-void Camera::Camera::invertCameraY()
+void Camera::CameraDefault::invertCameraY()
 {
 	cameraFront.y = -cameraFront.y;
 }
 
-void Camera::Camera::updateCameraPosition()
+void Camera::CameraDefault::updateCameraPosition()
 {
 	viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
-
-void Camera::Camera::updateCameraUniform(Shaders::ShadersIf::ShadersIf* shader)
+/*
+void Camera::CameraDefault::updateCameraUniform(Shaders::ShadersIf::ShadersIf* shader)
 {
 	glUniformMatrix4fv(shader->getViewMatrixID(), 1, GL_FALSE, &viewMatrix[0][0]);
 
@@ -152,21 +152,20 @@ void Camera::Camera::updateCameraUniformInv(Shaders::ShadersIf::ShadersIf* shade
 	glm::mat4 viewMatrixInv = glm::inverse(viewMatrix);
 	glUniformMatrix4fv(shader->getViewMatrixInvID(), 1, GL_FALSE, &viewMatrixInv[0][0]);
 }
-
+*/
 // NEW
 
-glm::mat4 Camera::Camera::getViewMatrix()
+glm::mat4 Camera::CameraDefault::getViewMatrix()
 {
 	return viewMatrix;
 }
 
-void Camera::Camera::invertCameraMatrix()
+void Camera::CameraDefault::invertCameraMatrix()
 {
 	viewMatrixInv = glm::inverse(viewMatrix);
 }
 
-glm::mat4 Camera::Camera::getInvViewMatrix()
+glm::mat4 Camera::CameraDefault::getInvViewMatrix()
 {
 	return viewMatrixInv;
 }
-*/

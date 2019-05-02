@@ -24,7 +24,8 @@
 #include "shaderIf.h"
 #include "defaultShader.h"
 
-
+#include "cameraIf.h"
+#include "cameraDefault.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
@@ -98,6 +99,10 @@ public:
 		{
 			printName(m_vecOfShaderIf);
 		}
+		else if (!objNameIf.compare("CameraIf"))
+		{
+			printName(m_vecOfCameraIf);
+		}
 		else
 		{
 			std::cout << "ERROR: objNameIf can not be found!" << '\n';
@@ -147,6 +152,11 @@ public:
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
+		// CameraIf
+		else if (!objNameIf.compare("CameraIf"))
+		{
+			m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
+		}
 		else
 		{
 			std::cout << "ERROR: Can not store derivedObject in container" << "\n";
@@ -167,7 +177,8 @@ public:
 	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
 	// ShaderIf
 	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
-
+	// CameraIf
+	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0);
 
 	// Generic getter 
 	template<class T>
@@ -208,6 +219,8 @@ private:
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
 	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
+
+	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
 };
 }
  

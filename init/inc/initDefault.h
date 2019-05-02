@@ -25,6 +25,7 @@ public:
 	void createShaders();
 	void createLoaders();
 
+	void createCameras();
 
 private:
 std::string m_name;

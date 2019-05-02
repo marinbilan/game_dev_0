@@ -20,6 +20,8 @@ public:
 	virtual void setGPUObject(const std::shared_ptr<GPUObject::GPUObjectIf>& gpuObjectIf) {};
 	virtual void setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf) {};
 
+	virtual void connect() {};
+
 	virtual void render() {};
 
 	virtual const std::string& getName() 

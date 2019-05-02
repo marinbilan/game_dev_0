@@ -48,6 +48,7 @@ void Loader::ModelLoader::postInit()
 	//modelName += ".obj";
 	*/
 
+	// This goes in preInit - Iterate over DB.txt and create all [gpuObjects]
 	loadModel();
 }
 
@@ -158,6 +159,8 @@ void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vert) * vertices.size(), &vertices[0], GL_STATIC_DRAW); // sizeof(Vert) = 32
+	std::cout << " xxx vertices.size() = " << vertices.size() << std::endl;
+	m_GPUObjectIf->setNumOfInd(vertices.size());
 
 	GLuint IBO;
 	glGenBuffers(1, &IBO);

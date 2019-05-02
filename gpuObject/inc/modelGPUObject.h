@@ -28,13 +28,21 @@ public:
 
 	void setIBO(GLuint IBO);
 
+	void setNumOfInd(GLuint numOfInd);
+
+	// GET
+	virtual std::vector<GLuint>& getVecOfVBOs();
+	virtual std::vector<GLuint>& getVecOfIBOs();
+	virtual std::vector<GLuint>& getVecOfNumOfInds();
+
 	void info();
 
-private:
+// private:
 	std::string m_name;
 
 	GLuint m_VAO;
 	std::vector<GLuint> m_vecOfVBOs;
 	std::vector<GLuint> m_vecOfIBOs;
+	std::vector<GLuint> m_vecOfNumOfInds;
 };
 }
