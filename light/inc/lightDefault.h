@@ -13,7 +13,6 @@ public:
 	~LightDefault();
 
 	void preInit();
-
 	void postInit();
 
 private:

@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
+#include <vector>
 
 #include "glew.h"
-#include <vector>
 
 
 namespace GPUObject

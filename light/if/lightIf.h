@@ -9,12 +9,10 @@ class LightIf
 public:
 	~LightIf()
 	{
-		std::cout << "LightIf destructor called!" << std::endl;
+		std::cout << "Error: LightIf::~LightIf() called from LightIf!" << '\n';
 	}
 
 	virtual void preInit() {};
-
 	virtual void postInit() {};
-
 };
-}
+} // End of namespace

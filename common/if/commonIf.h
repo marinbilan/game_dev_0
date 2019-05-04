@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 
+
 namespace Common
 {
 class CommonIf
@@ -9,10 +10,13 @@ class CommonIf
 public:
 	virtual ~CommonIf()
 	{
-		std::cout << "Calling CommonIf Destructor" << std::endl;
+		std::cout << "Error: CommonIf::~CommonIf() called from CommonIf!" << '\n';
 	}
 
-	virtual const std::string& getName() { return " ... called from CommonIf"; }
+	virtual const std::string& getName() 
+	{ 
+		return "Error: CommonIf::~getName() called from CommonIf!"; 
+	}
 };
 
 }

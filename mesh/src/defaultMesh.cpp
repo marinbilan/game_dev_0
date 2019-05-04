@@ -1,18 +1,31 @@
 #include "defaultMesh.h"
 
-#include "error.h"
 #include "factory.h"
 
 
 Mesh::DefaultMesh::DefaultMesh(Common::Error& err, const std::string& name) : m_name(name)
 {
-	std::cout << "DefaultMesh created!" << std::endl;
+	std::cout << "Mesh::DefaultMesh::DefaultMesh(...) constructor called!" << '\n';
 }
 
 
 Mesh::DefaultMesh::~DefaultMesh()
 {
-	std::cout << "DefaultMesh destructor called!" << std::endl;
+	std::cout << "Mesh::DefaultMesh::~DefaultMesh(...) destructor called!" << '\n';
+}
+
+
+void Mesh::DefaultMesh::preInit()
+{
+	std::cout << "Mesh::DefaultMesh::preInit(...) called!" << '\n';
+	// Set shaders Ids
+	shaderIdsInit();
+}
+
+
+void Mesh::DefaultMesh::postInit()
+{
+	std::cout << "Mesh::DefaultMesh::postInit(...) called!" << '\n';
 }
 
 
@@ -42,7 +55,6 @@ void Mesh::DefaultMesh::setNumOfInd(GLuint numOfInd)
 
 void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 {
-	std::cout << " ----> mesh rendered() VBO: " << m_VBO << " IBO: " << m_IBO << " numIndices: " << m_numOfInd <<  '\n';
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
@@ -59,16 +71,11 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 	// VERTEX SHADER UNIFORMS
 	// Projection matrix updated in shader constructor (Only once)
 	glUniformMatrix4fv(m_shaderIf->getViewMatrixID(), 1, GL_FALSE, &m_cameraIf->getViewMatrix()[0][0]);
-	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][0] << " ";
-	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][1] << " ";
-	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][2] << " ";
-	std::cout << "  ----- matrix: " << m_cameraIf->getViewMatrix()[3][3] << std::endl;
 	m_cameraIf->invertCameraMatrix();
 	glUniformMatrix4fv(m_shaderIf->getViewMatrixInvID(), 1, GL_FALSE, &m_cameraIf->getInvViewMatrix()[0][0]);
 
 	glUniformMatrix4fv(m_shaderIf->getModelMatrixID(), 1, GL_FALSE, &modelMatrix[0][0]);
 	
-
 	glm::vec3 lightPositionModelPTN(385.0f, 77.0f, 385.0f);
 	glm::vec3 lightColorModelPTN(1.0f, 1.0f, 1.0f);
 
@@ -97,21 +104,8 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 };
 
 
-void Mesh::DefaultMesh::preInit()
-{
-	shaderIdsInit();
-}
-
-
-void Mesh::DefaultMesh::postInit()
-{
-	std::cout << "postInit function called!" << std::endl;
-}
-
-
 void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf)
 {
-	std::cout << " [Mesh::DefaultMesh::setShader] ... " << std::endl;
 	m_shaderIf = shaderIf;
 
 	shaderIdsInit();
@@ -120,7 +114,6 @@ void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shade
 
 void Mesh::DefaultMesh::setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf)
 {
-	std::cout << " [Mesh::DefaultMesh::setCamera] ... " << std::endl;
 	m_cameraIf = cameraIf;
 
 }
@@ -128,40 +121,24 @@ void Mesh::DefaultMesh::setCamera(const std::shared_ptr<Camera::CameraIf>& camer
 
 void Mesh::DefaultMesh::shaderIdsInit()
 {
-	// shaderProgramID = m_shaderIf->getShaderProgramID();
-
-	// ---- Shader IDs ----
     // VERTEX SHADER
 	positionsID = m_shaderIf->getPositionsID();
-	std::cout << " ---- positionsID: " << positionsID << '\n';
 	textureCoordsID = m_shaderIf->getTextureCoordsID();
-	std::cout << " ---- textureCoordsID: " << textureCoordsID << '\n';
 	GLuint normalsID = m_shaderIf->getNormalsID();
-	std::cout << " ---- normalsID: " << normalsID << '\n';
 
 	projectionMatrixID = m_shaderIf->getProjectionMatrixID();
-	std::cout << " ---- projectionMatrixID: " << projectionMatrixID << '\n';
 	viewMatrixID = m_shaderIf->getViewMatrixID();
-	std::cout << " ---- viewMatrixID: " << viewMatrixID << '\n';
 	viewMatrixInvID = m_shaderIf->getViewMatrixInvID();
-	std::cout << " ---- viewMatrixInvID: " << viewMatrixInvID << '\n';
 	modelMatrixID = m_shaderIf->getModelMatrixID();
-	std::cout << " ---- modelMatrixID: " << modelMatrixID << '\n';
 
 	lightPositionID = m_shaderIf->getLightPositionID();
-	std::cout << " ---- lightPositionID: " << lightPositionID << '\n';
 	planeID = m_shaderIf->getPlaneID();
-	std::cout << " ---- planeID: " << planeID << '\n';
 
 	// FRAGMENT SHADER
 	lightColourID = m_shaderIf->getLightColorID();
-	std::cout << " ---- lightColourID: " << lightColourID << '\n';
 	shineDamperID = m_shaderIf->getShineDamperID();
-	std::cout << " ---- shineDamperID: " << shineDamperID << '\n';
 	reflectivityID = m_shaderIf->getReflectivityID();
-	std::cout << " ---- reflectivityID: " << reflectivityID << '\n';
 	modelTextureID = m_shaderIf->getModelTextureID();
-	std::cout << " ---- modelTextureID: " << modelTextureID << '\n';
 }
 
 

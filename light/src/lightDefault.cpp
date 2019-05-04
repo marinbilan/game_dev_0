@@ -1,27 +1,26 @@
 #include "lightDefault.h"
-#include "error.h"
 
 
 Light::LightDefault::LightDefault(Common::Error& err, const std::string& name) : m_name(name)
 {
-	std::cout << "LightDefault created!" << std::endl;
+	std::cout << "Light::LightDefault::LightDefault() constructor called!" << '\n';
 }
 
 
 Light::LightDefault::~LightDefault()
 {
-	std::cout << "LightDefault destructor called!" << std::endl;
+	std::cout << "Light::LightDefault::~LightDefault() destructor called!" << '\n';
 }
 
 
 void Light::LightDefault::preInit()
 {
-
+	std::cout << "Light::LightDefault::preInit() called!" << '\n';
 }
 
 
 void Light::LightDefault::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
+	std::cout << "Light::LightDefault::postInit() called!" << '\n';
 }
 

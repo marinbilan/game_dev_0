@@ -9,11 +9,12 @@ class EngineCtrlIf
 public:
 	~EngineCtrlIf()
 	{
-		std::cout << "EngineCtrlDefaultIf destructor called!" << std::endl;
+		std::cout << "Error: EngineCtrlIf::~EngineCtrlIf() called from EngineCtrlIf!" << '\n';
 	}
 
 	virtual void preInit() {};
 	virtual void postInit() {};
 
+	// Render
 };
 }

@@ -1,7 +1,6 @@
 #include "initDefault.h"
 
 #include "factory.h"
-#include "error.h"
 
 #include "cameraIf.h"
 #include "cameraDefault.h"

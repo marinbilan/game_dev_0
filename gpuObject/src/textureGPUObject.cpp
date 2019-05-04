@@ -1,17 +1,15 @@
 #include "textureGPUObject.h"
 
-#include "error.h"
-
 
 GPUObject::TextureGPUObject::TextureGPUObject(Common::Error& err, const std::string& name) : m_name(name)
 {
-	std::cout << "TextureGPUObject created!" << std::endl;
+	std::cout << "GPUObject::TextureGPUObject::TextureGPUObject() constructor called!" << '\n';
 }
 
 
 GPUObject::TextureGPUObject::~TextureGPUObject()
 {
-	std::cout << "TextureGPUObject destructor called!" << std::endl;
+	std::cout << "GPUObject::TextureGPUObject::~TextureGPUObject() destructor called!" << '\n';
 }
 
 
@@ -29,6 +27,6 @@ void GPUObject::TextureGPUObject::preInit()
 
 void GPUObject::TextureGPUObject::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
+	std::cout << "GPUObject::TextureGPUObject::postInit() destructor called!" << '\n';
 }
 

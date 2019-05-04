@@ -1,9 +1,6 @@
 #pragma once
 #include "initIf.h"
 
-#include <iostream>
-#include <string>
-
 #include "error.h"
 
 
@@ -20,12 +17,14 @@ public:
 	void postInit();
 
 	void registerClass();
+
+	void createCameras();
+
+	void createLoaders();
+
 	void createModels();
 	void createMeshes();
 	void createShaders();
-	void createLoaders();
-
-	void createCameras();
 
 private:
 std::string m_name;
