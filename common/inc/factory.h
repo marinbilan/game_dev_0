@@ -7,6 +7,9 @@
 
 #include "error.h"
 
+#include "cameraIf.h"
+#include "cameraDefault.h"
+
 #include "loaderIf.h"
 #include "modelLoader.h"
 #include "textureLoader.h"
@@ -24,8 +27,6 @@
 #include "shaderIf.h"
 #include "defaultShader.h"
 
-#include "cameraIf.h"
-#include "cameraDefault.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
@@ -54,8 +55,7 @@ public:
 
 	~Factory() {};
 	//
-
-
+	// ---- xx START xx ----
 	// 1] Type of constructor  (two args - Error&, std::string)  
 	template <class T>
 	void registerClass(std::string const& ConstructorName)
@@ -74,8 +74,14 @@ public:
 
 
 	// ---- [0] ---- 
-	void showMeSeededClasses();
-
+	void showMeSeededClasses()
+	{
+		mapType::iterator it;
+		for (it = m_classesMap.begin(); it != m_classesMap.end(); ++it)
+		{
+			std::cout << " - " << it->first << "\n";
+		}
+	}
 	// ---- [1] ---- 
 	void showMeObjects(const std::string& objNameIf)
 	{
@@ -108,7 +114,6 @@ public:
 			std::cout << "ERROR: objNameIf can not be found!" << '\n';
 		}
 	}
-
 	// Generic Object Name Printer
 	template<class T>
 	void printName(T& vec0)
@@ -120,21 +125,25 @@ public:
 	}
 
 
-	// SET
+	// SET - Store
 	// ---- [2] ---- 
 	template<class T>
-	// args 1] objectName    2] object 
+	// args 1] classIf    2] derived objectName
 	void storeInContainer(const std::string& objNameIf, T& derivedObject)
 	{
+		// CameraIf
+		if (!objNameIf.compare("CameraIf"))
+		{
+		m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
+		}
 		// LoaderIf
-		if (!objNameIf.compare("LoaderIf"))
+		else if (!objNameIf.compare("LoaderIf"))
 		{
 			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(derivedObject));
 		}
 		// GPUObjectIf
 		else if (!objNameIf.compare("GPUObjectIf"))
 		{
-			std::cout << " xxx Stroing in container GPUObjectIf xxx " << "\n";
 			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(derivedObject));
 		}
 		// ModelIf
@@ -152,11 +161,6 @@ public:
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
-		// CameraIf
-		else if (!objNameIf.compare("CameraIf"))
-		{
-			m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
-		}
 		else
 		{
 			std::cout << "ERROR: Can not store derivedObject in container" << "\n";
@@ -164,21 +168,38 @@ public:
 	}
 
 
-	// GET - Make this Generic
+	// GET object - TODO: Make this generic
 	// ---- [3] ---- 
 	// ADD INTERFACE 
-	// LoaderIf
-	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0);
-	// GPUObjectIf
-	std::shared_ptr<GPUObject::GPUObjectIf>& getGPUObjectIf(const std::string& arg0);
-	// ModelIf
-	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0);	
-	// MeshIf
-	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0);
-	// ShaderIf
-	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0);
-	// CameraIf
-	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0);
+	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfCameraIf, arg0);
+	}
+
+	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfLoaderIf, arg0);
+	}
+
+	std::shared_ptr<GPUObject::GPUObjectIf>& getGPUObjectIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfGPUObjectIf, arg0);
+	}
+
+	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfModelIf, arg0);
+	}
+
+	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfMeshIf, arg0);
+	}
+
+	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfShaderIf, arg0);
+	}
 
 	// Generic getter 
 	template<class T>
@@ -188,7 +209,7 @@ public:
 		{
 			if (!(*it)->getName().compare(arg1))
 			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << std::endl;
+				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << "\n";
 				return *it;
 			}
 		}
@@ -198,29 +219,28 @@ public:
 		return vec0[0];
 	}
 
-
 private:	
 	// Singleton Factory - Constructor private
 	Factory() 
 	{
 	};
-
+	//
 	// Factory Stuff 
+	//
 	typedef void*(*constructor_t)(Error&, const std::string&);
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
-
 	//
 	// Container Stuff 
 	//
+	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
+
 	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
 	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
 
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
 	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
-
-	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
 };
-}
+} // End of namespace
  

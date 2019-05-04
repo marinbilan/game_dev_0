@@ -36,7 +36,7 @@ int main ()
 	glfwWindowHint(GLFW_SAMPLES, 8);
 
 	/* Create a windowed mode window and its OpenGL context */
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "Error: Failed to create GLFW window" << std::endl;
@@ -64,14 +64,21 @@ int main ()
 	engineCtrl0.preInit();
 	engineCtrl0.postInit();
 	
-	std::cout << " ----> Render from main()" << '\n';
-	Common::Factory::getInstance().getModelIf("smartModel_0")->render();
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_CLIP_DISTANCE0);
+		std::cout << " ----> Render from main()" << '\n';
+		Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

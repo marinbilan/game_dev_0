@@ -43,6 +43,8 @@ void Mesh::DefaultMesh::setNumOfInd(GLuint numOfInd)
 void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 {
 	std::cout << " ----> mesh rendered() VBO: " << m_VBO << " IBO: " << m_IBO << " numIndices: " << m_numOfInd <<  '\n';
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
 	glUseProgram(m_shaderIf->getShaderProgramID());
 
@@ -83,8 +85,14 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture0);
 	// RENDER MESH
-	// glDrawElements(GL_TRIANGLES, _staticModel.getVectorOfMeshes()[i].numIndices, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_numOfInd, GL_UNSIGNED_INT, 0);
 	//
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+
+	glBindVertexArray(0);
+
 	glUseProgram(0);
 };
 
