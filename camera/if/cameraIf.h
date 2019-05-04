@@ -1,11 +1,9 @@
 #pragma once
 #include <iostream>
 
-#include "glew.h"
-#include "glfw3.h"
-
 #include "glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+
 
 namespace Camera
 {
@@ -14,43 +12,39 @@ class CameraIf
 public:
 	virtual ~CameraIf()
 	{
-		std::cout << "CameraIf destructor called!" << std::endl;
+		std::cout << "Error: CameraIf::~CameraIf() called from CameraIf!" << '\n';
 	}
 
 	virtual const std::string& getName()
 	{
-		return "not implemented in CameraIf";
+		return "Error: CameraIf::getName() called from CameraIf!";
 	}
 
 	virtual void preInit() {};
 	virtual void postInit() {};
 
 	// FUNCTIONs
-	// virtual glm::vec3 getcameraPosition() { return glm::vec3(1.0f, 1.0f, 1.0f); };
-	virtual GLfloat getcameraPositionX() { return 0; };
-	virtual GLfloat getcameraPositionY() { return 0; };
-	virtual GLfloat getcameraPositionZ() { return 0; };
-	//virtual void setcameraPosition(glm::vec3 _position) {};
-	virtual void invertCameraDown() {};
-	virtual void invertCameraUp() {};
-	virtual void setcameraPositionY(GLfloat _positionY) {};
+	// Get
+	virtual glm::mat4& getViewMatrix() 
+	{ 
+		std::cout << "Error: CameraIf::getViewMatrix() called from CameraIf!" << '\n';
+		glm::mat4 tempMatrix = glm::mat4(1.0f);
+		return tempMatrix;
+	}
 
-	virtual void moveForward(GLfloat deltaTime) {};
-	virtual void moveBack(GLfloat deltaTime) {};
-	virtual void strafeLeft(GLfloat deltaTime) {};
-	virtual void strafeRight(GLfloat deltaTime) {};
+	virtual glm::mat4& getInvViewMatrix() 
+	{
+		std::cout << "Error: CameraIf::getInvViewMatrix() called from CameraIf!" << '\n';
+		glm::mat4 tempMatrix = glm::mat4(1.0f);
+		return tempMatrix;
+	}
 
-	// virtual void camFront(glm::vec3 _cameraFront) {};
+	// Set
+	virtual void invertCameraMatrix() 
+	{
+		std::cout << "Error: CameraIf::invertCameraMatrix() called from CameraIf!" << '\n';
+	}
 
-	virtual void stopTranslate() {};
-	virtual void invertCameraY() {};
-	virtual void updateCameraPosition() {};
-	// virtual void updateCameraUniform(Shaders::ShadersIf::ShadersIf* shader) {};
-	// virtual void updateCameraUniformInv(Shaders::ShadersIf::ShadersIf* shader) {};
-	// NEW
-	virtual glm::mat4 getViewMatrix() { return glm::mat4(1.0f); }
-	virtual glm::mat4 getInvViewMatrix() { return glm::mat4(1.0f); }
-	virtual void invertCameraMatrix() {}
 	// OPERATORs	
 };
-}
+} // End of namespace

@@ -3,14 +3,8 @@
 #include "factory.h"
 #include "error.h"
 
-#include "modelIf.h"
-#include "staticModel.h"
-
-#include "meshIf.h"
-#include "defaultMesh.h"
-
-#include "shaderIf.h"
-#include "defaultShader.h"
+#include "cameraIf.h"
+#include "cameraDefault.h"
 
 #include "loaderIf.h"
 #include "modelLoader.h"
@@ -20,8 +14,15 @@
 #include "modelGPUObject.h"
 #include "textureGPUObject.h"
 
-#include "cameraIf.h"
-#include "cameraDefault.h"
+#include "modelIf.h"
+#include "staticModel.h"
+
+#include "meshIf.h"
+#include "defaultMesh.h"
+
+#include "shaderIf.h"
+#include "defaultShader.h"
+
 
 
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
@@ -44,6 +45,7 @@ void Init::InitDefault::preInit()
 	registerClass();
 
 	createShaders();
+
 	createMeshes();
 
 	createLoaders();
@@ -51,9 +53,6 @@ void Init::InitDefault::preInit()
 	createModels();
 
 	createCameras();
-
-	// Test
-	std::cout << " NUM OF INSTANCES after LOADER: " << Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject").use_count() << "\n";
 }
 
 
@@ -102,62 +101,33 @@ void Init::InitDefault::registerClass()
 	std::cout << "registerClass function called!" << std::endl;
 
 	// 1] Register Constructor (Class)
-	REGISTER_CLASS(Model::StaticModel);
-	REGISTER_CLASS(Mesh::DefaultMesh);
-	REGISTER_CLASS(Shader::DefaultShader);
+	REGISTER_CLASS(Camera::CameraDefault);
 
 	REGISTER_CLASS(Loader::ModelLoader);
 	REGISTER_CLASS(Loader::TextureLoader);
-	REGISTER_CLASS(GPUObject::ModelGPUObject);
+
 	REGISTER_CLASS(GPUObject::TextureGPUObject);
-	REGISTER_CLASS(Camera::CameraDefault);
+	REGISTER_CLASS(GPUObject::ModelGPUObject);
+
+	REGISTER_CLASS(Model::StaticModel);
+	REGISTER_CLASS(Mesh::DefaultMesh);
+	REGISTER_CLASS(Shader::DefaultShader);
 
 	Common::Factory::getInstance().showMeSeededClasses();
 }
 
 
-void Init::InitDefault::createShaders()
+void Init::InitDefault::createCameras()
 {
 	Common::Error err;
 
-	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
-    smartShader_0->printINFO();
-	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
+	std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
+	Common::Factory::getInstance().storeInContainer("CameraIf", smartCamera_0);
 
-
-	std::cout << " xxx SHOW ME SHADERS xxx" << '\n';
-	Common::Factory::getInstance().showMeObjects("ShaderIf");
+	Common::Factory::getInstance().showMeObjects("CameraIf");
 }
 
 
-void Init::InitDefault::createMeshes()
-{
-	Common::Error err;
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_0((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_0"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_0);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_1((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_1"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_1);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_2((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_2"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_2);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_3((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_3"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_3);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_4((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_4"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_4);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_5((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_5"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_5);
-
-	std::cout << " xxx SHOW ME MESHEs xxx" << '\n';
-	Common::Factory::getInstance().showMeObjects("MeshIf");
-}
-
-
-// Create MODELs
 void Init::InitDefault::createLoaders()
 {
 	Common::Error err;
@@ -189,7 +159,6 @@ void Init::InitDefault::createLoaders()
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
 
-	std::cout << " xxx SHOW ME LOADERs xxx" << '\n';
 	Common::Factory::getInstance().showMeObjects("LoaderIf");
 }
 
@@ -197,24 +166,52 @@ void Init::InitDefault::createLoaders()
 void Init::InitDefault::createModels()
 {
 	Common::Error err;
-	// Create                                                                                                             Model::StaticModel"       .. /modelPath/    smartModel_0
-	// Model object
-	std::shared_ptr<Model::StaticModel> smartModel_0((Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0"));
+	// Create   
+	// DB Entry:
+	// Create    ModelIf    Model::StaticModel    smartModel_0
+	// Model object                                                                                                   Model::StaticModel       .. /modelPath/    smartModel_0
+	std::shared_ptr<Model::ModelIf> smartModel_0((Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0") );
 	Common::Factory::getInstance().storeInContainer("ModelIf", smartModel_0);
 
-	std::cout << " xxx SHOW ME MODELSs xxx" << '\n';
 	Common::Factory::getInstance().showMeObjects("ModelIf");
 }
 
-void Init::InitDefault::createCameras()
+
+void Init::InitDefault::createMeshes()
 {
 	Common::Error err;
 
-	// Probaj interface cast
-	// std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
-	std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
-	Common::Factory::getInstance().storeInContainer("CameraIf", smartCamera_0);
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_0((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_0"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_0);
 
-	std::cout << " xxx------------------------------- SHOW ME CAMERAs xxx" << '\n';
-	Common::Factory::getInstance().showMeObjects("CameraIf");
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_1((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_1"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_1);
+
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_2((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_2"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_2);
+
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_3((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_3"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_3);
+
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_4((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_4"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_4);
+
+	std::shared_ptr<Mesh::DefaultMesh> smartMesh_5((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_5"));
+	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_5);
+
+	Common::Factory::getInstance().showMeObjects("MeshIf");
 }
+
+
+void Init::InitDefault::createShaders()
+{
+	Common::Error err;
+
+	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
+    // smartShader_0->printINFO();
+	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
+
+	Common::Factory::getInstance().showMeObjects("ShaderIf");
+}
+
+

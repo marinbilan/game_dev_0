@@ -129,7 +129,7 @@ public:
 	// ---- [2] ---- 
 	template<class T>
 	// args 1] classIf    2] derived objectName
-	void storeInContainer(const std::string& objNameIf, T& derivedObject)
+	void storeInContainer(const std::string& objNameIf, const T& derivedObject)
 	{
 		// CameraIf
 		if (!objNameIf.compare("CameraIf"))
