@@ -169,7 +169,7 @@ void Init::InitDefault::createModels()
 	// DB Entry:
 	// Create    ModelIf    Model::StaticModel    smartModel_0
 	// Model object                                                                                                   Model::StaticModel       .. /modelPath/    smartModel_0
-	std::shared_ptr<Model::ModelIf> smartModel_0((Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0") );
+	std::shared_ptr<Model::ModelIf> smartModel_0( (Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0") );
 	Common::Factory::getInstance().storeInContainer("ModelIf", smartModel_0);
 
 	Common::Factory::getInstance().showMeObjects("ModelIf");

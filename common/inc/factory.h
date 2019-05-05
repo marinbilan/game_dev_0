@@ -209,7 +209,6 @@ public:
 		{
 			if (!(*it)->getName().compare(arg1))
 			{
-				std::cout << "- FOUND -" << (*it)->getName() << " number of shared objects " << (*it).use_count() << "\n";
 				return *it;
 			}
 		}

@@ -24,6 +24,14 @@ public:
 		return "not implemented in MeshIf";
 	}
 
+	virtual void preInit() {};
+	virtual void postInit() {};
+
+	virtual std::string  getShaderName() 
+	{ 
+		return dummyString; 
+	}
+
 	// FUNCTIONs
 	virtual GLuint createShader(const char* vertexShader, const char* fragmentShader)
 	{
@@ -44,36 +52,7 @@ public:
 		return shaderID;
 	}
 
-	virtual std::string  getShaderName() { return dummyString; }
-	virtual GLuint const getShaderProgramID()      const { return 0; }
-
-	// [ VERTEX SHADER ]
-	//   ATTRIBs
-	// ------------------- [ ShaderPTN0 ] --------------------------
-	virtual GLuint const getPositionsID()        const { return 0; }
-	virtual GLuint const getTextureCoordsID()    const { return 0; }
-	virtual GLuint const getNormalsID()          const { return 0; }
-	//   UNIFORMs
-	virtual GLuint const getProjectionMatrixID() const { return 0; }
-	virtual GLuint const getViewMatrixID()       const { return 0; }
-	virtual GLuint const getViewMatrixInvID()    const { return 0; }
-	virtual GLuint const getModelMatrixID()      const { return 0; }
-
-	virtual GLuint const getLightPositionID()    const { return 0; }
-	virtual GLuint const getPlaneID()            const { return 0; }
-	// [ FRAGMENT SHADER ]
-	//   UNIFORMs
-	virtual GLuint const getLightColorID()       const { return 0; }
-	virtual GLuint const getShineDamperID()      const { return 0; }
-	virtual GLuint const getReflectivityID()     const { return 0; }
-	virtual GLuint const getModelTextureID()     const { return 0; }
-	// -------------------------------------------------------------
-
-
 	virtual int getId() { return 0; }
-
-	virtual void preInit() {};
-	virtual void postInit() {};
 
 	// OPERATORs
 	virtual void printINFO() {};

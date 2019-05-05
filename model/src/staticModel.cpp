@@ -105,16 +105,10 @@ void Model::StaticModel::setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf)
 // 5 ] Disable everything
 void Model::StaticModel::render() 
 {
-    std::cout << "Model::StaticModel::render()" << std::endl;
-	std::cout << " VAO: " << m_VAO << std::endl;
-
 	glBindVertexArray(m_VAO);
 
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
-		// glBindBuffer(GL_ARRAY_BUFFER, _staticModel.getVectorOfMeshes()[i].VBO);
-		// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _staticModel.getVectorOfMeshes()[i].IBO);
-
 		// GET SHADER FOR EACH MESH IN MODEL
 		(*it)->render(modelMatrix);
 	}

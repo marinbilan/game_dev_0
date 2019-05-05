@@ -81,47 +81,24 @@ const char* FragmentShaderPTN =
 public:
 	DefaultShader(Common::Error& err, const std::string& name);
 
-	DefaultShader(GLfloat projMatrixWidth, GLfloat projMatrixHeight);
-
 	~DefaultShader();
 
 	// FUNCTIONs
 	virtual std::string  getShaderName();
-	virtual GLuint const getShaderProgramID()    const;
-	// ---------------- [ ShaderPTN0 ] ----------------
-	// [ VERTEX SHADER ]
-	//   ATTRIBUTEs
-	virtual GLuint const getPositionsID()        const;
-	virtual GLuint const getTextureCoordsID()    const;
-	virtual GLuint const getNormalsID()          const;
-	//   UNIFORMs
-	virtual GLuint const getProjectionMatrixID() const;
-	virtual GLuint const getViewMatrixID()       const;
-	virtual GLuint const getViewMatrixInvID()    const;
-	virtual GLuint const getModelMatrixID()      const;
-	virtual GLuint const getLightPositionID()    const;
-	virtual GLuint const getPlaneID()            const;
 
-	// [ FRAGMENT SHADER ]
-	//   UNIFORMs
-	virtual GLuint const getLightColorID()       const;
-	virtual GLuint const getShineDamperID()      const;
-	virtual GLuint const getReflectivityID()     const;
-	virtual GLuint const getModelTextureID()     const;
-	// ------------------------------------------------
-
-	int getId();
+	void preInit();
+	void postInit();
 
 	const std::string& getName()
 	{
 		return m_name;
 	}
 
-	void preInit();
-	void postInit();
+	int getId();
 
 	// OPERATORs
 	void printINFO();
+
 	friend std::ostream& operator<<(std::ostream& output, DefaultShader& info)
 	{
 		output << "" << std::endl;
@@ -149,7 +126,7 @@ public:
 
 	void cmdPrompt(const std::string& arg0);
 
-private:
+// Members
 std::string m_name;
 
 std::string shaderName;

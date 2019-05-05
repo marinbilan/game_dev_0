@@ -5,6 +5,7 @@
 #include "cameraDefault.h"
 
 #include "shaderIf.h"
+#include "defaultShader.h"
 
 
 namespace Mesh
@@ -29,13 +30,13 @@ public:
 
 	// Set
 	virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {};
+	virtual void setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf) {};
 
+	// TODO: Remove
 	virtual void setVBO(GLuint VBO) {};
 	virtual void setIBO(GLuint IBO) {};
 	virtual void setNumOfInd(GLuint numOfInd) {};
 
-
-	virtual void setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf) {};
 	virtual void setTextureId(GLuint texId) {};
 
 	virtual void render(const glm::mat4& modelMatrix) {};

@@ -77,7 +77,7 @@ int main ()
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_CLIP_DISTANCE0);
-		std::cout << " ----> Render from main()" << '\n';
+
 		Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 
 		/* Swap front and back buffers */
