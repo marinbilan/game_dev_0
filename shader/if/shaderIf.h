@@ -4,7 +4,6 @@
 #include "glew.h"
 #include "glfw3.h"
 
-// TODO: Include glm projection matrix
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp" // For projection matrix
 
@@ -27,11 +26,6 @@ public:
 	virtual void preInit() {};
 	virtual void postInit() {};
 
-	virtual std::string  getShaderName() 
-	{ 
-		return dummyString; 
-	}
-
 	// FUNCTIONs
 	virtual GLuint createShader(const char* vertexShader, const char* fragmentShader)
 	{
@@ -51,8 +45,6 @@ public:
 
 		return shaderID;
 	}
-
-	virtual int getId() { return 0; }
 
 	// OPERATORs
 	virtual void printINFO() {};

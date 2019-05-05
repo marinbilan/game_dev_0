@@ -49,25 +49,6 @@ Shader::DefaultShader::~DefaultShader()
 
 
 // FUNCTIONs
-std::string Shader::DefaultShader::getShaderName()
-{
-	return shaderName;
-}
-
-
-// OPERATORs
-void Shader::DefaultShader::printINFO()
-{
-	std::cout << *this;
-}
-
-
-int Shader::DefaultShader::getId()
-{
-	return 11;
-}
-
-
 void Shader::DefaultShader::preInit()
 {
 
@@ -77,6 +58,13 @@ void Shader::DefaultShader::preInit()
 void Shader::DefaultShader::postInit()
 {
 	std::cout << "postInit function called!" << std::endl;
+}
+
+
+// OPERATORs
+void Shader::DefaultShader::printINFO()
+{
+	std::cout << *this;
 }
 
 

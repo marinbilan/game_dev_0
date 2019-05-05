@@ -1,6 +1,5 @@
 #include "staticModel.h"
 
-#include "error.h"
 #include "factory.h"
 
 Model::StaticModel::StaticModel(Common::Error& err, const std::string& name) : m_name(name)

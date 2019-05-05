@@ -3,11 +3,11 @@
 
 #include "error.h"
 
+
 namespace Shader
 {
 class DefaultShader : public ShaderIf
 {
-
 const char* VertexShaderPTN =
 "#version 330 \r\n"
 ""
@@ -80,12 +80,9 @@ const char* FragmentShaderPTN =
 
 public:
 	DefaultShader(Common::Error& err, const std::string& name);
-
 	~DefaultShader();
 
 	// FUNCTIONs
-	virtual std::string  getShaderName();
-
 	void preInit();
 	void postInit();
 
@@ -93,8 +90,6 @@ public:
 	{
 		return m_name;
 	}
-
-	int getId();
 
 	// OPERATORs
 	void printINFO();
