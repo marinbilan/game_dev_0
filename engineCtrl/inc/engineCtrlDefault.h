@@ -9,6 +9,8 @@
 #include "initIf.h"
 #include "initDefault.h"
 #include "cmdPrompt.h"
+#include "database.h"
+#include "factory.h"
 
 
 namespace EngineCtrl
@@ -19,6 +21,9 @@ public:
 	EngineCtrlDefault(Common::Error& err, const std::string& name);
 
 	~EngineCtrlDefault();
+
+	// Database init before preInit and postInit
+	void databaseInit(const std::string& dbName);
 
 	void preInit();
 	void postInit();

@@ -23,11 +23,11 @@
 #include "defaultShader.h"
 
 
-
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
 {
 	std::cout << "InitDefault created!" << std::endl;
 }
+
 
 Init::InitDefault::~InitDefault()
 {
@@ -43,15 +43,14 @@ void Init::InitDefault::preInit()
 	//
 	registerClass();
 
-	createShaders();
+	createCameras();
 
 	createMeshes();
-
 	createLoaders();
 
 	createModels();
 
-	createCameras();
+	createShaders();
 }
 
 
@@ -100,16 +99,25 @@ void Init::InitDefault::registerClass()
 	std::cout << "registerClass function called!" << std::endl;
 
 	// 1] Register Constructor (Class)
+	//
+	// CameraIf
 	REGISTER_CLASS(Camera::CameraDefault);
-
+	
+	// LoaderIf
 	REGISTER_CLASS(Loader::ModelLoader);
 	REGISTER_CLASS(Loader::TextureLoader);
 
+	// GPUObjectIf
 	REGISTER_CLASS(GPUObject::TextureGPUObject);
 	REGISTER_CLASS(GPUObject::ModelGPUObject);
 
+	// ModelIf
 	REGISTER_CLASS(Model::StaticModel);
+
+	// MeshIf
 	REGISTER_CLASS(Mesh::DefaultMesh);
+
+	// ShaderIf
 	REGISTER_CLASS(Shader::DefaultShader);
 
 	Common::Factory::getInstance().showMeSeededClasses();
@@ -120,10 +128,20 @@ void Init::InitDefault::createCameras()
 {
 	Common::Error err;
 
-	std::shared_ptr<Camera::CameraDefault> smartCamera_0((Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::CameraDefault", err, "smartCamera_0"));
-	Common::Factory::getInstance().storeInContainer("CameraIf", smartCamera_0);
+	std::string create("Create");
 
-	Common::Factory::getInstance().showMeObjects("CameraIf");
+	std::vector<std::string> arg0;
+	std::vector<std::string> arg1;
+
+	// String Variables
+	std::string CameraIf("CameraIf");
+
+	// Get this from Factory
+	Common::Factory::getInstance().getDatabase()->create(create, CameraIf, arg0, arg1);
+
+	// Iterate over vector arg0
+	std::shared_ptr<Camera::CameraDefault> smartCamera_0( (Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::" + arg0[1], err, arg1[1]) );
+	Common::Factory::getInstance().storeInContainer(CameraIf, smartCamera_0);
 }
 
 
@@ -143,14 +161,14 @@ void Init::InitDefault::createLoaders()
 	GLuint texture3 = textureLoader_0->createTexture("_vanquish/textures/texture3.png");
 	GLuint texture4 = textureLoader_0->createTexture("_vanquish/textures/texture4.png");
 	GLuint texture5 = textureLoader_0->createTexture("_vanquish/textures/texture5.png");
-
+	/*
 	std::cout << " texture0: " << texture0 << '\n';
 	std::cout << " texture1: " << texture1 << '\n';
 	std::cout << " texture2: " << texture2 << '\n';
 	std::cout << " texture3: " << texture3 << '\n';
 	std::cout << " texture4: " << texture4 << '\n';
 	std::cout << " texture5: " << texture5 << '\n';
-
+	*/
 	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(texture0);
 	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(texture1);
 	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(texture2);
@@ -158,7 +176,7 @@ void Init::InitDefault::createLoaders()
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
 
-	Common::Factory::getInstance().showMeObjects("LoaderIf");
+	// Common::Factory::getInstance().showMeObjects("LoaderIf");
 }
 
 
@@ -172,7 +190,7 @@ void Init::InitDefault::createModels()
 	std::shared_ptr<Model::ModelIf> smartModel_0( (Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0") );
 	Common::Factory::getInstance().storeInContainer("ModelIf", smartModel_0);
 
-	Common::Factory::getInstance().showMeObjects("ModelIf");
+	// Common::Factory::getInstance().showMeObjects("ModelIf");
 }
 
 
@@ -198,7 +216,7 @@ void Init::InitDefault::createMeshes()
 	std::shared_ptr<Mesh::DefaultMesh> smartMesh_5((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_5"));
 	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_5);
 
-	Common::Factory::getInstance().showMeObjects("MeshIf");
+	// Common::Factory::getInstance().showMeObjects("MeshIf");
 }
 
 
@@ -210,7 +228,7 @@ void Init::InitDefault::createShaders()
     // smartShader_0->printINFO();
 	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
 
-	Common::Factory::getInstance().showMeObjects("ShaderIf");
+	// Common::Factory::getInstance().showMeObjects("ShaderIf");
 }
 
 

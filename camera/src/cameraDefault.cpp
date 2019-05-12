@@ -9,6 +9,7 @@ Camera::CameraDefault::CameraDefault(Common::Error& err, const std::string& name
 	m_viewMatrix(glm::mat4(1.0f)),
 	m_viewMatrixInv(glm::mat4(1.0f))
 {
+	// Move to preInit (read from DB)
 	m_cameraPos =   glm::vec3(375, 25, 420);
 	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	m_cameraUp =    glm::vec3(0.0f, 1.0f, 0.0f);

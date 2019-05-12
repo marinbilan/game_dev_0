@@ -6,6 +6,7 @@
 #include <vector>  
 
 #include "error.h"
+#include "database.h"
 
 #include "cameraIf.h"
 #include "cameraDefault.h"
@@ -71,6 +72,20 @@ public:
 		return i->second(err, arg0);
 	}
 	// ---- xx END xx ----
+
+
+	// xx DataBase xx
+	// --------
+	void setDatabase(std::unique_ptr<Common::Database>& database)
+	{
+		m_database = std::move(database);
+	}
+
+	std::unique_ptr<Common::Database>& getDatabase()
+	{
+		return m_database;
+	}
+	// --------
 
 
 	// ---- [0] ---- 
@@ -229,6 +244,9 @@ private:
 	typedef void*(*constructor_t)(Error&, const std::string&);
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
+	//
+	// DataBase
+	std::unique_ptr<Common::Database> m_database;
 	//
 	// Container Stuff 
 	//

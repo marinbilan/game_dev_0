@@ -1,0 +1,2 @@
+Create    CameraIf    arg0    arg1
+Create    CameraIf    CameraDefault    smartCamera_0

@@ -25,8 +25,14 @@
 #include "FreeImage.h"
 
 
-int main ()
+int main (int argc, char** argv)
 {
+	std::cout << "You have entered " << argc
+		<< " arguments:" << "\n";
+
+	for (int i = 0; i < argc; ++i)
+		std::cout << argv[i] << "\n";
+
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
@@ -60,10 +66,15 @@ int main ()
 
 	Common::Error err;
 
+	// 1] Create Engine Control
+	// ------------------------
 	EngineCtrl::EngineCtrlDefault engineCtrl0(err, "engineControl");
-	engineCtrl0.preInit();
+	engineCtrl0.databaseInit("sw/_db/database_0.txt");
+	engineCtrl0.preInit(); // Database Initialization
 	engineCtrl0.postInit();
-	
+	// ------------------------
+
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glEnable(GL_CULL_FACE);

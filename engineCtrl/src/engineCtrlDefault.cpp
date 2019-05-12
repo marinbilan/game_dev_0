@@ -13,6 +13,17 @@ EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 }
 
 
+void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)
+{
+	Common::Error err;
+
+	// Create DB and store it in Factory
+	std::unique_ptr<Common::Database> database = std::make_unique<Common::Database>(err, "sw/_db/database_0.txt");
+	Common::Factory::getInstance().setDatabase(database);
+		
+}
+
+
 void EngineCtrl::EngineCtrlDefault::preInit()
 {
 	std::cout << "EngineCtrl::EngineCtrlDefault::preInit() called" << '\n';
@@ -22,6 +33,9 @@ void EngineCtrl::EngineCtrlDefault::preInit()
 
 	// Create defaultInit 
 	defaultInit0 = new Init::InitDefault(err, "DefaultInit0");
+
+
+	// Init All Objects
 	defaultInit0->preInit();
 
 	// Create cmdPrompt
