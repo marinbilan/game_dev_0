@@ -140,7 +140,7 @@ void Init::InitDefault::createCameras()
 	Common::Factory::getInstance().getDatabase()->create(create, CameraIf, arg0, arg1);
 
 	// Iterate over vector arg0
-	std::shared_ptr<Camera::CameraDefault> smartCamera_0( (Camera::CameraDefault*)Common::Factory::getInstance().constructObject("Camera::" + arg0[1], err, arg1[1]) );
+	std::shared_ptr<Camera::CameraIf> smartCamera_0( (Camera::CameraIf*)Common::Factory::getInstance().constructObject("Camera::" + arg0[1], err, arg1[1]) );
 	Common::Factory::getInstance().storeInContainer(CameraIf, smartCamera_0);
 }
 
