@@ -1,2 +1,35 @@
-Create    CameraIf    arg0    arg1
+/*****************************************************************/
+/* CREATE
+/* 0 arg - Key word (ex Create)
+/* 1 arg - Group identifier (ex CameraIf) for all derived classes
+/* 2 arg - Derived class name (ex StaticModel)
+/* 3 arg - Instance name
+/*****************************************************************/
+
+// Cameras [CameraIf]
 Create    CameraIf    CameraDefault    smartCamera_0
+Create    CameraIf    CameraDefault    smartCamera_1
+
+
+// Loaders [LoaderIf]
+Create    LoaderIf    ModelLoader      modelLoader_0
+Create    LoaderIf    TextureLoader    textureLoader_0
+
+
+// ----
+// Models [ModelIf]
+Create    ModelIf     StaticModel      smartModel_0
+
+
+// Meshes [MeshIf]
+Create    MeshIf      DefaultMesh      smartMesh_0
+Create    MeshIf      DefaultMesh      smartMesh_1
+Create    MeshIf      DefaultMesh      smartMesh_2
+Create    MeshIf      DefaultMesh      smartMesh_3
+Create    MeshIf      DefaultMesh      smartMesh_4
+Create    MeshIf      DefaultMesh      smartMesh_5
+// ----
+
+
+// Shaders [ShaderIf]
+Create    ShaderIf    DefaultShader    smartShader_0

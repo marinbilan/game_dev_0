@@ -43,17 +43,24 @@ void Init::InitDefault::preInit()
 	//
 	registerClass();
 
-	createCameras();
+	// Create Cameras
+	createObjects("Camera::", "CameraIf");
 
-	createMeshes();
-	createLoaders();
+	// Create Meshes
+	createObjects("Mesh::", "MeshIf");
 
-	createModels();
+	// Create Loaders
+	createObjects("Loader::", "LoaderIf");
 
-	createShaders();
+	// Create Models
+	createObjects("Model::", "ModelIf");
+
+	// Create Shaders
+	createObjects("Shader::", "ShaderIf");
 }
 
 
+// Combine all things together
 void Init::InitDefault::postInit()
 {
 	std::cout << "[initDefault] postInit function called!" << std::endl;
@@ -89,8 +96,26 @@ void Init::InitDefault::postInit()
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 
-	std::cout << " **** RENDER MODEL **** " << '\n';
-	Common::Factory::getInstance().getModelIf("smartModel_0")->render();
+	// Combiner
+//
+// TODO: Combine inside instances
+	GLuint texture0 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture0.png");
+	GLuint texture1 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture1.png");
+	GLuint texture2 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture2.png");
+	GLuint texture3 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture3.png");
+	GLuint texture4 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture4.png");
+	GLuint texture5 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture5.png");
+
+
+	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(texture0);
+	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(texture1);
+	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(texture2);
+	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(texture3);
+	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
+	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
+
+	//std::cout << " **** RENDER MODEL **** " << '\n';
+	//Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 }
 
 
@@ -124,111 +149,54 @@ void Init::InitDefault::registerClass()
 }
 
 
-void Init::InitDefault::createCameras()
+void Init::InitDefault::createObjects(const std::string& name_space, const std::string& inter_face)
 {
 	Common::Error err;
 
-	std::string create("Create");
-
-	std::vector<std::string> arg0;
-	std::vector<std::string> arg1;
+	std::vector<std::string> vecArg0;
+	std::vector<std::string> vecArg1;
 
 	// String Variables
-	std::string CameraIf("CameraIf");
+	// std::string Create("Create");
+	// std::string CameraIf("CameraIf");
 
 	// Get this from Factory
-	Common::Factory::getInstance().getDatabase()->create(create, CameraIf, arg0, arg1);
+	Common::Factory::getInstance().getDatabase()->create("Create", inter_face, vecArg0, vecArg1);
 
-	// Iterate over vector arg0
-	std::shared_ptr<Camera::CameraIf> smartCamera_0( (Camera::CameraIf*)Common::Factory::getInstance().constructObject("Camera::" + arg0[1], err, arg1[1]) );
-	Common::Factory::getInstance().storeInContainer(CameraIf, smartCamera_0);
-}
+	// Iterate over colums and create objects with the same interface
+	// vecArg0 - vector (column) of derived classes
+	// vecArg1 - vector (column) of derived classes names
+	auto it1 = vecArg1.begin();
+	for (auto it0 = vecArg0.begin(); it0 != vecArg0.end(); ++it0)
+	{
+		if(!inter_face.compare("CameraIf"))
+		{
+			std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
+			Common::Factory::getInstance().storeInContainer(inter_face, camera);
+		}
+		else if (!inter_face.compare("MeshIf"))
+		{
+			std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
+			Common::Factory::getInstance().storeInContainer(inter_face, mesh);
+		}
+		else if (!inter_face.compare("LoaderIf"))
+		{
+			std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
+			Common::Factory::getInstance().storeInContainer(inter_face, loader);
+		}
+		else if (!inter_face.compare("ModelIf"))
+		{
+			std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
+			Common::Factory::getInstance().storeInContainer(inter_face, model);
+		}
+		else if (!inter_face.compare("ShaderIf"))
+		{
+			std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
+			Common::Factory::getInstance().storeInContainer(inter_face, shader);
+		}
 
-
-void Init::InitDefault::createLoaders()
-{
-	Common::Error err;
-
-	std::shared_ptr<Loader::ModelLoader> modelLoader_0( (Loader::ModelLoader*)Common::Factory::getInstance().constructObject("Loader::ModelLoader", err, "modelLoader_0") );
-	Common::Factory::getInstance().storeInContainer("LoaderIf", modelLoader_0);
-
-	std::shared_ptr<Loader::TextureLoader> textureLoader_0((Loader::TextureLoader*)Common::Factory::getInstance().constructObject("Loader::TextureLoader", err, "textureLoader_0"));
-	Common::Factory::getInstance().storeInContainer("LoaderIf", textureLoader_0);
-
-	GLuint texture0 = textureLoader_0->createTexture("_vanquish/textures/texture0.png");
-	GLuint texture1 = textureLoader_0->createTexture("_vanquish/textures/texture1.png");
-	GLuint texture2 = textureLoader_0->createTexture("_vanquish/textures/texture2.png");
-	GLuint texture3 = textureLoader_0->createTexture("_vanquish/textures/texture3.png");
-	GLuint texture4 = textureLoader_0->createTexture("_vanquish/textures/texture4.png");
-	GLuint texture5 = textureLoader_0->createTexture("_vanquish/textures/texture5.png");
-	/*
-	std::cout << " texture0: " << texture0 << '\n';
-	std::cout << " texture1: " << texture1 << '\n';
-	std::cout << " texture2: " << texture2 << '\n';
-	std::cout << " texture3: " << texture3 << '\n';
-	std::cout << " texture4: " << texture4 << '\n';
-	std::cout << " texture5: " << texture5 << '\n';
-	*/
-	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(texture0);
-	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(texture1);
-	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(texture2);
-	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(texture3);
-	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
-	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
-
-	// Common::Factory::getInstance().showMeObjects("LoaderIf");
-}
-
-
-void Init::InitDefault::createModels()
-{
-	Common::Error err;
-	// Create   
-	// DB Entry:
-	// Create    ModelIf    Model::StaticModel    smartModel_0
-	// Model object                                                                                                   Model::StaticModel       .. /modelPath/    smartModel_0
-	std::shared_ptr<Model::ModelIf> smartModel_0( (Model::StaticModel*)Common::Factory::getInstance().constructObject("Model::StaticModel", err, "smartModel_0") );
-	Common::Factory::getInstance().storeInContainer("ModelIf", smartModel_0);
-
-	// Common::Factory::getInstance().showMeObjects("ModelIf");
-}
-
-
-void Init::InitDefault::createMeshes()
-{
-	Common::Error err;
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_0((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_0"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_0);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_1((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_1"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_1);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_2((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_2"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_2);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_3((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_3"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_3);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_4((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_4"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_4);
-
-	std::shared_ptr<Mesh::DefaultMesh> smartMesh_5((Mesh::DefaultMesh*)Common::Factory::getInstance().constructObject("Mesh::DefaultMesh", err, "smartMesh_5"));
-	Common::Factory::getInstance().storeInContainer("MeshIf", smartMesh_5);
-
-	// Common::Factory::getInstance().showMeObjects("MeshIf");
-}
-
-
-void Init::InitDefault::createShaders()
-{
-	Common::Error err;
-
-	std::shared_ptr<Shader::DefaultShader> smartShader_0((Shader::DefaultShader*)Common::Factory::getInstance().constructObject("Shader::DefaultShader", err, "smartShader_0"));
-    // smartShader_0->printINFO();
-	Common::Factory::getInstance().storeInContainer("ShaderIf", smartShader_0);
-
-	// Common::Factory::getInstance().showMeObjects("ShaderIf");
+		++it1;
+	}
 }
 
 

@@ -28,7 +28,9 @@ public:
 	{
 		std::cout << "LoaderIf destructor called!" << '\n';
 	}
-
+	//
+	// Common
+	//
 	virtual const std::string& getName()
 	{
 		return "not implemented in LoaderIf";
@@ -36,5 +38,10 @@ public:
 
 	virtual void preInit() {};
 	virtual void postInit() {};
+
+	// ModelLoader
+
+	// TextureLoader
+	virtual GLuint createTexture(const std::string& _textureName) { return 0; };
 };
 }

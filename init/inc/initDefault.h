@@ -18,15 +18,10 @@ public:
 
 	void registerClass();
 
-	void createCameras();
-
-	void createLoaders();
-
-	void createModels();
-	void createMeshes();
-	void createShaders();
-
 private:
+	void createObjects(const std::string& name_space, const std::string& inter_face);
+
+// Members
 std::string m_name;
 };
 }
