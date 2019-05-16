@@ -74,8 +74,24 @@ public:
 	// ---- xx END xx ----
 
 
-	// xx DataBase xx
+	// -----
+	// ERROR
+	// -----
+	void setError(std::unique_ptr<Common::Error>& error)
+	{
+		m_error = std::move(error);
+	}
+
+	std::unique_ptr<Common::Error>& getError()
+	{
+		return m_error;
+	}
 	// --------
+
+
+	// ---------
+	// DATABASE
+	// ---------
 	void setDatabase(std::unique_ptr<Common::Database>& database)
 	{
 		m_database = std::move(database);
@@ -84,6 +100,107 @@ public:
 	std::unique_ptr<Common::Database>& getDatabase()
 	{
 		return m_database;
+	}
+	// --------
+
+
+	void registerClass()
+	{
+		std::cout << "registerClass function called!" << std::endl;
+
+		// 1] Register Constructor (Class)
+		//
+		// CameraIf
+		REGISTER_CLASS(Camera::CameraDefault);
+
+		// LoaderIf
+		REGISTER_CLASS(Loader::ModelLoader);
+		REGISTER_CLASS(Loader::TextureLoader);
+
+		// GPUObjectIf
+		REGISTER_CLASS(GPUObject::TextureGPUObject);
+		REGISTER_CLASS(GPUObject::ModelGPUObject);
+
+		// ModelIf
+		REGISTER_CLASS(Model::StaticModel);
+
+		// MeshIf
+		REGISTER_CLASS(Mesh::DefaultMesh);
+
+		// ShaderIf
+		REGISTER_CLASS(Shader::DefaultShader);
+
+		Common::Factory::getInstance().showMeSeededClasses();
+	}
+
+
+	// ----------------------------
+	// CREATE OBJECTS FROM DATABASE
+	// ----------------------------
+
+	void createObjects()
+	{
+		// Create Cameras
+		createObjects("Camera::", "CameraIf");
+
+		// Create Meshes
+		createObjects("Mesh::", "MeshIf");
+
+		// Create Loaders
+		createObjects("Loader::", "LoaderIf");
+
+		// Create Models
+		createObjects("Model::", "ModelIf");
+
+		// Create Shaders
+		createObjects("Shader::", "ShaderIf");
+	}
+
+
+	void createObjects(const std::string& name_space, const std::string& inter_face)
+	{
+		Common::Error err;
+
+		std::vector<std::string> vecArg0;
+		std::vector<std::string> vecArg1;
+
+		// GET ALL DERIVED CLASSes FROM SAME IF
+		Common::Factory::getInstance().getDatabase()->create("Create", inter_face, vecArg0, vecArg1);
+
+		// Iterate over colums and create objects with the same interface
+		// vecArg0 - vector (column) of derived classes
+		// vecArg1 - vector (column) of derived classes names
+		auto it1 = vecArg1.begin();
+		for (auto it0 = vecArg0.begin(); it0 != vecArg0.end(); ++it0)
+		{
+			if (!inter_face.compare("CameraIf"))
+			{
+				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(name_space + *it0, err, *it1));
+				storeInContainer(inter_face, camera);
+			}
+			else if (!inter_face.compare("MeshIf"))
+			{
+				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(name_space + *it0, err, *it1));
+				storeInContainer(inter_face, mesh);
+			}
+			else if (!inter_face.compare("LoaderIf"))
+			{
+				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(name_space + *it0, err, *it1));
+				storeInContainer(inter_face, loader);
+			}
+			else if (!inter_face.compare("ModelIf"))
+			{
+				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(name_space + *it0, err, *it1));
+				storeInContainer(inter_face, model);
+			}
+			else if (!inter_face.compare("ShaderIf"))
+			{
+				std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(name_space + *it0, err, *it1));
+				storeInContainer(inter_face, shader);
+			}
+
+			++it1;
+		}
 	}
 	// --------
 
@@ -97,6 +214,8 @@ public:
 			std::cout << " - " << it->first << "\n";
 		}
 	}
+
+
 	// ---- [1] ---- 
 	void showMeObjects(const std::string& objNameIf)
 	{
@@ -245,6 +364,8 @@ private:
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
 	//
+	// Error
+	std::unique_ptr<Common::Error> m_error;
 	// DataBase
 	std::unique_ptr<Common::Database> m_database;
 	//

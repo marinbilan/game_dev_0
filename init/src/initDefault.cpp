@@ -23,6 +23,9 @@
 #include "defaultShader.h"
 
 
+#define FACTORY Common::Factory::getInstance()
+
+
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
 {
 	std::cout << "InitDefault created!" << std::endl;
@@ -38,25 +41,12 @@ Init::InitDefault::~InitDefault()
 void Init::InitDefault::preInit()
 {
 	std::cout << "preInit function called!" << std::endl;
-	// Get stuff from db
-	// ...
-	//
-	registerClass();
 
-	// Create Cameras
-	createObjects("Camera::", "CameraIf");
+	// REGISTER CLASSes
+	FACTORY.registerClass();
 
-	// Create Meshes
-	createObjects("Mesh::", "MeshIf");
-
-	// Create Loaders
-	createObjects("Loader::", "LoaderIf");
-
-	// Create Models
-	createObjects("Model::", "ModelIf");
-
-	// Create Shaders
-	createObjects("Shader::", "ShaderIf");
+	// CREATE OBJECTs
+	FACTORY.createObjects();
 }
 
 
@@ -117,86 +107,3 @@ void Init::InitDefault::postInit()
 	//std::cout << " **** RENDER MODEL **** " << '\n';
 	//Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 }
-
-
-void Init::InitDefault::registerClass()
-{
-	std::cout << "registerClass function called!" << std::endl;
-
-	// 1] Register Constructor (Class)
-	//
-	// CameraIf
-	REGISTER_CLASS(Camera::CameraDefault);
-	
-	// LoaderIf
-	REGISTER_CLASS(Loader::ModelLoader);
-	REGISTER_CLASS(Loader::TextureLoader);
-
-	// GPUObjectIf
-	REGISTER_CLASS(GPUObject::TextureGPUObject);
-	REGISTER_CLASS(GPUObject::ModelGPUObject);
-
-	// ModelIf
-	REGISTER_CLASS(Model::StaticModel);
-
-	// MeshIf
-	REGISTER_CLASS(Mesh::DefaultMesh);
-
-	// ShaderIf
-	REGISTER_CLASS(Shader::DefaultShader);
-
-	Common::Factory::getInstance().showMeSeededClasses();
-}
-
-
-void Init::InitDefault::createObjects(const std::string& name_space, const std::string& inter_face)
-{
-	Common::Error err;
-
-	std::vector<std::string> vecArg0;
-	std::vector<std::string> vecArg1;
-
-	// String Variables
-	// std::string Create("Create");
-	// std::string CameraIf("CameraIf");
-
-	// Get this from Factory
-	Common::Factory::getInstance().getDatabase()->create("Create", inter_face, vecArg0, vecArg1);
-
-	// Iterate over colums and create objects with the same interface
-	// vecArg0 - vector (column) of derived classes
-	// vecArg1 - vector (column) of derived classes names
-	auto it1 = vecArg1.begin();
-	for (auto it0 = vecArg0.begin(); it0 != vecArg0.end(); ++it0)
-	{
-		if(!inter_face.compare("CameraIf"))
-		{
-			std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
-			Common::Factory::getInstance().storeInContainer(inter_face, camera);
-		}
-		else if (!inter_face.compare("MeshIf"))
-		{
-			std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
-			Common::Factory::getInstance().storeInContainer(inter_face, mesh);
-		}
-		else if (!inter_face.compare("LoaderIf"))
-		{
-			std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
-			Common::Factory::getInstance().storeInContainer(inter_face, loader);
-		}
-		else if (!inter_face.compare("ModelIf"))
-		{
-			std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
-			Common::Factory::getInstance().storeInContainer(inter_face, model);
-		}
-		else if (!inter_face.compare("ShaderIf"))
-		{
-			std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)Common::Factory::getInstance().constructObject(name_space + *it0, err, *it1));
-			Common::Factory::getInstance().storeInContainer(inter_face, shader);
-		}
-
-		++it1;
-	}
-}
-
-

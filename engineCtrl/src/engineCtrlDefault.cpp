@@ -13,14 +13,23 @@ EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 }
 
 
+void EngineCtrl::EngineCtrlDefault::errorInit()
+{
+	// Create Error and store it in Factory
+	std::unique_ptr<Common::Error> error = std::make_unique<Common::Error>();
+
+	Common::Factory::getInstance().setError(error);
+}
+
+
 void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)
 {
 	Common::Error err;
 
 	// Create DB and store it in Factory
-	std::unique_ptr<Common::Database> database = std::make_unique<Common::Database>(err, "sw/_db/database_0.txt");
+	std::unique_ptr<Common::Database> database = std::make_unique<Common::Database>(err, dbName);
+
 	Common::Factory::getInstance().setDatabase(database);
-		
 }
 
 

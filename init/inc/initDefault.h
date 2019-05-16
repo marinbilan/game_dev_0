@@ -16,12 +16,7 @@ public:
 	void preInit();
 	void postInit();
 
-	void registerClass();
-
 private:
-	void createObjects(const std::string& name_space, const std::string& inter_face);
-
-// Members
 std::string m_name;
 };
 }

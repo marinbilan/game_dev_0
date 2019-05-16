@@ -22,6 +22,8 @@ public:
 
 	~EngineCtrlDefault();
 
+	// Error init before preInit and postInit
+	void errorInit();
 	// Database init before preInit and postInit
 	void databaseInit(const std::string& dbName);
 

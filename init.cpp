@@ -69,8 +69,12 @@ int main (int argc, char** argv)
 	// 1] Create Engine Control
 	// ------------------------
 	EngineCtrl::EngineCtrlDefault engineCtrl0(err, "engineControl");
+	// Error, Database Initialization
+	engineCtrl0.errorInit();
 	engineCtrl0.databaseInit("sw/_db/database_0.txt");
-	engineCtrl0.preInit(); // Database Initialization
+	
+	// Init
+	engineCtrl0.preInit(); 
 	engineCtrl0.postInit();
 	// ------------------------
 
