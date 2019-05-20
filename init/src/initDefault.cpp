@@ -22,8 +22,7 @@
 #include "shaderIf.h"
 #include "defaultShader.h"
 
-
-#define FACTORY Common::Factory::getInstance()
+#include "commonTypes.h"
 
 
 Init::InitDefault::InitDefault(Common::Error& err, const std::string& name) : m_name(name)
@@ -42,11 +41,9 @@ void Init::InitDefault::preInit()
 {
 	std::cout << "preInit function called!" << std::endl;
 
-	// REGISTER CLASSes
-	FACTORY.registerClass();
+	// FACTORY
+	FACTORY.preInit();
 
-	// CREATE OBJECTs
-	FACTORY.createObjects();
 }
 
 

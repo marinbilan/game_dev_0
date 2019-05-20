@@ -13,22 +13,12 @@ EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 }
 
 
-void EngineCtrl::EngineCtrlDefault::errorInit()
-{
-	// Create Error and store it in Factory
-	std::unique_ptr<Common::Error> error = std::make_unique<Common::Error>();
-
-	Common::Factory::getInstance().setError(error);
-}
-
-
 void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)
 {
 	Common::Error err;
 
 	// Create DB and store it in Factory
 	std::unique_ptr<Common::Database> database = std::make_unique<Common::Database>(err, dbName);
-
 	Common::Factory::getInstance().setDatabase(database);
 }
 
@@ -42,7 +32,6 @@ void EngineCtrl::EngineCtrlDefault::preInit()
 
 	// Create defaultInit 
 	defaultInit0 = new Init::InitDefault(err, "DefaultInit0");
-
 
 	// Init All Objects
 	defaultInit0->preInit();
@@ -58,7 +47,6 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 
 	defaultInit0->postInit();
 
-	cmdPrompt0->runCmdPrompt();
-	
+	cmdPrompt0->runCmdPrompt();	
 }
 

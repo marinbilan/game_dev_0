@@ -5,8 +5,9 @@
 #include <memory>  
 #include <vector>  
 
-#include "error.h"
 #include "database.h"
+#include "error.h"
+#include "log.h"
 
 #include "cameraIf.h"
 #include "cameraDefault.h"
@@ -44,7 +45,7 @@ template <class T> void* constructor(Error& err, const std::string& arg0)
 class Factory
 {
 public:
-	// Singleton stuff
+	// Singleton "constructor"
 	static Factory& getInstance()
 	{
 		static Factory instance;
@@ -74,24 +75,35 @@ public:
 	// ---- xx END xx ----
 
 
-	// -----
-	// ERROR
-	// -----
-	void setError(std::unique_ptr<Common::Error>& error)
+	// ---------
+	// FUNCTIONS
+	// ---------
+	void preInit()
 	{
-		m_error = std::move(error);
+		// Create "global" objects
+		// Error
+		m_error = std::make_unique<Common::Error>();
+		// Log
+		m_log = std::make_unique<Common::Log>("log_0");
+
+
+		// Register Class
+		registerClass();
+
+		// Create Objects
+		createObjects();
 	}
 
-	std::unique_ptr<Common::Error>& getError()
+
+	void postInit()
 	{
-		return m_error;
+
 	}
-	// --------
 
 
 	// ---------
-	// DATABASE
-	// ---------
+    // DATABASE
+    // ---------
 	void setDatabase(std::unique_ptr<Common::Database>& database)
 	{
 		m_database = std::move(database);
@@ -102,6 +114,19 @@ public:
 		return m_database;
 	}
 	// --------
+
+
+	// -----
+	// ERROR
+	// -----
+	std::unique_ptr<Common::Error>& getErrorObject()
+	{
+		return m_error;
+	}
+	// --------
+
+
+
 
 
 	void registerClass()
@@ -364,10 +389,13 @@ private:
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
 	//
-	// Error
-	std::unique_ptr<Common::Error> m_error;
 	// DataBase
 	std::unique_ptr<Common::Database> m_database;
+	// Error
+	std::unique_ptr<Common::Error> m_error;
+	// Log
+	std::unique_ptr<Common::Log> m_log;
+
 	//
 	// Container Stuff 
 	//

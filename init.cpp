@@ -66,17 +66,18 @@ int main (int argc, char** argv)
 
 	Common::Error err;
 
+
 	// 1] Create Engine Control
 	// ------------------------
 	EngineCtrl::EngineCtrlDefault engineCtrl0(err, "engineControl");
-	// Error, Database Initialization
-	engineCtrl0.errorInit();
+	// Create Database
 	engineCtrl0.databaseInit("sw/_db/database_0.txt");
 	
 	// Init
 	engineCtrl0.preInit(); 
 	engineCtrl0.postInit();
 	// ------------------------
+
 
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
