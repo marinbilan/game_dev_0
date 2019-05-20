@@ -126,7 +126,14 @@ public:
 	// --------
 
 
-
+	// ---
+	// LOG
+	// ---
+	std::unique_ptr<Common::Log>& getLog()
+	{
+		return m_log;
+	}
+	// --------
 
 
 	void registerClass()
