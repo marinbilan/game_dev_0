@@ -33,3 +33,7 @@ Create    MeshIf      DefaultMesh      smartMesh_5
 
 // Shaders [ShaderIf]
 Create    ShaderIf    DefaultShader    smartShader_0
+
+
+**** SET_MEMBER ****
+object1    member1     iNeedThis

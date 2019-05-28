@@ -23,7 +23,10 @@ namespace Common
 
 		void getStringFromDB(const std::string& dbEntry, const std::string& dbTarget, std::string& dbParam);
 
+		// Create Object (set0, set1, get0, get1)
 		void create(const std::string& operation, const std::string& interface, std::vector<std::string>& arg0, std::vector<std::string>& arg1);
+		// Set Member (set0, set1, get0)
+		void setMember(const std::string& objName, const std::string& memberName, std::string& get0);
 
 	private:
 		std::string m_name;

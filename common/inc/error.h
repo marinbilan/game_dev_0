@@ -6,7 +6,6 @@
 
 namespace Common
 {
-
 class Error
 {
 public:
@@ -15,8 +14,6 @@ public:
 	void printErrors();
 
 private:
-
 std::vector<std::string> m_errors;
 };
-
-}
+} // End of namespace

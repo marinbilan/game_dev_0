@@ -1,5 +1,7 @@
 #include <iostream>
+#include <ctime>
 
+#include "commonTypes.h"
 #include "error.h"
 
 #include "engineCtrlIf.h"
@@ -78,6 +80,31 @@ int main (int argc, char** argv)
 	engineCtrl0.postInit();
 	// ------------------------
 
+
+	// NEW STUFF TESTING
+	std::cout << " ---- NEW STUFF TESTING START----" << "\n";
+	FACTORY.getErrorObject()->setError("This is error 1");
+	FACTORY.getErrorObject()->setError("This is error 2");
+	FACTORY.getErrorObject()->setError("This is error 3");
+	FACTORY.getErrorObject()->printErrors();
+
+	std::string s("This is cmd stuff");
+	FACTORY.getLog()->INFOCMD(LOG s + "hello");
+	FACTORY.getLog()->LOGFILE(LOG s + "hello");
+
+
+	std::string str;
+	FACTORY.getDatabase()->setMember("object1", "member1", str);
+	std::cout << str << "\n";
+
+	// current date/time based on current system
+	time_t now = time(0);
+	// convert now to string form
+	char* dt = ctime(&now);
+	std::string log0(dt);
+	std::cout << "The local date and time is: " << log0 << std::endl;
+
+	std::cout << " ---- NEW STUFF TESTING END----" << "\n";
 
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

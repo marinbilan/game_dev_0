@@ -5,23 +5,19 @@
 #include <fstream>
 
 
-#define LOG __DATE__, __TIME__, __FILENAME__, __LINE__,
-#define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-
-
 namespace Common
 {
 	class Log
 	{
 	public:
-		Log(const std::string& name) : m_name(name) 
+		Log(const std::string& name) : m_name(name), m_logFile("_log/logFile.txt")
 		{
-			std::ofstream m_logFile("logFile.txt");
+
 		}
 
-		void LOGFILE(const char* date, const char* time, const char* file, int line, std::string msg);
+		void LOGFILE(const char* date, const char* time, const char* file, int line, const std::string& msg);
 
-		void INFOCMD(const char* date, const char* time, const char* file, int line, std::string msg);
+		void INFOCMD(const char* date, const char* time, const char* file, int line, const std::string& msg);
 
 	private:
 
