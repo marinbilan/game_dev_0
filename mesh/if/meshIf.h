@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+#include "commonTypes.h"
 #include "cameraIf.h"
 #include "cameraDefault.h"
 
@@ -29,7 +30,9 @@ public:
 	// Get
 
 	// Set
-	virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {};
+	//virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {}; // TODO: Remove
+	virtual void setShader() {};
+
 	virtual void setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf) {};
 
 	// TODO: Remove

@@ -75,9 +75,6 @@ public:
 	// ---- xx END xx ----
 
 
-	// ---------
-	// FUNCTIONS
-	// ---------
 	void preInit()
 	{
 		// Create "global" objects
@@ -336,7 +333,7 @@ public:
 
 	// GET object - TODO: Make this generic
 	// ---- [3] ---- 
-	// ADD INTERFACE 
+	//
 	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfCameraIf, arg0);

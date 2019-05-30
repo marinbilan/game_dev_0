@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+#include "commonTypes.h"
 #include "error.h"
 
 #include "initIf.h"

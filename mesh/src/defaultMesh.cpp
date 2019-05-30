@@ -18,20 +18,54 @@ Mesh::DefaultMesh::~DefaultMesh()
 void Mesh::DefaultMesh::preInit()
 {
 	std::cout << "Mesh::DefaultMesh::preInit(...) called!" << '\n';
+
+	std::string shaderDbName;
+	FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderDbName);
+
+	std::cout << " --------------- stringFromDb: " << shaderDbName << "\n";
+
+	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>( FACTORY.getShaderIf(shaderDbName) ); // downcast
+	std::cout << " --------------- m_defaultShader: " << m_defaultShader->getName() << "\n";
+
+	setShader();
 }
 
 
 void Mesh::DefaultMesh::postInit()
 {
-	std::cout << "Mesh::DefaultMesh::postInit(...) called!" << '\n';
+	std::cout << " **************************** Mesh::DefaultMesh::postInit(...) called!" << '\n';
+
+	// Combine objects here
 }
 
-
+/*
 void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf)
 {
 	m_shaderIf = shaderIf;
 	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>(shaderIf);
 
+	// ShaderId
+	m_defaultShaderID = m_defaultShader->shaderProgramID;
+
+	// VERTEX SHADER
+	// m_projectionMatrixID = m_shaderIf->getProjectionMatrixID();
+	m_viewMatrixID = m_defaultShader->viewMatrixID;
+	m_viewMatrixInvID = m_defaultShader->viewMatrixInvID;
+	m_modelMatrixID = m_defaultShader->modelMatrixID;
+
+	m_lightPositionID = m_defaultShader->lightPositionID;
+	m_planeID = m_defaultShader->planeID;
+
+	// FRAGMENT SHADER
+	m_lightColourID = m_defaultShader->lightColourID;
+	m_shineDamperID = m_defaultShader->shineDamperID;
+	m_reflectivityID = m_defaultShader->reflectivityID;
+	m_modelTextureID = m_defaultShader->modelTextureID;
+}
+*/
+
+void Mesh::DefaultMesh::setShader()
+{
 	// ShaderId
 	m_defaultShaderID = m_defaultShader->shaderProgramID;
 

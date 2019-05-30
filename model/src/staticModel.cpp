@@ -12,7 +12,7 @@ Model::StaticModel::StaticModel(Common::Error& err, const std::string& name) : m
 	// std::shared_ptr<GPUObject::GPUObjectIf> tempGPUObj = Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject");
 	// tempGPUObj->info();
 
-	// MODEL VARIABLES
+	// MODEL VARIABLES - TODO: move this in DB
 	modelMatrix = glm::mat4(1.0f);
 
 	modelPosition = glm::vec3(385.0f, 0.0f, 375.0f);

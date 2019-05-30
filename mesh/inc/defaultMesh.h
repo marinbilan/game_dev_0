@@ -24,7 +24,8 @@ public:
 	// Get
 
 	// Set
-	void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf);
+	//void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf); // TODO: Remove
+	void setShader();
 
 	void setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf);
 
@@ -48,7 +49,7 @@ GLuint m_numOfInd;
 
 std::shared_ptr<Camera::CameraIf> m_cameraIf;
 
-std::shared_ptr<Shader::ShaderIf> m_shaderIf;
+// std::shared_ptr<Shader::ShaderIf>      m_shaderIf;    // TODO: remove
 std::shared_ptr<Shader::DefaultShader> m_defaultShader;
 
 // Lights ... 
@@ -72,5 +73,4 @@ GLuint m_reflectivityID;
 
 GLuint m_modelTextureID;
 };
-
 } // End of namespace

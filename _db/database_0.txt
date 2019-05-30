@@ -22,7 +22,6 @@ Create    ModelIf     StaticModel      smartModel_0
 
 
 // Meshes [MeshIf]
-Create    MeshIf      DefaultMesh      smartMesh_0
 Create    MeshIf      DefaultMesh      smartMesh_1
 Create    MeshIf      DefaultMesh      smartMesh_2
 Create    MeshIf      DefaultMesh      smartMesh_3
@@ -34,6 +33,18 @@ Create    MeshIf      DefaultMesh      smartMesh_5
 // Shaders [ShaderIf]
 Create    ShaderIf    DefaultShader    smartShader_0
 
-
 **** SET_MEMBER ****
-object1    member1     iNeedThis
+smartMesh_1    shader     smartShader_0
+smartMesh_2    shader     smartShader_0
+smartMesh_3    shader     smartShader_0
+smartMesh_4    shader     smartShader_0
+smartMesh_5    shader     smartShader_0
+
+
+
+
+
+// ---- smartMesh_0 ----
+Create    MeshIf      DefaultMesh      smartMesh_0
+smartMesh_0    shader     smartShader_0
+// ---- ----

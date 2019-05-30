@@ -44,6 +44,13 @@ void Init::InitDefault::preInit()
 	// FACTORY
 	FACTORY.preInit();
 
+	// TODO: foreach object
+	FACTORY.getMeshIf("smartMesh_0")->preInit();
+	FACTORY.getMeshIf("smartMesh_1")->preInit();
+	FACTORY.getMeshIf("smartMesh_2")->preInit();
+	FACTORY.getMeshIf("smartMesh_3")->preInit();
+	FACTORY.getMeshIf("smartMesh_4")->preInit();
+	FACTORY.getMeshIf("smartMesh_5")->preInit();
 }
 
 
@@ -56,12 +63,12 @@ void Init::InitDefault::postInit()
 	// ...
 
 	// Connect shader and mesh
-	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_0")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_1")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_2")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_3")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_4")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
+	//Common::Factory::getInstance().getMeshIf("smartMesh_5")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
 
 	// Connect mesh and model
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_0"));
@@ -83,9 +90,13 @@ void Init::InitDefault::postInit()
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 
-	// Combiner
+
+
+
+
+	// Combiner - POSTINIT
 //
-// TODO: Combine inside instances
+// TODO: Combine inside instances in postInit
 	GLuint texture0 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture0.png");
 	GLuint texture1 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture1.png");
 	GLuint texture2 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture2.png");
@@ -101,6 +112,4 @@ void Init::InitDefault::postInit()
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
 
-	//std::cout << " **** RENDER MODEL **** " << '\n';
-	//Common::Factory::getInstance().getModelIf("smartModel_0")->render();
 }
