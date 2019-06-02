@@ -99,3 +99,31 @@ void Common::Database::setMember(const std::string& objName, const std::string& 
 	}
 	*/
 }
+
+
+void Common::Database::get(const std::string& set0, const std::string& set1, std::vector<std::string>& get0)
+{
+	// dB File - m_name - database text file name
+	std::ifstream dBFile(m_name);
+	// dB Line
+	std::string dBLine;
+	// db Regex - dbEntry (name of the operation) dbTarget (Interface - class of objects with the same interface)
+	std::regex regexLine(set0 + "\\s+" + set1 + "\\s+(\\w+)");
+
+	std::smatch match;
+	while (std::getline(dBFile, dBLine))
+	{
+		if (std::regex_search(dBLine, match, regexLine))
+		{
+			// match.str(0) // Whole matched string
+			// std::cout << " --------------- stringFromDb: " << match.str(1) << "\n";
+			get0.push_back(match.str(1));
+		}
+	}
+	/*
+	if (!arg0.compare("")) // Raise error if no param in DB
+	{
+		// error = true;
+	}
+	*/
+}

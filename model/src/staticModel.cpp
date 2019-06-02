@@ -24,6 +24,8 @@ Model::StaticModel::StaticModel(Common::Error& err, const std::string& name) : m
 
 	modelScale = glm::vec3(10.0f, 10.0f, 10.0f);
 	modelMatrix = glm::scale(modelMatrix, modelScale);
+
+	// m_meshIf = nullptr;
 }
 
 
@@ -35,7 +37,17 @@ Model::StaticModel::~StaticModel()
 
 void Model::StaticModel::preInit()
 {
-    
+	std::vector<std::string> vecOfStringMeshes;
+	FACTORY.getDatabase()->get(m_name, "mesh", vecOfStringMeshes);
+
+
+	for (auto it1 = vecOfStringMeshes.begin(); it1 < vecOfStringMeshes.end(); ++it1)
+	{
+		// std::cout << m_name << " --------------- stringFromDb: " << *it1 << "\n";
+
+		m_meshIf = FACTORY.getMeshIf(*it1);
+		m_vecOfdefaultMeshIf.push_back(m_meshIf);
+	}
 }
 
 

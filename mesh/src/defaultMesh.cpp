@@ -22,10 +22,10 @@ void Mesh::DefaultMesh::preInit()
 	std::string shaderDbName;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderDbName);
 
-	std::cout << " --------------- stringFromDb: " << shaderDbName << "\n";
+	//std::cout << " --------------- stringFromDb: " << shaderDbName << "\n";
 
 	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>( FACTORY.getShaderIf(shaderDbName) ); // downcast
-	std::cout << " --------------- m_defaultShader: " << m_defaultShader->getName() << "\n";
+	//std::cout << " --------------- m_defaultShader: " << m_defaultShader->getName() << "\n";
 
 	setShader();
 }
@@ -34,6 +34,13 @@ void Mesh::DefaultMesh::preInit()
 void Mesh::DefaultMesh::postInit()
 {
 	std::cout << " **************************** Mesh::DefaultMesh::postInit(...) called!" << '\n';
+
+	std::string cameraDbName;
+	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraDbName);
+
+	std::cout << m_name << " --------------- stringFromDb: " << cameraDbName << "\n";
+
+	m_cameraIf = FACTORY.getCameraIf(cameraDbName);
 
 	// Combine objects here
 }

@@ -47,5 +47,7 @@ GLuint m_VAO;
 
 std::shared_ptr<GPUObject::GPUObjectIf> m_gpuObjectIf;
 std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfdefaultMeshIf;
+
+std::shared_ptr<Mesh::MeshIf> m_meshIf;
 };
 }

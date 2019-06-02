@@ -51,6 +51,8 @@ void Init::InitDefault::preInit()
 	FACTORY.getMeshIf("smartMesh_3")->preInit();
 	FACTORY.getMeshIf("smartMesh_4")->preInit();
 	FACTORY.getMeshIf("smartMesh_5")->preInit();
+
+	// FACTORY.getModelIf("smartModel_0")->preInit();
 }
 
 
@@ -71,25 +73,40 @@ void Init::InitDefault::postInit()
 	//Common::Factory::getInstance().getMeshIf("smartMesh_5")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
 
 	// Connect mesh and model
+	FACTORY.getModelIf("smartModel_0")->preInit();
+	/*
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_0"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_1"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_2"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_3"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_4"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_5"));
-
+	*/
 	// Connect GPUObject and SmartModel
 	Common::Factory::getInstance().getModelIf("smartModel_0")->setGPUObject(Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject"));
 	Common::Factory::getInstance().getModelIf("smartModel_0")->connect();
 
+
+
+
 	// Connect Camera and SmartModel
-	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	FACTORY.getMeshIf("smartMesh_0")->postInit();
+	FACTORY.getMeshIf("smartMesh_1")->postInit();
+	FACTORY.getMeshIf("smartMesh_2")->postInit();
+	FACTORY.getMeshIf("smartMesh_3")->postInit();
+	FACTORY.getMeshIf("smartMesh_4")->postInit();
+	FACTORY.getMeshIf("smartMesh_5")->postInit();
+	
+
+
+	// Common::Factory::getInstance().getMeshIf("smartMesh_0")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	/*
 	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
-
+	*/
 
 
 

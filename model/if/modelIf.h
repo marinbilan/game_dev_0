@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "commonTypes.h"
+
 #include "gpuObjectIf.h"
 #include "meshIf.h"
 
