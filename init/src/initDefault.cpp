@@ -52,7 +52,7 @@ void Init::InitDefault::preInit()
 	FACTORY.getMeshIf("smartMesh_4")->preInit();
 	FACTORY.getMeshIf("smartMesh_5")->preInit();
 
-	// FACTORY.getModelIf("smartModel_0")->preInit();
+	FACTORY.getModelIf("smartModel_0")->preInit();
 }
 
 
@@ -61,34 +61,6 @@ void Init::InitDefault::postInit()
 {
 	std::cout << "[initDefault] postInit function called!" << std::endl;
 
-	// Add shaders private members
-	// ...
-
-	// Connect shader and mesh
-	//Common::Factory::getInstance().getMeshIf("smartMesh_0")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	//Common::Factory::getInstance().getMeshIf("smartMesh_1")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	//Common::Factory::getInstance().getMeshIf("smartMesh_2")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	//Common::Factory::getInstance().getMeshIf("smartMesh_3")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	//Common::Factory::getInstance().getMeshIf("smartMesh_4")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-	//Common::Factory::getInstance().getMeshIf("smartMesh_5")->setShader(Common::Factory::getInstance().getShaderIf("smartShader_0"));
-
-	// Connect mesh and model
-	FACTORY.getModelIf("smartModel_0")->preInit();
-	/*
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_0"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_1"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_2"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_3"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_4"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setMesh(Common::Factory::getInstance().getMeshIf("smartMesh_5"));
-	*/
-	// Connect GPUObject and SmartModel
-	Common::Factory::getInstance().getModelIf("smartModel_0")->setGPUObject(Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject"));
-	Common::Factory::getInstance().getModelIf("smartModel_0")->connect();
-
-
-
-
 	// Connect Camera and SmartModel
 	FACTORY.getMeshIf("smartMesh_0")->postInit();
 	FACTORY.getMeshIf("smartMesh_1")->postInit();
@@ -96,37 +68,55 @@ void Init::InitDefault::postInit()
 	FACTORY.getMeshIf("smartMesh_3")->postInit();
 	FACTORY.getMeshIf("smartMesh_4")->postInit();
 	FACTORY.getMeshIf("smartMesh_5")->postInit();
-	
 
 
-	// Common::Factory::getInstance().getMeshIf("smartMesh_0")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+	FACTORY.getModelIf("smartModel_0")->postInit();
+
+
+
+
+
+	Common::Factory::getInstance().getLoaderIf("textureLoader_0")->preInit();
+
+
+
 	/*
-	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
-	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setCamera(Common::Factory::getInstance().getCameraIf("smartCamera_0"));
+
+
+	GLuint texture0 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture0.png");
+	std::cout << " ************ " << FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID() << '\n';
+
+	// FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID();
+
+	GLuint texture1 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture1.png");
+	std::cout << " ************ " << FACTORY.getGPUObjectIf("_vanquish/textures/texture1.png")->getTextureID() << '\n';
+
+
+
+	GLuint texture2 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture2.png");
+	GLuint texture3 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture3.png");
+	GLuint texture4 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture4.png");
+	GLuint texture5 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture5.png");
 	*/
 
 
 
 
-	// Combiner - POSTINIT
-//
-// TODO: Combine inside instances in postInit
-	GLuint texture0 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture0.png");
-	GLuint texture1 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture1.png");
-	GLuint texture2 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture2.png");
-	GLuint texture3 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture3.png");
-	GLuint texture4 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture4.png");
-	GLuint texture5 = Common::Factory::getInstance().getLoaderIf("textureLoader_0")->createTexture("_vanquish/textures/texture5.png");
-
-
+	// TODO: remove
+	/*
 	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(texture0);
 	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(texture1);
 	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(texture2);
 	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(texture3);
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(texture4);
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
+	*/
+
+	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID());
+	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture1.png")->getTextureID());
+	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture2.png")->getTextureID());
+	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture3.png")->getTextureID());
+	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture4.png")->getTextureID());
+	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture5.png")->getTextureID());
 
 }

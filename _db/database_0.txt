@@ -16,9 +16,18 @@ Create    LoaderIf    ModelLoader      modelLoader_0
 Create    LoaderIf    TextureLoader    textureLoader_0
 
 
+
+
+// Shaders [ShaderIf]
+Create    ShaderIf    DefaultShader    smartShader_0
+
+
 // ----
-// Models [ModelIf]
+// ---- Models [ModelIf] ----
 Create    ModelIf     StaticModel      smartModel_0
+
+smartModel_0 GPUObject      vanquishGPUObject
+
 
 smartModel_0    mesh    smartMesh_0
 smartModel_0    mesh    smartMesh_1
@@ -37,10 +46,6 @@ Create    MeshIf      DefaultMesh      smartMesh_4
 Create    MeshIf      DefaultMesh      smartMesh_5
 // ----
 
-
-// Shaders [ShaderIf]
-Create    ShaderIf    DefaultShader    smartShader_0
-
 **** SET_MEMBER ****
 smartMesh_0    shader     smartShader_0
 smartMesh_1    shader     smartShader_0
@@ -49,14 +54,10 @@ smartMesh_3    shader     smartShader_0
 smartMesh_4    shader     smartShader_0
 smartMesh_5    shader     smartShader_0
 
+
 smartMesh_0 camera smartCamera_0
 smartMesh_1 camera smartCamera_0
 smartMesh_2 camera smartCamera_0
 smartMesh_3 camera smartCamera_0
 smartMesh_4 camera smartCamera_0
 smartMesh_5 camera smartCamera_0
-
-
-// ---- smartMesh_0 ----
-
-// ---- ----

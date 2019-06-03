@@ -2,7 +2,7 @@
 
 #include "factory.h"
 
-#include "error.h"
+// #include "error.h"
 
 
 Loader::ModelLoader::ModelLoader(Common::Error& err, const std::string& name) : m_name(name)
@@ -66,17 +66,17 @@ void Loader::ModelLoader::loadModel()
 
 	if (pScene)
 	{
-		std::string vanquish("vanquish");
+		// std::string vanquish("vanquish");
 		// CREATE OBJECT //
 		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(err, "vanquishGPUObject");
 
-		std::cout << " xxx INIT OK" << std::endl;		
+		// std::cout << " xxx INIT OK" << std::endl;		
 		initScene(pScene);
 	}
 	else
 	{
 		// CommonFunctions::INFOCMD(LOG "ERROR parsing: " + modelFolder + modelName + ". " + Importer.GetErrorString());
-		std::cout << " xxx INIT NOK" << std::endl;
+		// std::cout << " xxx INIT NOK" << std::endl;
 	}	
 }
 
@@ -103,7 +103,7 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 
 	Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
 	// STORE OBJECT //
-	std::cout << " NUM OF INSTANCES IN Loader: " << Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject").use_count() << "\n";
+	// std::cout << " NUM OF INSTANCES IN Loader: " << Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObject").use_count() << "\n";
 }
 
 

@@ -56,8 +56,20 @@ void Model::StaticModel::postInit()
 	std::cout << "postInit function called!" << std::endl;
 
 	// Combine meshes (VBO, IBO)
-	
 
+	// Set GPU object!
+	std::string gpuObjectString;
+	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObject", gpuObjectString);
+
+	std::cout << "----------------------------------- GPUObject: " << gpuObjectString  << std::endl;
+
+	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
+	m_gpuObjectIf->info();
+
+	m_VAO = m_gpuObjectIf->getVAO();
+
+	// Connect VBOs, IBOs
+	connect();
 }
 
 

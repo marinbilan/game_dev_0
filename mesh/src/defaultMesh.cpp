@@ -33,12 +33,12 @@ void Mesh::DefaultMesh::preInit()
 
 void Mesh::DefaultMesh::postInit()
 {
-	std::cout << " **************************** Mesh::DefaultMesh::postInit(...) called!" << '\n';
+	// std::cout << " **************************** Mesh::DefaultMesh::postInit(...) called!" << '\n';
 
 	std::string cameraDbName;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraDbName);
 
-	std::cout << m_name << " --------------- stringFromDb: " << cameraDbName << "\n";
+	// std::cout << m_name << " --------------- stringFromDb: " << cameraDbName << "\n";
 
 	m_cameraIf = FACTORY.getCameraIf(cameraDbName);
 

@@ -147,8 +147,8 @@ public:
 		REGISTER_CLASS(Loader::TextureLoader);
 
 		// GPUObjectIf
-		REGISTER_CLASS(GPUObject::TextureGPUObject);
 		REGISTER_CLASS(GPUObject::ModelGPUObject);
+		REGISTER_CLASS(GPUObject::TextureGPUObject);
 
 		// ModelIf
 		REGISTER_CLASS(Model::StaticModel);

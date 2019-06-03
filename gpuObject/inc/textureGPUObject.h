@@ -17,7 +17,11 @@ public:
 	void preInit();
 	void postInit();
 
+	void setTextureID(GLuint textureID);
+	GLuint getTextureID();
+
 private:
 	std::string m_name;
+	GLuint m_textureID;
 };
 }

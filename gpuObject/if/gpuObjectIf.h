@@ -75,6 +75,10 @@ public:
 		return temp;
 	}
 
+	// TEXTURE STUFF
+	virtual void setTextureID(GLuint textureID) {}
+	virtual GLuint getTextureID() { return 0; }
+
 	virtual void info() {}
 };
 }

@@ -1,7 +1,8 @@
 #pragma once
 #include "loaderIf.h"
 
-#include "error.h"
+//#include "error.h"
+#include "textureGPUObject.h"
 
 
 namespace Loader
@@ -22,6 +23,8 @@ public:
 	
 private:
 	std::string m_name;
+
+	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;
 
 	GLuint textureID;
 

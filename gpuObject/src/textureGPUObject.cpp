@@ -30,3 +30,14 @@ void GPUObject::TextureGPUObject::postInit()
 	std::cout << "GPUObject::TextureGPUObject::postInit() destructor called!" << '\n';
 }
 
+
+void GPUObject::TextureGPUObject::setTextureID(GLuint textureID)
+{
+	m_textureID = textureID;
+}
+
+
+GLuint GPUObject::TextureGPUObject::getTextureID()
+{
+	return m_textureID;
+}
