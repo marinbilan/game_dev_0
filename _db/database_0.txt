@@ -16,6 +16,15 @@ Create    LoaderIf    ModelLoader      modelLoader_0
 Create    LoaderIf    TextureLoader    textureLoader_0
 
 
+textureLoader_0    load    _vanquish/textures/texture0.png
+textureLoader_0    load    _vanquish/textures/texture1.png
+textureLoader_0    load    _vanquish/textures/texture2.png
+textureLoader_0    load    _vanquish/textures/texture3.png
+textureLoader_0    load    _vanquish/textures/texture4.png
+textureLoader_0    load    _vanquish/textures/texture5.png
+
+
+
 
 
 // Shaders [ShaderIf]
@@ -53,6 +62,18 @@ smartMesh_2    shader     smartShader_0
 smartMesh_3    shader     smartShader_0
 smartMesh_4    shader     smartShader_0
 smartMesh_5    shader     smartShader_0
+
+
+
+
+smartMesh_0    texture    _vanquish/textures/texture0.png
+smartMesh_1    texture    _vanquish/textures/texture1.png
+smartMesh_2    texture    _vanquish/textures/texture2.png
+smartMesh_3    texture    _vanquish/textures/texture3.png
+smartMesh_4    texture    _vanquish/textures/texture4.png
+smartMesh_5    texture    _vanquish/textures/texture5.png
+
+
 
 
 smartMesh_0 camera smartCamera_0

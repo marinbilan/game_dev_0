@@ -61,6 +61,11 @@ void Init::InitDefault::postInit()
 {
 	std::cout << "[initDefault] postInit function called!" << std::endl;
 
+
+	// TODO: Move in preInit
+	Common::Factory::getInstance().getLoaderIf("textureLoader_0")->preInit();
+
+
 	// Connect Camera and SmartModel
 	FACTORY.getMeshIf("smartMesh_0")->postInit();
 	FACTORY.getMeshIf("smartMesh_1")->postInit();
@@ -76,7 +81,6 @@ void Init::InitDefault::postInit()
 
 
 
-	Common::Factory::getInstance().getLoaderIf("textureLoader_0")->preInit();
 
 
 
@@ -112,11 +116,12 @@ void Init::InitDefault::postInit()
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(texture5);
 	*/
 
-	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID());
+	/*
+	Common::Factory::getInstance().getMeshIf("smartMesh_0")->setTextureId( FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID() );
 	Common::Factory::getInstance().getMeshIf("smartMesh_1")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture1.png")->getTextureID());
 	Common::Factory::getInstance().getMeshIf("smartMesh_2")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture2.png")->getTextureID());
 	Common::Factory::getInstance().getMeshIf("smartMesh_3")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture3.png")->getTextureID());
 	Common::Factory::getInstance().getMeshIf("smartMesh_4")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture4.png")->getTextureID());
 	Common::Factory::getInstance().getMeshIf("smartMesh_5")->setTextureId(FACTORY.getGPUObjectIf("_vanquish/textures/texture5.png")->getTextureID());
-
+	*/
 }

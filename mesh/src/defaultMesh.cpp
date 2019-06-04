@@ -43,6 +43,15 @@ void Mesh::DefaultMesh::postInit()
 	m_cameraIf = FACTORY.getCameraIf(cameraDbName);
 
 	// Combine objects here
+	std::string textureName;
+	FACTORY.getDatabase()->getRest(m_name, "texture", textureName);
+	// std::cout << m_name << " ------------------------------------------- texture: " << textureName << "\n";
+
+	texture0 = FACTORY.getGPUObjectIf(textureName)->getTextureID();
+
+	std::cout << m_name << " ------------------------------------------- texture: " << texture0 << "\n";
+
+	// FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID();
 }
 
 /*

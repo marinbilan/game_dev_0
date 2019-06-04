@@ -26,16 +26,25 @@ void Loader::TextureLoader::preInit()
 {
 	Common::Error err;
 
+	std::vector<std::string> wantedString;
+	FACTORY.getDatabase()->getRest(m_name, "load", wantedString);
+
+	for (auto s : wantedString)
+	{
+		GLuint tempTextureID = createTexture(s);
+
+		m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, s);
+		m_GPUObjectIf->setTextureID(tempTextureID);
+
+		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
+	}
+	//std::cout << " ------------------------------------ wantedString: " << wantedString[0] << '\n';
+	//std::cout << " ------------------------------------ wantedString: " << wantedString[1] << '\n';
+	//std::cout << " ------------------------------------ wantedString: " << wantedString[2] << '\n';
+
 	// 0]
+	/*
 	GLuint tempTextureID = createTexture("_vanquish/textures/texture0.png");
-
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture0.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-
-
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
 
 	// createTexture("_vanquish/textures/texture1.png");
 
@@ -88,6 +97,7 @@ void Loader::TextureLoader::preInit()
 	m_GPUObjectIf->setTextureID(tempTextureID);
 	std::cout << " ------------------------------------ " << tempTextureID << '\n';
 	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
+	*/
 }
 
 
