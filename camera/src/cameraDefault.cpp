@@ -1,7 +1,7 @@
 #include "cameraDefault.h"
 
 
-Camera::CameraDefault::CameraDefault(Common::Error& err, const std::string& name) : 
+Camera::CameraDefault::CameraDefault(const std::string& name) : 
 	m_name(name),
 	m_cameraPos(glm::vec3(0, 0, 0)),
 	m_cameraFront(glm::vec3(0, 0, 1)),

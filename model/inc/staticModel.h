@@ -11,7 +11,7 @@ namespace Model
 class StaticModel : public ModelIf
 {
 public:
-	StaticModel(Common::Error& err, const std::string& name);
+	StaticModel(const std::string& name);
 
 	~StaticModel();
 

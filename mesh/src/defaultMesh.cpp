@@ -3,7 +3,7 @@
 #include "factory.h"
 
 
-Mesh::DefaultMesh::DefaultMesh(Common::Error& err, const std::string& name) : m_name(name)
+Mesh::DefaultMesh::DefaultMesh(const std::string& name) : m_name(name)
 {
 	std::cout << "Mesh::DefaultMesh::DefaultMesh(...) constructor called!" << '\n';
 }

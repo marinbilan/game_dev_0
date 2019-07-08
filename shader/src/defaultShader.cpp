@@ -1,7 +1,7 @@
 #include "defaultShader.h"
 
 
-Shader::DefaultShader::DefaultShader(Common::Error& err, const std::string& name) : m_name(name)
+Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 {
 	std::cout << "DefaultShader created!" << std::endl;
 

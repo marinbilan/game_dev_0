@@ -8,7 +8,7 @@ namespace GPUObject
 class TextureGPUObject : public GPUObjectIf
 {
 public:
-	TextureGPUObject(Common::Error& err, const std::string& name);
+	TextureGPUObject(const std::string& name);
 
 	~TextureGPUObject();
 

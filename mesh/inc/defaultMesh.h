@@ -9,7 +9,7 @@ namespace Mesh
 class DefaultMesh : public MeshIf
 {
 public:
-	DefaultMesh(Common::Error& err, const std::string& name);
+	DefaultMesh(const std::string& name);
 
 	~DefaultMesh();
 

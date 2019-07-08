@@ -5,7 +5,7 @@
 // #include "error.h"
 
 
-Loader::ModelLoader::ModelLoader(Common::Error& err, const std::string& name) : m_name(name)
+Loader::ModelLoader::ModelLoader(const std::string& name) : m_name(name)
 {
 	std::cout << "ModelLoader created!" << std::endl;
 
@@ -68,7 +68,7 @@ void Loader::ModelLoader::loadModel()
 	{
 		// std::string vanquish("vanquish");
 		// CREATE OBJECT //
-		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(err, "vanquishGPUObject");
+		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>("vanquishGPUObject");
 
 		// std::cout << " xxx INIT OK" << std::endl;		
 		initScene(pScene);

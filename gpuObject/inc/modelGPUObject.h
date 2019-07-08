@@ -11,7 +11,7 @@ namespace GPUObject
 class ModelGPUObject : public GPUObjectIf
 {
 public:
-	ModelGPUObject(Common::Error& err, const std::string& name);
+	ModelGPUObject(const std::string& name);
 
 	~ModelGPUObject();
 	

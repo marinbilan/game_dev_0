@@ -9,7 +9,7 @@ namespace Camera
 class CameraDefault : public CameraIf
 {
 public:
-	CameraDefault(Common::Error& err, const std::string& name);
+	CameraDefault(const std::string& name);
 
 	~CameraDefault();
 

@@ -79,7 +79,7 @@ const char* FragmentShaderPTN =
 "}";
 
 public:
-	DefaultShader(Common::Error& err, const std::string& name);
+	DefaultShader(const std::string& name);
 	~DefaultShader();
 
 	// FUNCTIONs

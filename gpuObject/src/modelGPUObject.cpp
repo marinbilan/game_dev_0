@@ -3,7 +3,7 @@
 #include "error.h"
 
 
-GPUObject::ModelGPUObject::ModelGPUObject(Common::Error& err, const std::string& name) : m_name(name)
+GPUObject::ModelGPUObject::ModelGPUObject(const std::string& name) : m_name(name)
 {
 	std::cout << "ModelGPUObject created!" << std::endl;
 }

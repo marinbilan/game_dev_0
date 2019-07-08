@@ -10,7 +10,7 @@ namespace Loader
 class TextureLoader : public LoaderIf
 {
 public:
-	TextureLoader(Common::Error& err, const std::string& name);
+	TextureLoader(const std::string& name);
 
 	~TextureLoader();
 

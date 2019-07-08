@@ -4,7 +4,7 @@
 //#include "error.h"
 
 
-Loader::TextureLoader::TextureLoader(Common::Error& err, const std::string& name) : m_name(name)
+Loader::TextureLoader::TextureLoader(const std::string& name) : m_name(name)
 {
 	std::cout << "TextureLoader created!" << std::endl;
 }
@@ -33,7 +33,7 @@ void Loader::TextureLoader::preInit()
 	{
 		GLuint tempTextureID = createTexture(s);
 
-		m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, s);
+		m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(s);
 		m_GPUObjectIf->setTextureID(tempTextureID);
 
 		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);

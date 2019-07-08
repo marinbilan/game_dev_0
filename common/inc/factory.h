@@ -29,23 +29,26 @@
 #include "shaderIf.h"
 #include "defaultShader.h"
 
-
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
 namespace Common
 {
-
-// ---- Constructor Prototype ---- 
-template <class T> void* constructor(Error& err, const std::string& arg0)
+/*! @brief Method for object construction
+*   @param objectName Name (ID) of particaular instance
+*   @return void pointer on particular created object
+*/
+template <class T> void* constructor(const std::string& objectName)
 {
-	return (void*)new T(err, arg0);
+	return (void*)new T(objectName);
 }
 
-// ---- Factroy ---- 
+
 class Factory
 {
 public:
-	// Singleton "constructor"
+	/*! @brief Get singleton factory instance
+	*   @return Factory reference 
+	*/
 	static Factory& getInstance()
 	{
 		static Factory instance;
@@ -56,89 +59,95 @@ public:
 	void operator=(Factory const&) = delete;
 
 	~Factory() {};
-	//
-	// ---- xx START xx ----
-	// 1] Type of constructor  (two args - Error&, std::string)  
+
+	/*! @brief Method for class registration - map(constructor name, constructor pointer)
+	*   @param constructorName Namespace::constructorName
+	*   @return void
+	*/
 	template <class T>
-	void registerClass(std::string const& ConstructorName)
+	void registerClass(std::string const& constructorName)
 	{
-		m_classesMap.insert(std::make_pair(ConstructorName, &constructor<T>));
+		m_classesMap.insert(std::make_pair(constructorName, &constructor<T>));
 	}
 
-	// 2] Construct object out of seed - Get constructor (map - second) and create object with params  
-	void* constructObject(std::string const& constructorName, Error& err, const std::string& arg0)
+	/*! @brief Method for class registration map(constructor name, constructor pointer)
+	*   @param constructorName Namespace::constructorName
+	*   @return void
+	*/
+	void* constructObject(std::string const& constructorName, const std::string& arg0)
 	{
 		mapType::iterator i = m_classesMap.find(constructorName);
 		if (i == m_classesMap.end()) return 0; // or throw or whatever you want  
-		return i->second(err, arg0);
+		return i->second(arg0);
 	}
-	// ---- xx END xx ----
 
 
 	void preInit()
 	{
-		// Create "global" objects
-		// Error
+		// Create global Error object
 		m_error = std::make_unique<Common::Error>();
-		// Log
+		// Create global Log object
 		m_log = std::make_unique<Common::Log>("log_0");
 
-
-		// Register Class
 		registerClass();
 
-		// Create Objects
 		createObjects();
 	}
 
 
 	void postInit()
 	{
-
 	}
 
 
-	// ---------
-    // DATABASE
-    // ---------
+	/*! @brief Set database object created from init object (during init phase)
+	*   @param database
+	*   @return void
+	*/
 	void setDatabase(std::unique_ptr<Common::Database>& database)
 	{
 		m_database = std::move(database);
 	}
 
+
+	/*! @brief Get reference on global database object
+     *  @param - 
+     *  @return reference on database object
+     */
 	std::unique_ptr<Common::Database>& getDatabase()
 	{
 		return m_database;
 	}
-	// --------
 
 
-	// -----
-	// ERROR
-	// -----
+	/*! @brief Get reference on global error object
+	 *  @param -
+	 *  @return reference on error object
+	 */
 	std::unique_ptr<Common::Error>& getErrorObject()
 	{
 		return m_error;
 	}
-	// --------
 
 
-	// ---
-	// LOG
-	// ---
+	/*! @brief Get reference on global log object
+	 *  @param -
+	 *  @return reference on log object
+	 */
 	std::unique_ptr<Common::Log>& getLog()
 	{
 		return m_log;
 	}
-	// --------
 
 
+	/*! @brief Register class using MACRO - Generator of objects
+     *  @param -
+     *  @return void
+     */
 	void registerClass()
 	{
 		std::cout << "registerClass function called!" << std::endl;
 
-		// 1] Register Constructor (Class)
-		//
 		// CameraIf
 		REGISTER_CLASS(Camera::CameraDefault);
 
@@ -159,14 +168,15 @@ public:
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);
 
+		// TODO: remove
 		Common::Factory::getInstance().showMeSeededClasses();
 	}
 
 
-	// ----------------------------
-	// CREATE OBJECTS FROM DATABASE
-	// ----------------------------
-
+	/*! @brief Create objects from DB
+	 *  @param -
+	 *  @return void
+	 */
 	void createObjects()
 	{
 		// Create Cameras
@@ -186,7 +196,12 @@ public:
 	}
 
 
-	void createObjects(const std::string& name_space, const std::string& inter_face)
+	/*! @brief Create objects Namespace::ClassName, objectName
+     *  @param - nameSpace
+	 *  @param - interFace
+     *  @return void
+     */
+	void createObjects(const std::string& nameSpace, const std::string& interFace)
 	{
 		Common::Error err;
 
@@ -194,7 +209,7 @@ public:
 		std::vector<std::string> vecArg1;
 
 		// GET ALL DERIVED CLASSes FROM SAME IF
-		Common::Factory::getInstance().getDatabase()->create("Create", inter_face, vecArg0, vecArg1);
+		Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecArg0, vecArg1);
 
 		// Iterate over colums and create objects with the same interface
 		// vecArg0 - vector (column) of derived classes
@@ -202,39 +217,40 @@ public:
 		auto it1 = vecArg1.begin();
 		for (auto it0 = vecArg0.begin(); it0 != vecArg0.end(); ++it0)
 		{
-			if (!inter_face.compare("CameraIf"))
+			if (!interFace.compare("CameraIf"))
 			{
-				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(name_space + *it0, err, *it1));
-				storeInContainer(inter_face, camera);
+				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, camera);
 			}
-			else if (!inter_face.compare("MeshIf"))
+			else if (!interFace.compare("MeshIf"))
 			{
-				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(name_space + *it0, err, *it1));
-				storeInContainer(inter_face, mesh);
+				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, mesh);
 			}
-			else if (!inter_face.compare("LoaderIf"))
+			else if (!interFace.compare("LoaderIf"))
 			{
-				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(name_space + *it0, err, *it1));
-				storeInContainer(inter_face, loader);
+				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, loader);
 			}
-			else if (!inter_face.compare("ModelIf"))
+			else if (!interFace.compare("ModelIf"))
 			{
-				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(name_space + *it0, err, *it1));
-				storeInContainer(inter_face, model);
+				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, model);
 			}
-			else if (!inter_face.compare("ShaderIf"))
+			else if (!interFace.compare("ShaderIf"))
 			{
-				std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(name_space + *it0, err, *it1));
-				storeInContainer(inter_face, shader);
+				std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, shader);
 			}
 
 			++it1;
 		}
 	}
-	// --------
 
 
-	// ---- [0] ---- 
+	/*! @brief Show classes registered in map m_classesMap(constructorName, construcor pointer)
+	 *  @return void
+	 */
 	void showMeSeededClasses()
 	{
 		mapType::iterator it;
@@ -245,7 +261,9 @@ public:
 	}
 
 
-	// ---- [1] ---- 
+	/*! @brief Show all objects generated from classes within one interface
+	 *  @return void
+	 */
 	void showMeObjects(const std::string& objNameIf)
 	{
 		if (!objNameIf.compare("LoaderIf"))
@@ -277,7 +295,8 @@ public:
 			std::cout << "ERROR: objNameIf can not be found!" << '\n';
 		}
 	}
-	// Generic Object Name Printer
+	
+
 	template<class T>
 	void printName(T& vec0)
 	{
@@ -288,38 +307,34 @@ public:
 	}
 
 
-	// SET - Store
-	// ---- [2] ---- 
+	/*! @brief Store object in container
+	 *  @param - objNameIf
+	 *  @param - derivedObject
+	 *  @return void
+	 */
 	template<class T>
-	// args 1] classIf    2] derived objectName
 	void storeInContainer(const std::string& objNameIf, const T& derivedObject)
 	{
-		// CameraIf
 		if (!objNameIf.compare("CameraIf"))
 		{
 		m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
 		}
-		// LoaderIf
 		else if (!objNameIf.compare("LoaderIf"))
 		{
 			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(derivedObject));
 		}
-		// GPUObjectIf
 		else if (!objNameIf.compare("GPUObjectIf"))
 		{
 			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(derivedObject));
 		}
-		// ModelIf
 		else if (!objNameIf.compare("ModelIf"))
 		{
 			m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(derivedObject));
 		}
-		// MeshIf
 		else if (!objNameIf.compare("MeshIf"))
 		{
 			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(derivedObject));
 		}
-		// ShaderIf
 		else if (!objNameIf.compare("ShaderIf"))
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
@@ -332,8 +347,11 @@ public:
 
 
 	// GET object - TODO: Make this generic
-	// ---- [3] ---- 
-	//
+	/*! @brief get object (within particaulary interface) from container
+	 *  @param - objNameIf
+	 *  @param - derivedObject
+	 *  @return void
+	 */
 	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfCameraIf, arg0);
@@ -381,18 +399,18 @@ public:
 		return vec0[0];
 	}
 
+
 private:	
-	// Singleton Factory - Constructor private
+	// Singleton Factory - Private Constructor
 	Factory() 
 	{
 	};
-	//
+
 	// Factory Stuff 
-	//
-	typedef void*(*constructor_t)(Error&, const std::string&);
+	typedef void*(*constructor_t)(const std::string&);
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
-	//
+
 	// DataBase
 	std::unique_ptr<Common::Database> m_database;
 	// Error
@@ -400,9 +418,8 @@ private:
 	// Log
 	std::unique_ptr<Common::Log> m_log;
 
-	//
+
 	// Container Stuff 
-	//
 	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
 
 	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;

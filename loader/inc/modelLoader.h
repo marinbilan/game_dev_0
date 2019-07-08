@@ -29,7 +29,7 @@ private:
 class ModelLoader : public LoaderIf
 {
 public:
-	ModelLoader(Common::Error& err, const std::string& name);
+	ModelLoader(const std::string& name);
 
 	~ModelLoader();
 

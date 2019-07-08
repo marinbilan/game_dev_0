@@ -1,7 +1,7 @@
 #include "textureGPUObject.h"
 
 
-GPUObject::TextureGPUObject::TextureGPUObject(Common::Error& err, const std::string& name) : m_name(name)
+GPUObject::TextureGPUObject::TextureGPUObject(const std::string& name) : m_name(name)
 {
 	std::cout << "GPUObject::TextureGPUObject::TextureGPUObject() constructor called!" << '\n';
 }

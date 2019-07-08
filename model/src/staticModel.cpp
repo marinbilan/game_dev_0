@@ -2,7 +2,7 @@
 
 #include "factory.h"
 
-Model::StaticModel::StaticModel(Common::Error& err, const std::string& name) : m_name(name)
+Model::StaticModel::StaticModel(const std::string& name) : m_name(name)
 {
 	std::cout << "StaticModel created!" << std::endl;
 
