@@ -9,7 +9,7 @@ namespace Common
 class Error
 {
 public:
-	void setError(const std::string& arg0);
+	void setError(std::string arg0);
 
 	void printErrors();
 

@@ -47,7 +47,6 @@ private:
 
 	const aiScene*    pScene;
 
-	// 
 	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;
 };
 }

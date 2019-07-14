@@ -15,39 +15,31 @@ public:
 
 	~StaticModel();
 
-	// ModelIf
-	void preInit();
-	void postInit();
-
-	void setGPUObject(const std::shared_ptr<GPUObject::GPUObjectIf>& gpuObjectIf);
-	void setMesh(const std::shared_ptr<Mesh::MeshIf>& meshIf);
-
-	void connect();
-
-    void render();
-
 	const std::string& getName() 
 	{ 
 		return m_name; 
 	}
 
+	// ModelIf
+	void preInit();
+	void postInit();
+
+    void render();
+
 	void cmdPrompt(const std::string& arg0);
 
 private:
 std::string m_name;
-
-glm::mat4                 modelMatrix;
-
-glm::vec3                 modelPosition;
-glm::vec3                 modelScale;
-glm::vec3                 modelRotateAround;
-GLfloat                   angle;
-
 GLuint m_VAO;
 
-std::shared_ptr<GPUObject::GPUObjectIf> m_gpuObjectIf;
-std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfdefaultMeshIf;
+glm::vec3                 m_modelPosition;
+glm::vec3                 m_modelScale;
+glm::vec3                 m_modelRotateAround;
+GLfloat                   m_angle;
 
-std::shared_ptr<Mesh::MeshIf> m_meshIf;
+glm::mat4                 m_modelMatrix;
+
+std::shared_ptr<GPUObject::GPUObjectIf>    m_gpuObjectIf;
+std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfdefaultMeshIf;
 };
-}
+} // end of namespace

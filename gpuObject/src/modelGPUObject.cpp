@@ -5,13 +5,11 @@
 
 GPUObject::ModelGPUObject::ModelGPUObject(const std::string& name) : m_name(name)
 {
-	std::cout << "ModelGPUObject created!" << std::endl;
 }
 
 
 GPUObject::ModelGPUObject::~ModelGPUObject()
 {
-	std::cout << "ModelGPUObject destructor called!" << std::endl;
 }
 
 
@@ -20,16 +18,14 @@ const std::string& GPUObject::ModelGPUObject::getName()
 	return m_name;
 }
 
-
+// Preinit
 void GPUObject::ModelGPUObject::preInit()
 {
-
 }
 
-
+// Postinit
 void GPUObject::ModelGPUObject::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
 }
 
 
@@ -39,60 +35,25 @@ void GPUObject::ModelGPUObject::setVAO(GLuint VAO)
 }
 
 
+void GPUObject::ModelGPUObject::setMeshInVec(const Mesh& mesh)
+{
+	m_vecOfMeshes.push_back(mesh);
+}
+
+
 GLuint GPUObject::ModelGPUObject::getVAO()
 {
 	return m_VAO;
 }
 
 
-void GPUObject::ModelGPUObject::setVBO(GLuint VBO)
+std::vector<GPUObject::Mesh>& GPUObject::ModelGPUObject::getMeshVec()
 {
-	m_vecOfVBOs.push_back(VBO);
-}
-
-
-void GPUObject::ModelGPUObject::setIBO(GLuint IBO)
-{
-	m_vecOfIBOs.push_back(IBO);
-}
-
-
-void GPUObject::ModelGPUObject::setNumOfInd(GLuint numOfInd)
-{
-	m_vecOfNumOfInds.push_back(numOfInd);
-}
-
-
-std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfVBOs()
-{
-	return m_vecOfVBOs;
-}
-
-
-std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfIBOs()
-{
-	return m_vecOfIBOs;
-}
-
-
-std::vector<GLuint>& GPUObject::ModelGPUObject::getVecOfNumOfInds()
-{
-	return m_vecOfNumOfInds;
+	return m_vecOfMeshes;
 }
 
 
 void GPUObject::ModelGPUObject::info()
-{
-	std::cout << " _ info m_VAO: " << m_VAO << '\n';
-	for (auto it = m_vecOfVBOs.begin(); it != m_vecOfVBOs.end(); ++it)
-	{
-		std::cout << " ___ info m_VBO: " << *it << '\n';
-	}
-	
-	for (auto it = m_vecOfIBOs.begin(); it != m_vecOfIBOs.end(); ++it)
-	{
-		std::cout << " ___ info m_IBO: " << *it << '\n';
-	}
-	
+{	
 }
 

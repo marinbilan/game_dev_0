@@ -31,6 +31,18 @@
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
+/*
+Factory:
+Class Registration
+1] class registration (insert in map)
+
+Object Creation
+1] create object (find in map and create instance)
+
+Other
+1] Error, Log, Database
+*/
+
 namespace Common
 {
 /*! @brief Method for object construction
@@ -55,10 +67,10 @@ public:
 		return instance;
 	}
 
+	~Factory() {};
+
 	Factory(Factory const&) = delete;
 	void operator=(Factory const&) = delete;
-
-	~Factory() {};
 
 	/*! @brief Method for class registration - map(constructor name, constructor pointer)
 	*   @param constructorName Namespace::constructorName
@@ -70,8 +82,9 @@ public:
 		m_classesMap.insert(std::make_pair(constructorName, &constructor<T>));
 	}
 
-	/*! @brief Method for class registration map(constructor name, constructor pointer)
+	/*! @brief Method for object creation
 	*   @param constructorName Namespace::constructorName
+	*   @param arg0 object name
 	*   @return void
 	*/
 	void* constructObject(std::string const& constructorName, const std::string& arg0)
@@ -111,7 +124,6 @@ public:
 
 
 	/*! @brief Get reference on global database object
-     *  @param - 
      *  @return reference on database object
      */
 	std::unique_ptr<Common::Database>& getDatabase()
@@ -121,7 +133,6 @@ public:
 
 
 	/*! @brief Get reference on global error object
-	 *  @param -
 	 *  @return reference on error object
 	 */
 	std::unique_ptr<Common::Error>& getErrorObject()
@@ -141,13 +152,10 @@ public:
 
 
 	/*! @brief Register class using MACRO - Generator of objects
-     *  @param -
      *  @return void
      */
 	void registerClass()
 	{
-		std::cout << "registerClass function called!" << std::endl;
-
 		// CameraIf
 		REGISTER_CLASS(Camera::CameraDefault);
 
@@ -167,14 +175,10 @@ public:
 
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);
-
-		// TODO: remove
-		Common::Factory::getInstance().showMeSeededClasses();
 	}
 
 
 	/*! @brief Create objects from DB
-	 *  @param -
 	 *  @return void
 	 */
 	void createObjects()
@@ -205,17 +209,17 @@ public:
 	{
 		Common::Error err;
 
-		std::vector<std::string> vecArg0;
-		std::vector<std::string> vecArg1;
+		std::vector<std::string> vecClassNames;
+		std::vector<std::string> vecObjectNames;
 
 		// GET ALL DERIVED CLASSes FROM SAME IF
-		Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecArg0, vecArg1);
+		Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecClassNames, vecObjectNames);
 
 		// Iterate over colums and create objects with the same interface
-		// vecArg0 - vector (column) of derived classes
-		// vecArg1 - vector (column) of derived classes names
-		auto it1 = vecArg1.begin();
-		for (auto it0 = vecArg0.begin(); it0 != vecArg0.end(); ++it0)
+		// vecClassNames - vector (column) of derived classes
+		// vecObjectNames - vector (column) of object names
+		auto it1 = vecObjectNames.begin();
+		for (auto it0 = vecClassNames.begin(); it0 != vecClassNames.end(); ++it0)
 		{
 			if (!interFace.compare("CameraIf"))
 			{
@@ -292,7 +296,8 @@ public:
 		}
 		else
 		{
-			std::cout << "ERROR: objNameIf can not be found!" << '\n';
+			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
+			FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
 		}
 	}
 	
@@ -302,7 +307,7 @@ public:
 	{
 		for (auto it = vec0.begin(); it != vec0.end(); ++it)
 		{
-			std::cout << "- PRINT NAME TEST -" << (*it)->getName() << '\n';
+			std::cout << (*it)->getName() << '\n';
 		}
 	}
 
@@ -317,7 +322,7 @@ public:
 	{
 		if (!objNameIf.compare("CameraIf"))
 		{
-		m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
+		    m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
 		}
 		else if (!objNameIf.compare("LoaderIf"))
 		{
@@ -341,7 +346,8 @@ public:
 		}
 		else
 		{
-			std::cout << "ERROR: Can not store derivedObject in container" << "\n";
+			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
+			FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
 		}
 	}
 
@@ -394,8 +400,9 @@ public:
 			}
 		}
 
-		// If can't find element in vector, return first
-		std::cout << "ERROR: Can not find element in vector! " << '\n';
+		FACTORY.getErrorObject()->setError("ERROR: " + arg1 + " can not be found!");
+		FACTORY.getLog()->LOGFILE(LOG "ERROR: " + arg1 + " can not be found!");
+
 		return vec0[0];
 	}
 
@@ -430,4 +437,3 @@ private:
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
 };
 } // End of namespace
- 

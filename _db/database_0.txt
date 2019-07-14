@@ -1,42 +1,44 @@
 /*****************************************************************/
 /* CREATE
-/* 0 arg - Key word (ex Create)
-/* 1 arg - Group identifier (ex CameraIf) for all derived classes
-/* 2 arg - Derived class name (ex StaticModel)
-/* 3 arg - Instance name
+/* 0 arg - Key word           (ex Create)
+/* 1 arg - Group identifier   (ex CameraIf) for all derived classes
+/* 2 arg - Derived class name (ex CameraDefault)
+/* 3 arg - Instance name      (ex smartCamera_0)
 /*****************************************************************/
 
-// Cameras [CameraIf]
+// ---- ==== ==== CREATE ==== ==== ----
+
+// ---- Cameras [CameraIf] ----
 Create    CameraIf    CameraDefault    smartCamera_0
 Create    CameraIf    CameraDefault    smartCamera_1
 
+// ---- Meshes [MeshIf] ---- 
+Create    MeshIf      DefaultMesh      smartMesh_0
+Create    MeshIf      DefaultMesh      smartMesh_1
+Create    MeshIf      DefaultMesh      smartMesh_2
+Create    MeshIf      DefaultMesh      smartMesh_3
+Create    MeshIf      DefaultMesh      smartMesh_4
+Create    MeshIf      DefaultMesh      smartMesh_5
 
-// Loaders [LoaderIf]
+// ---- Loaders [LoaderIf] ---- 
 Create    LoaderIf    ModelLoader      modelLoader_0
 Create    LoaderIf    TextureLoader    textureLoader_0
 
-
-textureLoader_0    load    _vanquish/textures/texture0.png
-textureLoader_0    load    _vanquish/textures/texture1.png
-textureLoader_0    load    _vanquish/textures/texture2.png
-textureLoader_0    load    _vanquish/textures/texture3.png
-textureLoader_0    load    _vanquish/textures/texture4.png
-textureLoader_0    load    _vanquish/textures/texture5.png
-
-
-
-
+// ---- Models [ModelIf] ----
+Create    ModelIf     StaticModel      smartModel_0
 
 // Shaders [ShaderIf]
 Create    ShaderIf    DefaultShader    smartShader_0
 
+// ---- ==== ==== ==== ==== ----
 
-// ----
-// ---- Models [ModelIf] ----
-Create    ModelIf     StaticModel      smartModel_0
 
-smartModel_0 GPUObject      vanquishGPUObject
 
+// ---- ==== ==== OBJECT MEMBERs ==== ==== ----
+
+// ---- Model [smartModel_0] ----
+
+smartModel_0 GPUObject  vanquishGPUObject
 
 smartModel_0    mesh    smartMesh_0
 smartModel_0    mesh    smartMesh_1
@@ -45,26 +47,13 @@ smartModel_0    mesh    smartMesh_3
 smartModel_0    mesh    smartMesh_4
 smartModel_0    mesh    smartMesh_5
 
-
-// Meshes [MeshIf]
-Create    MeshIf      DefaultMesh      smartMesh_0
-Create    MeshIf      DefaultMesh      smartMesh_1
-Create    MeshIf      DefaultMesh      smartMesh_2
-Create    MeshIf      DefaultMesh      smartMesh_3
-Create    MeshIf      DefaultMesh      smartMesh_4
-Create    MeshIf      DefaultMesh      smartMesh_5
-// ----
-
-**** SET_MEMBER ****
+// ---- Model [smartMesh_0] ----
 smartMesh_0    shader     smartShader_0
 smartMesh_1    shader     smartShader_0
 smartMesh_2    shader     smartShader_0
 smartMesh_3    shader     smartShader_0
 smartMesh_4    shader     smartShader_0
 smartMesh_5    shader     smartShader_0
-
-
-
 
 smartMesh_0    texture    _vanquish/textures/texture0.png
 smartMesh_1    texture    _vanquish/textures/texture1.png
@@ -73,12 +62,28 @@ smartMesh_3    texture    _vanquish/textures/texture3.png
 smartMesh_4    texture    _vanquish/textures/texture4.png
 smartMesh_5    texture    _vanquish/textures/texture5.png
 
-
-
-
 smartMesh_0 camera smartCamera_0
 smartMesh_1 camera smartCamera_0
 smartMesh_2 camera smartCamera_0
 smartMesh_3 camera smartCamera_0
 smartMesh_4 camera smartCamera_0
 smartMesh_5 camera smartCamera_0
+
+// ---- TextureLoader [textureLoader_0] ----
+textureLoader_0    load    _vanquish/textures/texture0.png
+textureLoader_0    load    _vanquish/textures/texture1.png
+textureLoader_0    load    _vanquish/textures/texture2.png
+textureLoader_0    load    _vanquish/textures/texture3.png
+textureLoader_0    load    _vanquish/textures/texture4.png
+textureLoader_0    load    _vanquish/textures/texture5.png
+
+// ---- ==== ==== ==== ==== ----
+
+
+
+
+
+
+
+
+

@@ -16,7 +16,6 @@ class MeshIf
 public:
 	~MeshIf()
 	{
-		std::cout << "MeshIf::~MeshIf() destructor called!" << '\n';
 	}
 
 	virtual const std::string& getName() 
@@ -27,26 +26,18 @@ public:
 	virtual void preInit() {};
 	virtual void postInit() {};
 
-	// Get
-
 	// Set
-	//virtual void setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf) {}; // TODO: Remove
 	virtual void setShader() {};
 
-	virtual void setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf) {};
-
-	// TODO: Remove
-	virtual void setVBO(GLuint VBO) {};
-	virtual void setIBO(GLuint IBO) {};
-	virtual void setNumOfInd(GLuint numOfInd) {};
-
+	// TODO: Remove this
 	virtual void setTextureId(GLuint texId) {};
 
-	virtual void render(const glm::mat4& modelMatrix) {};
+	// Get
+
+	virtual void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds) {};
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{
-		std::cout << "Error: MeshIf::cmdPrompt() called from MeshIf!" << '\n';
 	}
 };
 }

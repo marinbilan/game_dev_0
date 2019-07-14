@@ -5,27 +5,20 @@
 
 Mesh::DefaultMesh::DefaultMesh(const std::string& name) : m_name(name)
 {
-	std::cout << "Mesh::DefaultMesh::DefaultMesh(...) constructor called!" << '\n';
 }
 
 
 Mesh::DefaultMesh::~DefaultMesh()
 {
-	std::cout << "Mesh::DefaultMesh::~DefaultMesh(...) destructor called!" << '\n';
 }
 
 
 void Mesh::DefaultMesh::preInit()
 {
-	std::cout << "Mesh::DefaultMesh::preInit(...) called!" << '\n';
-
 	std::string shaderDbName;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderDbName);
 
-	//std::cout << " --------------- stringFromDb: " << shaderDbName << "\n";
-
 	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>( FACTORY.getShaderIf(shaderDbName) ); // downcast
-	//std::cout << " --------------- m_defaultShader: " << m_defaultShader->getName() << "\n";
 
 	setShader();
 }
@@ -33,52 +26,19 @@ void Mesh::DefaultMesh::preInit()
 
 void Mesh::DefaultMesh::postInit()
 {
-	// std::cout << " **************************** Mesh::DefaultMesh::postInit(...) called!" << '\n';
-
 	std::string cameraDbName;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraDbName);
-
-	// std::cout << m_name << " --------------- stringFromDb: " << cameraDbName << "\n";
 
 	m_cameraIf = FACTORY.getCameraIf(cameraDbName);
 
 	// Combine objects here
 	std::string textureName;
 	FACTORY.getDatabase()->getRest(m_name, "texture", textureName);
-	// std::cout << m_name << " ------------------------------------------- texture: " << textureName << "\n";
 
+	// TODO: Remove from here - set this in render method during runtime
 	texture0 = FACTORY.getGPUObjectIf(textureName)->getTextureID();
-
-	std::cout << m_name << " ------------------------------------------- texture: " << texture0 << "\n";
-
-	// FACTORY.getGPUObjectIf("_vanquish/textures/texture0.png")->getTextureID();
 }
 
-/*
-void Mesh::DefaultMesh::setShader(const std::shared_ptr<Shader::ShaderIf>& shaderIf)
-{
-	m_shaderIf = shaderIf;
-	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>(shaderIf);
-
-	// ShaderId
-	m_defaultShaderID = m_defaultShader->shaderProgramID;
-
-	// VERTEX SHADER
-	// m_projectionMatrixID = m_shaderIf->getProjectionMatrixID();
-	m_viewMatrixID = m_defaultShader->viewMatrixID;
-	m_viewMatrixInvID = m_defaultShader->viewMatrixInvID;
-	m_modelMatrixID = m_defaultShader->modelMatrixID;
-
-	m_lightPositionID = m_defaultShader->lightPositionID;
-	m_planeID = m_defaultShader->planeID;
-
-	// FRAGMENT SHADER
-	m_lightColourID = m_defaultShader->lightColourID;
-	m_shineDamperID = m_defaultShader->shineDamperID;
-	m_reflectivityID = m_defaultShader->reflectivityID;
-	m_modelTextureID = m_defaultShader->modelTextureID;
-}
-*/
 
 void Mesh::DefaultMesh::setShader()
 {
@@ -102,41 +62,16 @@ void Mesh::DefaultMesh::setShader()
 }
 
 
-void Mesh::DefaultMesh::setCamera(const std::shared_ptr<Camera::CameraIf>& cameraIf)
-{
-	m_cameraIf = cameraIf;
-
-}
-
-
 void Mesh::DefaultMesh::setTextureId(GLuint texId)
 {
 	texture0 = texId;
 };
 
 
-void Mesh::DefaultMesh::setVBO(GLuint VBO)
+void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds)
 {
-	m_VBO = VBO;
-}
-
-
-void Mesh::DefaultMesh::setIBO(GLuint IBO)
-{
-	m_IBO = IBO;
-}
-
-
-void Mesh::DefaultMesh::setNumOfInd(GLuint numOfInd)
-{
-	m_numOfInd = numOfInd;
-}
-
-
-void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
-{
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 
 	glUseProgram(m_defaultShaderID);
 
@@ -171,7 +106,7 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture0);
 	// RENDER MESH
-	glDrawElements(GL_TRIANGLES, m_numOfInd, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, numOfInds, GL_UNSIGNED_INT, 0);
 	//
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -185,5 +120,4 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix)
 
 void Mesh::DefaultMesh::cmdPrompt(const std::string& arg0)
 {
-	std::cout << "cmdPrompt object: " << m_name << " called with arg: " << arg0 << std::endl;
 }

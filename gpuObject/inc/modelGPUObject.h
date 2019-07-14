@@ -20,29 +20,22 @@ public:
 	void preInit();
 	void postInit();
 
-	// modelGPUObjectIf
+	// Set
 	void setVAO(GLuint VAO);
+
+	void setMeshInVec(const Mesh& mesh) override;
+
+	// Get
 	GLuint getVAO();
 
-	void setVBO(GLuint VBO);
-
-	void setIBO(GLuint IBO);
-
-	void setNumOfInd(GLuint numOfInd);
-
-	// GET
-	virtual std::vector<GLuint>& getVecOfVBOs();
-	virtual std::vector<GLuint>& getVecOfIBOs();
-	virtual std::vector<GLuint>& getVecOfNumOfInds();
+	std::vector<Mesh>& getMeshVec() override;
 
 	void info();
 
-// private:
+private:
 	std::string m_name;
-
 	GLuint m_VAO;
-	std::vector<GLuint> m_vecOfVBOs;
-	std::vector<GLuint> m_vecOfIBOs;
-	std::vector<GLuint> m_vecOfNumOfInds;
+
+	std::vector<Mesh> m_vecOfMeshes;
 };
 }
