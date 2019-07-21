@@ -38,7 +38,8 @@ Create    ShaderIf    DefaultShader    smartShader_0
 
 // ---- Model [smartModel_0] ----
 
-smartModel_0 GPUObject  vanquishGPUObject
+smartModel_0 GPUObject         vanquishGPUObject
+smartModel_0 GPUObjectTexture  vanquishGPUObjectTexture
 
 smartModel_0    mesh    smartMesh_0
 smartModel_0    mesh    smartMesh_1

@@ -36,6 +36,24 @@ void Loader::TextureLoader::preInit()
 		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
 	}
 
+
+	// Test GPU Texture object
+	std::string gpuTexture("vanquishGPUObjectTexture");
+	m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(gpuTexture);
+
+	for (auto s : wantedString)
+	{
+		// Store Stuff
+		GPUObject::TextureStructure tempTextureStruct(s);
+
+		GLuint tempTextID = createTexture(s);
+		std::cout << " >>>>>>>>>>>>>> " << tempTextID << '\n';
+		tempTextureStruct.m_textureId = tempTextID;
+
+		m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
+	}
+
+	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);
 }
 
 

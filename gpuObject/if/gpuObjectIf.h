@@ -20,10 +20,12 @@ struct TextureStructure
 	TextureStructure(const std::string& name) : m_name(name) {};
 
 GLuint m_textureId;
-
-private:
 std::string m_name;
+// Texture parameters
+GLuint m_shineDamper;
+GLuint m_reflectivity;
 };
+
 
 class GPUObjectIf
 {
@@ -46,6 +48,7 @@ public:
 	}
 
 	virtual void setMeshInVec(const Mesh& mesh) {}
+	virtual void setTextureStructInVec(const TextureStructure& textureStruct) {}
 
 	// Get
 	virtual GLuint getVAO()
@@ -58,6 +61,10 @@ public:
 		return dummy;
 	}
 
+	virtual std::vector<TextureStructure>& getTextureStructVec()
+	{
+		return dummyTextureVector;
+	}
 
 	// TEXTURE STUFF
 	virtual void setTextureID(GLuint textureID) {}
@@ -66,5 +73,6 @@ public:
 	virtual void info() {}
 
 	std::vector<Mesh> dummy;
+	std::vector<TextureStructure> dummyTextureVector;
 };
 }

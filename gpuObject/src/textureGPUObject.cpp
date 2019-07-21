@@ -31,6 +31,19 @@ void GPUObject::TextureGPUObject::postInit()
 }
 
 
+void GPUObject::TextureGPUObject::setTextureStructInVec(const TextureStructure& textureStruct)
+{
+	m_vecOfTextures.push_back(textureStruct);
+	std::cout << " sizeeeeeeeeeeeeeeeeeeee: " << m_vecOfTextures.size() << '\n';
+}
+
+
+std::vector<GPUObject::TextureStructure>& GPUObject::TextureGPUObject::getTextureStructVec()
+{
+	return m_vecOfTextures;
+}
+
+
 void GPUObject::TextureGPUObject::setTextureID(GLuint textureID)
 {
 	m_textureID = textureID;

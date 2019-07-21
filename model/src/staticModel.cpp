@@ -48,8 +48,17 @@ void Model::StaticModel::postInit()
 	std::string gpuObjectString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObject", gpuObjectString);
 
+	std::string gpuObjectTextureString;
+	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
+
 	// 2] Get gpuObject instance from Factory
 	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
+	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
+
+	std::cout << " -----------------------------------> " << m_gpuObjectTextureIf->getName() << '\n';
+	std::cout << " " << m_gpuObjectTextureIf->getTextureStructVec()[5].m_textureId << '\n';
+
+
 
 	// 3] Set model VAO
 	m_VAO = m_gpuObjectIf->getVAO();
@@ -85,11 +94,17 @@ void Model::StaticModel::render()
 	glBindVertexArray(m_VAO);
 
 	auto itt = m_gpuObjectIf->getMeshVec().begin();
+	auto itTextureStructs = m_gpuObjectTextureIf->getTextureStructVec().begin();
+
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
 		// RENDER EACH MESH IN MODEL
-		(*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds);
+		// std::cout << itTextureStructs->m_textureId << '\n';
+		// (*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds);
+		(*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
+
 		++itt;
+		++itTextureStructs;
 	}
 };
 

@@ -20,8 +20,15 @@ public:
 	void setTextureID(GLuint textureID);
 	GLuint getTextureID();
 
+	void setTextureStructInVec(const TextureStructure& textureStruct) override;
+
+	// Get
+	std::vector<TextureStructure>& getTextureStructVec() override;
+
 private:
 	std::string m_name;
 	GLuint m_textureID;
+
+	std::vector<TextureStructure> m_vecOfTextures;
 };
 }

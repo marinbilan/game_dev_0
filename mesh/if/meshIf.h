@@ -7,7 +7,7 @@
 
 #include "shaderIf.h"
 #include "defaultShader.h"
-
+#include "gpuObjectIf.h"
 
 namespace Mesh
 {
@@ -33,6 +33,8 @@ public:
 	virtual void setTextureId(GLuint texId) {};
 
 	// Get
+
+	virtual void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct) {};
 
 	virtual void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds) {};
 
