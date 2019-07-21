@@ -34,6 +34,7 @@ void Loader::ModelLoader::postInit()
 
 void Loader::ModelLoader::loadModel()
 {
+	// TODO: iterate over all objects from DB
 	std::string modelStr("_vanquish/vanquish.3ds");
 	
 	Assimp::Importer Importer;
@@ -42,10 +43,14 @@ void Loader::ModelLoader::loadModel()
 	if (pScene)
 	{
 		// CREATE OBJECT //
-		// TODO: get this object from DB
+		// TODO: get this object from DB and create it on stack
 		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>("vanquishGPUObject");
 
+		// Store created GPU object in factory container
+		Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
+
 		initScene(pScene);
+		// TODO: store GPU_Object in Factory and get that object from Model instance
 	}
 	else
 	{
@@ -72,7 +77,6 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 		initMesh(i, paiMesh);
 	}
 
-	Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
 }
 
 

@@ -1,18 +1,15 @@
 #include "textureLoader.h"
 
 #include "factory.h"
-//#include "error.h"
 
 
 Loader::TextureLoader::TextureLoader(const std::string& name) : m_name(name)
 {
-	std::cout << "TextureLoader created!" << std::endl;
 }
 
 
 Loader::TextureLoader::~TextureLoader()
 {
-	std::cout << "TextureLoader destructor called!" << std::endl;
 }
 
 
@@ -38,75 +35,12 @@ void Loader::TextureLoader::preInit()
 
 		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
 	}
-	//std::cout << " ------------------------------------ wantedString: " << wantedString[0] << '\n';
-	//std::cout << " ------------------------------------ wantedString: " << wantedString[1] << '\n';
-	//std::cout << " ------------------------------------ wantedString: " << wantedString[2] << '\n';
 
-	// 0]
-	/*
-	GLuint tempTextureID = createTexture("_vanquish/textures/texture0.png");
-
-	// createTexture("_vanquish/textures/texture1.png");
-
-
-	// 1]
-	tempTextureID = createTexture("_vanquish/textures/texture1.png");
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture1.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
-
-
-	// 2]
-	tempTextureID = createTexture("_vanquish/textures/texture2.png");
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture2.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
-
-
-
-	//createTexture("_vanquish/textures/texture3.png");
-	// 3]
-	tempTextureID = createTexture("_vanquish/textures/texture3.png");
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture3.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
-
-
-
-
-	//createTexture("_vanquish/textures/texture4.png");
-	// 4]
-	tempTextureID = createTexture("_vanquish/textures/texture4.png");
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture4.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
-
-
-	// createTexture("_vanquish/textures/texture5.png");
-	// 5]
-	tempTextureID = createTexture("_vanquish/textures/texture5.png");
-	m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(err, "_vanquish/textures/texture5.png");
-	m_GPUObjectIf->setTextureID(tempTextureID);
-	std::cout << " ------------------------------------ " << tempTextureID << '\n';
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-	*/
 }
-
-
-
 
 
 void Loader::TextureLoader::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
 }
 
 

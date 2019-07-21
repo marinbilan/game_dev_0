@@ -15,6 +15,15 @@ GLuint m_IBO;
 GLuint m_NumOfInds;
 };
 
+struct TextureStructure
+{
+	TextureStructure(const std::string& name) : m_name(name) {};
+
+GLuint m_textureId;
+
+private:
+std::string m_name;
+};
 
 class GPUObjectIf
 {

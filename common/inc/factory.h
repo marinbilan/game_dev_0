@@ -344,6 +344,10 @@ public:
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
+		else if (!objNameIf.compare("TextureStrcture"))
+		{
+			m_vecOfTextureStructure.push_back(std::dynamic_pointer_cast<GPUObject::TextureStructure>(derivedObject));
+		}
 		else
 		{
 			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
@@ -435,5 +439,8 @@ private:
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
 	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
+
+	// ----
+	std::vector<std::shared_ptr<GPUObject::TextureStructure>> m_vecOfTextureStructure;
 };
 } // End of namespace
