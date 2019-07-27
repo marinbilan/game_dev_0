@@ -23,7 +23,6 @@ void Model::StaticModel::preInit()
 {
 	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " preInit method called!");
 
-
 	// MODEL VARIABLES - TODO: get this init model values from DB
     // 1] Update model position
 	m_modelPosition = glm::vec3(385.0f, 0.0f, 375.0f);
@@ -44,9 +43,8 @@ void Model::StaticModel::postInit()
 {
 	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " postInit method called!");
 
-	// 1] Get GPUObject instance name from DB for this instance
 	std::string gpuObjectString;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObject", gpuObjectString);
+	FACTORY.getDatabase()->getRest(m_name, "GPUObject", gpuObjectString);
 
 	std::string gpuObjectTextureString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
@@ -54,11 +52,6 @@ void Model::StaticModel::postInit()
 	// 2] Get gpuObject instance from Factory
 	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
-
-	std::cout << " -----------------------------------> " << m_gpuObjectTextureIf->getName() << '\n';
-	std::cout << " " << m_gpuObjectTextureIf->getTextureStructVec()[5].m_textureId << '\n';
-
-
 
 	// 3] Set model VAO
 	m_VAO = m_gpuObjectIf->getVAO();
@@ -99,8 +92,6 @@ void Model::StaticModel::render()
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
 		// RENDER EACH MESH IN MODEL
-		// std::cout << itTextureStructs->m_textureId << '\n';
-		// (*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds);
 		(*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
 
 		++itt;

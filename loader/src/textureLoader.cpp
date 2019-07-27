@@ -22,24 +22,16 @@ const std::string& Loader::TextureLoader::getName()
 void Loader::TextureLoader::preInit()
 {
 	Common::Error err;
+	
+	// Test GPU Texture object
+	std::string GPUTextureObjectString;
+	// TODO: Get column (vector) of this objects
+	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", GPUTextureObjectString);
 
 	std::vector<std::string> wantedString;
-	FACTORY.getDatabase()->getRest(m_name, "load", wantedString);
+	FACTORY.getDatabase()->getRest(m_name, GPUTextureObjectString, wantedString);
 
-	for (auto s : wantedString)
-	{
-		GLuint tempTextureID = createTexture(s);
-
-		m_GPUObjectIf = std::make_shared<GPUObject::TextureGPUObject>(s);
-		m_GPUObjectIf->setTextureID(tempTextureID);
-
-		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIf);
-	}
-
-
-	// Test GPU Texture object
-	std::string gpuTexture("vanquishGPUObjectTexture");
-	m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(gpuTexture);
+	m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(GPUTextureObjectString);
 
 	for (auto s : wantedString)
 	{
@@ -47,10 +39,10 @@ void Loader::TextureLoader::preInit()
 		GPUObject::TextureStructure tempTextureStruct(s);
 
 		GLuint tempTextID = createTexture(s);
-		std::cout << " >>>>>>>>>>>>>> " << tempTextID << '\n';
 		tempTextureStruct.m_textureId = tempTextID;
 
 		m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
+		// TODO: Store each texture in pool of textures!
 	}
 
 	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);

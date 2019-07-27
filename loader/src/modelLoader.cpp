@@ -34,8 +34,8 @@ void Loader::ModelLoader::postInit()
 
 void Loader::ModelLoader::loadModel()
 {
-	// TODO: iterate over all objects from DB
-	std::string modelStr("_vanquish/vanquish.3ds");
+	std::string modelStr;
+	FACTORY.getDatabase()->getRest(m_name, "GPUObject", modelStr);
 	
 	Assimp::Importer Importer;
 	pScene = Importer.ReadFile(modelStr.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
