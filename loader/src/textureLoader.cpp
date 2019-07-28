@@ -21,31 +21,64 @@ const std::string& Loader::TextureLoader::getName()
 
 void Loader::TextureLoader::preInit()
 {
-	Common::Error err;
-	
-	// Test GPU Texture object
-	std::string GPUTextureObjectString;
-	// TODO: Get column (vector) of this objects
-	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", GPUTextureObjectString);
+	// ---- [ 1] LOAD ALL TEXTUREs ] ----
 
-	std::vector<std::string> wantedString;
-	FACTORY.getDatabase()->getRest(m_name, GPUTextureObjectString, wantedString);
-
-	m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(GPUTextureObjectString);
-
-	for (auto s : wantedString)
+	// 1] Get all textures ....png for loading
+	std::vector<std::string> vectorOfAllTextureStrings;
+	FACTORY.getDatabase()->getRest(m_name, "load", vectorOfAllTextureStrings);
+	/*
+		_vanquish/textures/texture0.png
+		...
+		_vanquish/textures/texture5.png
+	*/
+	// 2] Iterate over string of all textures
+	for (auto s : vectorOfAllTextureStrings)
 	{
-		// Store Stuff
-		GPUObject::TextureStructure tempTextureStruct(s);
-
+		// 3] Create Raw Texture (only textureName and textureId)
+		std::shared_ptr<GPUObject::RawTextureStructure> rawTextureStruct = std::make_shared<GPUObject::RawTextureStructure>(s);
+		// 4] Get TextureId
 		GLuint tempTextID = createTexture(s);
-		tempTextureStruct.m_textureId = tempTextID;
-
-		m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
-		// TODO: Store each texture in pool of textures!
+		// 5] Fill Raw Texture Struct with data
+		rawTextureStruct->m_name = s;
+		rawTextureStruct->m_textureId = tempTextID;
+		// 6] Store each raw texture in Factory Store
+		FACTORY.storeInContainer(rawTextureStruct);
 	}
 
-	FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);
+
+	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
+
+	// 1] Get all GPUObjectTexture objects
+	std::vector<std::string> vectorOfAllGPUObjectTextureStrings;
+	FACTORY.getDatabase()->getRest(m_name, "GPUObjectTexture", vectorOfAllGPUObjectTextureStrings);
+	/*
+		vanquishGPUObjectTexture
+		...
+    */
+	// 2] Foreach object create GPUObjectTexture and set vector of TextureStructure
+	for (auto s : vectorOfAllGPUObjectTextureStrings)
+	{
+		// 3] Create GPUTextureObject [Container of TextureStructure]
+		m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(s);
+
+        // 4] Get Parameters
+		std::vector<std::string> vecOfTempTextures;
+		FACTORY.getDatabase()->getRest(s, "texture", vecOfTempTextures);
+		// 
+		for (auto s : vecOfTempTextures)
+		{
+			std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(s);
+			// 
+			GPUObject::TextureStructure tempTextureStruct(s);
+			tempTextureStruct.m_name = tempRawTextureStruct->m_name;
+			tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
+
+			m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
+		}
+
+		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);
+	}
+
 }
 
 

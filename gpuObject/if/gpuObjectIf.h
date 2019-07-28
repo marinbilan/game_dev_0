@@ -15,6 +15,22 @@ GLuint m_IBO;
 GLuint m_NumOfInds;
 };
 
+// Raw Texture - goes in pool of textures
+// Can be any kind of texture (ordinary, normal map, specular ...)
+struct RawTextureStructure
+{
+	RawTextureStructure(const std::string& name) : m_name(name) {};
+
+	std::string& getName()
+	{
+		return m_name;
+	}
+
+std::string m_name;
+GLuint m_textureId;
+};
+
+// For each mesh
 struct TextureStructure
 {
 	TextureStructure(const std::string& name) : m_name(name) {};

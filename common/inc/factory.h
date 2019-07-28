@@ -311,6 +311,11 @@ public:
 		}
 	}
 
+	// TODO: Remove Template setter (store)
+	void storeInContainer(const std::shared_ptr<GPUObject::RawTextureStructure>& rawTextureStruct)
+	{
+		m_vecOfRawTextureStructure.push_back(rawTextureStruct);
+	}
 
 	/*! @brief Store object in container
 	 *  @param - objNameIf
@@ -344,9 +349,10 @@ public:
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
-		else if (!objNameIf.compare("TextureStrcture"))
+		else if (!objNameIf.compare("RawTextureStrcture"))
 		{
-			m_vecOfTextureStructure.push_back(std::dynamic_pointer_cast<GPUObject::TextureStructure>(derivedObject));
+			// m_vecOfRawTextureStructure.push_back(std::dynamic_cast<GPUObject::RawTextureStructure>(derivedObject));
+			// m_vecOfRawTextureStructure.push_back(derivedObject);
 		}
 		else
 		{
@@ -390,6 +396,11 @@ public:
 	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfShaderIf, arg0);
+	}
+
+	std::shared_ptr<GPUObject::RawTextureStructure>& getRawTextureStructure(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfRawTextureStructure, arg0);
 	}
 
 	// Generic getter 
@@ -441,6 +452,6 @@ private:
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
 
 	// ----
-	std::vector<std::shared_ptr<GPUObject::TextureStructure>> m_vecOfTextureStructure;
+	std::vector<std::shared_ptr<GPUObject::RawTextureStructure>> m_vecOfRawTextureStructure;
 };
 } // End of namespace

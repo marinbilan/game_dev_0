@@ -28,16 +28,36 @@ Create    ShaderIf    DefaultShader    smartShader_0
 
 // ---- ==== ==== LOADERs ==== ==== ----
 modelLoader_0      GPUObject           _vanquish/vanquish.3ds
+
 // TODO: Add detailed description for each mesh
 
-textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture   
-// ...
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture0.png
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture1.png
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture2.png
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture3.png
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture4.png
-textureLoader_0    vanquishGPUObjectTexture    _vanquish/textures/texture5.png
+
+// Load all textures
+textureLoader_0    load    _vanquish/textures/texture0.png
+textureLoader_0    load    _vanquish/textures/texture1.png
+textureLoader_0    load    _vanquish/textures/texture2.png
+textureLoader_0    load    _vanquish/textures/texture3.png
+textureLoader_0    load    _vanquish/textures/texture4.png
+textureLoader_0    load    _vanquish/textures/texture5.png
+
+// 1]
+textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
+
+vanquishGPUObjectTexture    texture      _vanquish/textures/texture0.png
+vanquishGPUObjectTexture    textureNM    -
+vanquishGPUObjectTexture    shineDumper  5.0
+vanquishGPUObjectTexture    reflectivity 0.1
+
+vanquishGPUObjectTexture    texture    _vanquish/textures/texture1.png
+
+vanquishGPUObjectTexture    texture    _vanquish/textures/texture2.png
+
+vanquishGPUObjectTexture    texture    _vanquish/textures/texture3.png
+
+vanquishGPUObjectTexture    texture    _vanquish/textures/texture4.png
+
+vanquishGPUObjectTexture    texture    _vanquish/textures/texture5.png
+
 // ---- ==== ==== ==== ==== ----
 
 
