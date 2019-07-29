@@ -40,23 +40,30 @@ textureLoader_0    load    _vanquish/textures/texture3.png
 textureLoader_0    load    _vanquish/textures/texture4.png
 textureLoader_0    load    _vanquish/textures/texture5.png
 
-// 1]
+// 1] Get all GPUObjectTexture
 textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
+// ...
 
-vanquishGPUObjectTexture    texture      _vanquish/textures/texture0.png
-vanquishGPUObjectTexture    textureNM    -
-vanquishGPUObjectTexture    shineDumper  5.0
-vanquishGPUObjectTexture    reflectivity 0.1
+vanquishGPUObjectTexture    defaultShader NAME0
+NAME0    texture      _vanquish/textures/texture0.png
+NAME0    textureNM    -
+NAME0    shineDumper  5.0
+NAME0    reflectivity 0.1
 
-vanquishGPUObjectTexture    texture    _vanquish/textures/texture1.png
+vanquishGPUObjectTexture    defaultShader NAME1
+NAME1    texture    _vanquish/textures/texture1.png
 
-vanquishGPUObjectTexture    texture    _vanquish/textures/texture2.png
+vanquishGPUObjectTexture    defaultShader NAME2
+NAME2    texture    _vanquish/textures/texture2.png
 
-vanquishGPUObjectTexture    texture    _vanquish/textures/texture3.png
+vanquishGPUObjectTexture    defaultShader NAME3
+NAME3    texture    _vanquish/textures/texture3.png
 
-vanquishGPUObjectTexture    texture    _vanquish/textures/texture4.png
+vanquishGPUObjectTexture    defaultShader NAME4
+NAME4    texture    _vanquish/textures/texture4.png
 
-vanquishGPUObjectTexture    texture    _vanquish/textures/texture5.png
+vanquishGPUObjectTexture    defaultShader NAME5
+NAME5    texture    _vanquish/textures/texture5.png
 
 // ---- ==== ==== ==== ==== ----
 
