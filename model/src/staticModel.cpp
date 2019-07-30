@@ -84,7 +84,7 @@ void Model::StaticModel::postInit()
 // 5 ] Disable everything
 void Model::StaticModel::render() 
 {
-	glBindVertexArray(m_VAO);
+	// glBindVertexArray(m_VAO);
 
 	auto itt = m_gpuObjectIf->getMeshVec().begin();
 	auto itTextureStructs = m_gpuObjectTextureIf->getTextureStructVec().begin();
@@ -92,7 +92,7 @@ void Model::StaticModel::render()
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
 		// RENDER EACH MESH IN MODEL
-		(*it)->render(m_modelMatrix, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
+		(*it)->render(m_modelMatrix, itt->m_VAO, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
 
 		++itt;
 		++itTextureStructs;

@@ -66,6 +66,8 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
+	m_VAO = VAO;
+
 	m_GPUObjectIf->setVAO(VAO);
 
 	// START CREATING MESHes
@@ -139,6 +141,7 @@ void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
 
 	// Store Stuff
 	GPUObject::Mesh tempMesh;
+	tempMesh.m_VAO = m_VAO;
 	tempMesh.m_VBO = VBO;
 	tempMesh.m_IBO = IBO;
 	tempMesh.m_NumOfInds = vertices.size();

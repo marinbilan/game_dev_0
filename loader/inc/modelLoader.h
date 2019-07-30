@@ -45,6 +45,8 @@ private:
 	
 	std::string m_name;
 
+	GLuint m_VAO;
+
 	const aiScene*    pScene;
 
 	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;

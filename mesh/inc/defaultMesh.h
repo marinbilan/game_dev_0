@@ -28,7 +28,7 @@ public:
 	virtual void setTextureId(GLuint texId);
 
 	// Get
-	void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct);
+	void render(const glm::mat4& modelMatrix, GLuint VAO, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct);
 
 	void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds);
 

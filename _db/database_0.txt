@@ -46,30 +46,40 @@ textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
 
 vanquishGPUObjectTexture    defaultShader NAME0
 NAME0    texture      _vanquish/textures/texture0.png
-NAME0    textureNM    -
 NAME0    shineDumper  5.0
 NAME0    reflectivity 0.1
 
-vanquishGPUObjectTexture    defaultShader NAME1
+vanquishGPUObjectTexture    defaultShader     NAME1
 NAME1    texture    _vanquish/textures/texture1.png
+NAME1    shineDumper  5.0
+NAME1    reflectivity 0.1
 
-vanquishGPUObjectTexture    defaultShader NAME2
+vanquishGPUObjectTexture    defaultShader      NAME2
 NAME2    texture    _vanquish/textures/texture2.png
+NAME2    shineDumper  5.0
+NAME2    reflectivity 0.1
 
-vanquishGPUObjectTexture    defaultShader NAME3
+vanquishGPUObjectTexture    defaultShader      NAME3
 NAME3    texture    _vanquish/textures/texture3.png
+NAME3    shineDumper  5.0
+NAME3    reflectivity 0.1
 
-vanquishGPUObjectTexture    defaultShader NAME4
+vanquishGPUObjectTexture    defaultShader      NAME4
 NAME4    texture    _vanquish/textures/texture4.png
+NAME4    shineDumper  5.0
+NAME4    reflectivity 0.1
 
-vanquishGPUObjectTexture    defaultShader NAME5
+vanquishGPUObjectTexture    defaultShader      NAME5
 NAME5    texture    _vanquish/textures/texture5.png
-
+NAME5    shineDumper  5.0
+NAME5    reflectivity 0.1
 // ---- ==== ==== ==== ==== ----
 
 
 smartModel_0     GPUObject         _vanquish/vanquish.3ds
 smartModel_0     GPUObjectTexture  vanquishGPUObjectTexture
+// Add camera 
+// Add Light
 
 smartModel_0    mesh    smartMesh_0
 smartModel_0    mesh    smartMesh_1

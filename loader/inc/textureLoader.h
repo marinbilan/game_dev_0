@@ -17,6 +17,13 @@ public:
 
 	void preInit();
 	void postInit();
+
+	// Step 1
+	void loadAllTexturesAndCreateRawTextureStructs();
+
+	// Step 2
+	void createGPUObjectTextures();
+	void createDefaultShader(const std::string& defaultShaderName);
 	
 	GLuint createTexture(const std::string& _textureName);
 	

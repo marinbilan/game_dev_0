@@ -34,7 +34,7 @@ public:
 
 	// Get
 
-	virtual void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct) {};
+	virtual void render(const glm::mat4& modelMatrix, GLuint VAO, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct) {};
 
 	virtual void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds) {};
 

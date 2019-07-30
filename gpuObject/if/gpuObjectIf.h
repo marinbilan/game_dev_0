@@ -10,6 +10,7 @@ namespace GPUObject
 
 struct Mesh
 {
+GLuint m_VAO;
 GLuint m_VBO;
 GLuint m_IBO;
 GLuint m_NumOfInds;

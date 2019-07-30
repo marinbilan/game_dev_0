@@ -7,7 +7,7 @@
 #include <fstream>
 #include <regex>
 #include <vector>
-
+#include "glew.h"
 
 namespace Common
 {
@@ -35,6 +35,11 @@ namespace Common
 		void get(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
 		// Get Rest - vector of column strings
 		void getRest(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
+
+		// ---- NEW ----
+		void getColumnOfStrings12(const std::string& set0, std::vector<std::string>& get0, std::vector<std::string>& get1);
+
+		void getFloat21(const std::string& set0, const std::string& set1, GLfloat& get0);
 
 	private:
 		std::string m_name;

@@ -21,10 +21,23 @@ const std::string& Loader::TextureLoader::getName()
 
 void Loader::TextureLoader::preInit()
 {
-	// Put this in separate function
-	// ---- [ 1] LOAD ALL TEXTUREs ] ----
+	// ---- [ 1] LOAD ALL TEXTUREs AND CREATE RAW TEXTURE OBJECTs] ----
+	loadAllTexturesAndCreateRawTextureStructs();
 
-	// 1] Get all textures ....png for loading
+	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
+	createGPUObjectTextures();
+}
+
+
+void Loader::TextureLoader::postInit()
+{
+}
+
+
+void Loader::TextureLoader::loadAllTexturesAndCreateRawTextureStructs()
+{
+
+	// 1] GET all textures ... .png for loading
 	std::vector<std::string> vectorOfAllTextureStrings;
 	FACTORY.getDatabase()->getRest(m_name, "load", vectorOfAllTextureStrings);
 	/*
@@ -35,68 +48,93 @@ void Loader::TextureLoader::preInit()
 	// 2] Iterate over string of all textures
 	for (auto s : vectorOfAllTextureStrings)
 	{
-		// 3] Create Raw Texture (only textureName and textureId)
+		// 3] CREATE Raw Texture (only textureName and textureId)
 		std::shared_ptr<GPUObject::RawTextureStructure> rawTextureStruct = std::make_shared<GPUObject::RawTextureStructure>(s);
-		// 4] Get TextureId
+		// 4] GET TextureId
 		GLuint tempTextID = createTexture(s);
-		// 5] Fill Raw Texture Struct with data
+		// 5] FILL Raw Texture Struct with data
 		rawTextureStruct->m_name = s;
 		rawTextureStruct->m_textureId = tempTextID;
-		// 6] Store each raw texture in Factory Store
+		// 6] STORE each raw texture in Factory Store
 		FACTORY.storeInContainer(rawTextureStruct);
 	}
+}
 
 
-	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
-
+void Loader::TextureLoader::createGPUObjectTextures()
+{
 	// 1] Get all GPUObjectTexture objects
 	std::vector<std::string> vectorOfAllGPUObjectTextureStrings;
 	FACTORY.getDatabase()->getRest(m_name, "GPUObjectTexture", vectorOfAllGPUObjectTextureStrings);
 	/*
 		vanquishGPUObjectTexture
 		...
-    */
-	// 2] Foreach object create GPUObjectTexture and set vector of TextureStructure
+	*/
+	// 2] ForEach object create GPUObjectTexture and set vector of TextureStructure
 	for (auto s : vectorOfAllGPUObjectTextureStrings)
 	{
 		// ex. vanquishGPUObjectTexture
 		m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(s);
 
-		// TODO: Get last 2 database param and depending on 2nd param fill params in separate method
-		std::vector<std::string> vectorOfAllShaderTextures;
-		FACTORY.getDatabase()->getRest(s, "defaultShader", vectorOfAllShaderTextures);
-		/*
-	        NAME0
-	        NAME1
-			...
-        */
-		for (auto s : vectorOfAllShaderTextures)
-		{
-			GPUObject::TextureStructure tempTextureStruct(s);
+		// ----
+		std::vector<std::string> vectorOfShadersTypes;
+		std::vector<std::string> vectorOfShaderNames;
+		FACTORY.getDatabase()->getColumnOfStrings12(s, vectorOfShadersTypes, vectorOfShaderNames);
 
-			std::string tempTexture;
-			FACTORY.getDatabase()->getRest(s, "texture", tempTexture);
+		std::vector<std::string>::iterator it = vectorOfShaderNames.begin();
+		for (auto s : vectorOfShadersTypes)
+		{	
 			/*
-				_vanquish/textures/texture1.png
+				defaultShader
 			*/
-			std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(tempTexture);
-            
-			// Get also other params from DB (textureNM, shineDumper, Reflectivity ...)
-			tempTextureStruct.m_name = tempRawTextureStruct->m_name;
-			tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
-
-			// Store this (for ex defaultShader struct) in vector of structs
-			m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
+			if (!s.compare("defaultShader"))
+			{
+				/*
+					NAME0
+					NAME1
+					...
+				*/
+				createDefaultShader(*it);
+			}
+			++it;
 		}
 
 		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);
 	}
-
 }
 
 
-void Loader::TextureLoader::postInit()
+void Loader::TextureLoader::createDefaultShader(const std::string& defaultShaderName)
 {
+	/*
+		textureId
+		shineDumper
+		reflectivity
+	*/
+	GPUObject::TextureStructure tempTextureStruct(defaultShaderName);
+
+	GLfloat shineDumper;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "shineDumper", shineDumper);
+
+	GLfloat reflectivity;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "reflectivity", reflectivity);
+	std::cout << " ---------------->" << shineDumper << " " << reflectivity << '\n';
+	//
+	std::string tempTexture;
+	FACTORY.getDatabase()->getRest(defaultShaderName, "texture", tempTexture);
+	/*
+		_vanquish/textures/texture1.png
+	*/
+	std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(tempTexture);
+
+	// Get also other params from DB (textureNM, shineDumper, Reflectivity ...)
+	tempTextureStruct.m_name = tempRawTextureStruct->m_name;
+	tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
+	tempTextureStruct.m_shineDamper = shineDumper;
+	tempTextureStruct.m_reflectivity = reflectivity;
+
+	// Store this (for ex defaultShader struct) in vector of structs
+	m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
 }
 
 
