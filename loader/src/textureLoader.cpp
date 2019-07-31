@@ -73,20 +73,20 @@ void Loader::TextureLoader::createGPUObjectTextures()
 	// 2] ForEach object create GPUObjectTexture and set vector of TextureStructure
 	for (auto s : vectorOfAllGPUObjectTextureStrings)
 	{
-		// ex. vanquishGPUObjectTexture
 		m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(s);
 
-		// ----
 		std::vector<std::string> vectorOfShadersTypes;
 		std::vector<std::string> vectorOfShaderNames;
 		FACTORY.getDatabase()->getColumnOfStrings12(s, vectorOfShadersTypes, vectorOfShaderNames);
-
+		/*
+		    //                          // Shader Type   // Shader Name
+			vanquishGPUObjectTexture    defaultShader    NAME0
+			vanquishGPUObjectTexture    defaultShader    NAME0
+			...
+		*/
 		std::vector<std::string>::iterator it = vectorOfShaderNames.begin();
 		for (auto s : vectorOfShadersTypes)
 		{	
-			/*
-				defaultShader
-			*/
 			if (!s.compare("defaultShader"))
 			{
 				/*
@@ -106,28 +106,26 @@ void Loader::TextureLoader::createGPUObjectTextures()
 
 void Loader::TextureLoader::createDefaultShader(const std::string& defaultShaderName)
 {
-	/*
-		textureId
-		shineDumper
-		reflectivity
-	*/
 	GPUObject::TextureStructure tempTextureStruct(defaultShaderName);
 
-	GLfloat shineDumper;
-	FACTORY.getDatabase()->getFloat21(defaultShaderName, "shineDumper", shineDumper);
-
-	GLfloat reflectivity;
-	FACTORY.getDatabase()->getFloat21(defaultShaderName, "reflectivity", reflectivity);
-	std::cout << " ---------------->" << shineDumper << " " << reflectivity << '\n';
-	//
 	std::string tempTexture;
 	FACTORY.getDatabase()->getRest(defaultShaderName, "texture", tempTexture);
 	/*
-		_vanquish/textures/texture1.png
+		_vanquish/textures/texture0.png
 	*/
+	GLfloat shineDumper;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "shineDumper", shineDumper);
+	/*
+		shineDumper
+	*/
+	GLfloat reflectivity;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "reflectivity", reflectivity);
+	/*
+		reflectivity
+	*/
+
 	std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(tempTexture);
 
-	// Get also other params from DB (textureNM, shineDumper, Reflectivity ...)
 	tempTextureStruct.m_name = tempRawTextureStruct->m_name;
 	tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
 	tempTextureStruct.m_shineDamper = shineDumper;

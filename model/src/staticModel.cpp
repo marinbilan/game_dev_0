@@ -69,13 +69,16 @@ void Model::StaticModel::postInit()
 }
 
 
-// 1 ] Bind VAO glBindVertexArray(VAO); 
-// 2 ] Set Pointers    (glVertexAttribPointer); 
-// 3 ] Enable Pointers (glEnableVertexAttribArray); 
+// 1 ] Bind VAO        (glBindVertexArray (VAO)); 
+// 2 ] Bind VBO        (glBindBuffer (VBO)); 
+// 3 ] Bind IBO        (glBindBuffer (IBO)); 
+
+// 4 ] Set Pointers    (glVertexAttribPointer); 
+
+// 5 ] Enable Pointers (glEnableVertexAttribArray); 
+
+// 6 ] Active shader glUseProgram(ShaderID);
 // For each mesh:
-	// 4.1 ] glBindBuffer(GL_ARRAY_BUFFER)
-	// 4.2 ] glBindBuffer(GL_ELEMENT_ARRAY_BUFFER)
-	// 4.3 ] Active shader glUseProgram(ShaderID);
 	// 4.4 ] Update Uniform(s)
 
 	// 4.5 ] Active Textures
@@ -92,7 +95,8 @@ void Model::StaticModel::render()
 	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
 	{
 		// RENDER EACH MESH IN MODEL
-		(*it)->render(m_modelMatrix, itt->m_VAO, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
+		// (*it)->render(m_modelMatrix, itt->m_VAO, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
+		(*it)->render(m_modelMatrix, *itt, *itTextureStructs);
 
 		++itt;
 		++itTextureStructs;

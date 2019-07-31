@@ -96,13 +96,7 @@ smartMesh_3    shader     smartShader_0
 smartMesh_4    shader     smartShader_0
 smartMesh_5    shader     smartShader_0
 
-// TODO: remove
-smartMesh_0    texture    _vanquish/textures/texture0.png
-smartMesh_1    texture    _vanquish/textures/texture1.png
-smartMesh_2    texture    _vanquish/textures/texture2.png
-smartMesh_3    texture    _vanquish/textures/texture3.png
-smartMesh_4    texture    _vanquish/textures/texture4.png
-smartMesh_5    texture    _vanquish/textures/texture5.png
+
 
 smartMesh_0 camera smartCamera_0
 smartMesh_1 camera smartCamera_0
