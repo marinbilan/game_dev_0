@@ -54,7 +54,7 @@ void Model::StaticModel::postInit()
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
 
 	// 3] Set model VAO
-	m_VAO = m_gpuObjectIf->getVAO();
+	//m_VAO = m_gpuObjectIf->getVAO();
 
 	// 4] Get vector (column) of Mesh instances names from DB
 	std::vector<std::string> vecOfStringMeshesNames;

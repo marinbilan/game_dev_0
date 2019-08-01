@@ -68,7 +68,7 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 
 	m_VAO = VAO;
 
-	m_GPUObjectIf->setVAO(VAO);
+	//m_GPUObjectIf->setVAO(VAO);
 
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model

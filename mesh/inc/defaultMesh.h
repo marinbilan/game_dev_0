@@ -1,7 +1,6 @@
 #pragma once
 #include "meshIf.h"
 
-#include "error.h"
 
 
 namespace Mesh
@@ -21,34 +20,25 @@ public:
 	void preInit();
 	void postInit();
 
-	// Set
-	void setShader();
-
-	// TODO: remove this
-	virtual void setTextureId(GLuint texId);
-
 	// Get
-	void render(const glm::mat4& modelMatrix, GLuint VAO, GLuint VBO, GLuint IBO, GLuint numOfInds, const GPUObject::TextureStructure textureStruct);
-	void render(const glm::mat4& modelMatrix, const GPUObject::Mesh modelMesh, const GPUObject::TextureStructure textureStruct);
 
-	void render(const glm::mat4& modelMatrix, GLuint VBO, GLuint IBO, GLuint numOfInds);
+	void render(const glm::mat4& modelMatrix, const GPUObject::Mesh modelMesh, const GPUObject::TextureStructure textureStruct);
 
 	void cmdPrompt(const std::string& arg0);
 
 private:
+	// Set
+	void setShaderIDs();
+
 std::string m_name;
 
+// TODO: Remove LIght from Mesh
 std::shared_ptr<Camera::CameraIf> m_cameraIf;
 std::shared_ptr<Shader::DefaultShader> m_defaultShader;
 
-// Lights ... 
 
-// TODO: remove from here
-GLuint texture0;
-
+// GET this data from shader
 GLuint m_defaultShaderID;
-
-
 //
 // VERTEX SHADER
 // GLuint m_projectionMatrixID; // In shader defined

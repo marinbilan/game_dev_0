@@ -98,7 +98,7 @@ public:
 	{
 		output << "" << std::endl;
 		output << "[ SHADER ]" << std::endl;
-		output << " Shader Name:              " << info.shaderName << std::endl;
+		output << " Shader Name:              " << info.m_name << std::endl;
 		output << " ShaderProgramID:          " << info.shaderProgramID << std::endl;
 		output << "  [ VERTEX SHADER ]" << std::endl;
 		output << "     positionsID         = " << info.positionsID << std::endl;
@@ -124,7 +124,6 @@ public:
 // Members
 std::string m_name;
 
-std::string shaderName;
 glm::mat4   projectionMatrix;
 
 GLuint shaderProgramID;

@@ -1,15 +1,15 @@
 #include "defaultShader.h"
 
+#include "factory.h"
 
 Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 {
-	std::cout << "DefaultShader created!" << std::endl;
+	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
 
 	// TODO remove this
 	GLfloat projMatrixWidth = 800;
 	GLfloat projMatrixHeight = 600;
 
-	shaderName = "ShaderPTN0"; // Hardcoded shader name
 	shaderProgramID = createShader(VertexShaderPTN, FragmentShaderPTN);
 	// [ VERTEX SHADER ]
 	//   ATTRIBUTEs
@@ -38,26 +38,22 @@ Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projectionMatrix[0][0]);
 	glUseProgram(0);
 
-	std::cout << "ShaderPTN0 created!" << std::endl;
 }
 
 
 Shader::DefaultShader::~DefaultShader()
 {
-	std::cout << "DefaultShader destructor called!" << std::endl;
 }
 
 
 // FUNCTIONs
 void Shader::DefaultShader::preInit()
 {
-
 }
 
 
 void Shader::DefaultShader::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
 }
 
 

@@ -1,10 +1,11 @@
 #include "modelGPUObject.h"
 
-#include "error.h"
+#include "factory.h"
 
 
 GPUObject::ModelGPUObject::ModelGPUObject(const std::string& name) : m_name(name)
 {
+	FACTORY.getLog()->LOGFILE(LOG "ModelGPUObject: " + m_name + " created.");
 }
 
 
@@ -29,21 +30,9 @@ void GPUObject::ModelGPUObject::postInit()
 }
 
 
-void GPUObject::ModelGPUObject::setVAO(GLuint VAO)
-{
-	m_VAO = VAO;
-}
-
-
 void GPUObject::ModelGPUObject::setMeshInVec(const Mesh& mesh)
 {
 	m_vecOfMeshes.push_back(mesh);
-}
-
-
-GLuint GPUObject::ModelGPUObject::getVAO()
-{
-	return m_VAO;
 }
 
 

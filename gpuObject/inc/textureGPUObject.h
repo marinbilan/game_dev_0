@@ -1,7 +1,6 @@
 #pragma once
 #include "gpuObjectIf.h"
 
-#include "error.h"
 
 namespace GPUObject
 {
@@ -17,9 +16,7 @@ public:
 	void preInit();
 	void postInit();
 
-	void setTextureID(GLuint textureID);
-	GLuint getTextureID();
-
+	// Set
 	void setTextureStructInVec(const TextureStructure& textureStruct) override;
 
 	// Get
@@ -27,8 +24,7 @@ public:
 
 private:
 	std::string m_name;
-	GLuint m_textureID;
 
 	std::vector<TextureStructure> m_vecOfTextures;
 };
-}
+} // End of Namespace
