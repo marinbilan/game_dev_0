@@ -35,8 +35,6 @@ private:
 
 std::string m_name;
 
-// TODO: Remove LIght from Mesh
-std::shared_ptr<Camera::CameraIf> m_cameraIf;
 std::shared_ptr<Shader::DefaultShader> m_defaultShader;
 
 
