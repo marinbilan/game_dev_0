@@ -46,15 +46,24 @@ void Model::StaticModel::postInit()
 	std::string gpuObjectString;
 	FACTORY.getDatabase()->getRest(m_name, "GPUObject", gpuObjectString);
 
+
 	std::string gpuObjectTextureString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
+
+	std::string cameraString;
+	FACTORY.getDatabase()->getRest(m_name, "camera", cameraString);
+
+	std::string lightString;
+	FACTORY.getDatabase()->getRest(m_name, "light", lightString);
 
 	// 2] Get gpuObject instance from Factory
 	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
+	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString);
+	m_lightIf = Common::Factory::getInstance().getLightIf(lightString);
 
-	// 3] Set model VAO
-	//m_VAO = m_gpuObjectIf->getVAO();
+	// std::cout << " ---------------------------> " << m_lightIf->getLightPosition()[0] << " " << m_lightIf->getLightPosition()[1] << " " << m_lightIf->getLightPosition()[2] << '\n';
+	// std::cout << " ---------------------------> " << m_lightIf->getLightColors()[0] << " " << m_lightIf->getLightColors()[1] << " " << m_lightIf->getLightColors()[2] << '\n';
 
 	// 4] Get vector (column) of Mesh instances names from DB
 	std::vector<std::string> vecOfStringMeshesNames;
@@ -67,7 +76,6 @@ void Model::StaticModel::postInit()
 		m_vecOfdefaultMeshIf.push_back(m_meshIf);
 	}
 }
-
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 
 // 2 ] Bind VBO        (glBindBuffer (VBO)); 
@@ -96,7 +104,7 @@ void Model::StaticModel::render()
 	{
 		// RENDER EACH MESH IN MODEL
 		// (*it)->render(m_modelMatrix, itt->m_VAO, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
-		(*it)->render(m_modelMatrix, *itt, *itTextureStructs);
+		(*it)->render(m_modelMatrix, *itt, *itTextureStructs, m_cameraIf, m_lightIf);
 
 		++itt;
 		++itTextureStructs;

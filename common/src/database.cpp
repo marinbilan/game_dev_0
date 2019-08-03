@@ -227,3 +227,25 @@ void Common::Database::getFloat21(const std::string& set0, const std::string& se
 		}
 	}
 }
+
+
+void Common::Database::getVec3_21(const std::string& instanceName, const std::string& instanceMember, glm::vec3& dbParam)
+{
+	// dB File
+	std::ifstream dBFile(m_name);
+	// dB Line
+	std::string dBLine;
+	// dB Regex
+	std::regex regexLine(instanceName + "\\s+" + instanceMember + "\\s+([-]?\\d+)(\\.\\d+)?\\s+([-]?\\d+)(\\.\\d+)?\\s+([-]?\\d+)(\\.\\d+)?");
+
+	std::smatch match;
+	while (std::getline(dBFile, dBLine))
+	{
+		if (std::regex_search(dBLine, match, regexLine))
+		{
+			dbParam = glm::vec3(std::stof(match.str(1) + match.str(2)),
+				std::stof(match.str(3) + match.str(4)),
+				std::stof(match.str(5) + match.str(6)));
+		}
+	}
+}

@@ -8,6 +8,7 @@
 #include <regex>
 #include <vector>
 #include "glew.h"
+#include "glm/vec3.hpp"
 
 namespace Common
 {
@@ -41,6 +42,7 @@ namespace Common
 
 		void getFloat21(const std::string& set0, const std::string& set1, GLfloat& get0);
 
+		void getVec3_21(const std::string& dbEntry, const std::string& dbTarget, glm::vec3& dbParam);
 	private:
 		std::string m_name;
 	};

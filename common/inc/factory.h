@@ -12,6 +12,9 @@
 #include "cameraIf.h"
 #include "cameraDefault.h"
 
+#include "lightIf.h"
+#include "lightDefault.h"
+
 #include "loaderIf.h"
 #include "modelLoader.h"
 #include "textureLoader.h"
@@ -159,6 +162,9 @@ public:
 		// CameraIf
 		REGISTER_CLASS(Camera::CameraDefault);
 
+		// LightIf
+		REGISTER_CLASS(Light::LightDefault);
+
 		// LoaderIf
 		REGISTER_CLASS(Loader::ModelLoader);
 		REGISTER_CLASS(Loader::TextureLoader);
@@ -185,6 +191,9 @@ public:
 	{
 		// Create Cameras
 		createObjects("Camera::", "CameraIf");
+
+		// Create Lights
+		createObjects("Light::", "LightIf");
 
 		// Create Meshes
 		createObjects("Mesh::", "MeshIf");
@@ -225,6 +234,11 @@ public:
 			{
 				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, camera);
+			}
+			else if (!interFace.compare("LightIf"))
+			{
+				std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, light);
 			}
 			else if (!interFace.compare("MeshIf"))
 			{
@@ -294,6 +308,10 @@ public:
 		{
 			printName(m_vecOfCameraIf);
 		}
+		else if (!objNameIf.compare("LightIf"))
+		{
+			printName(m_vecOfLightIf);
+		}
 		else
 		{
 			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
@@ -329,6 +347,10 @@ public:
 		{
 		    m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
 		}
+		if (!objNameIf.compare("LightIf"))
+		{
+			m_vecOfLightIf.push_back(std::dynamic_pointer_cast<Light::LightIf>(derivedObject));
+		}
 		else if (!objNameIf.compare("LoaderIf"))
 		{
 			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(derivedObject));
@@ -349,11 +371,6 @@ public:
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
 		}
-		else if (!objNameIf.compare("RawTextureStrcture"))
-		{
-			// m_vecOfRawTextureStructure.push_back(std::dynamic_cast<GPUObject::RawTextureStructure>(derivedObject));
-			// m_vecOfRawTextureStructure.push_back(derivedObject);
-		}
 		else
 		{
 			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
@@ -371,6 +388,11 @@ public:
 	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfCameraIf, arg0);
+	}
+
+	std::shared_ptr<Light::LightIf>& getLightIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfLightIf, arg0);
 	}
 
 	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0)
@@ -443,6 +465,7 @@ private:
 
 	// Container Stuff 
 	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
+	std::vector<std::shared_ptr<Light::LightIf>>         m_vecOfLightIf;
 
 	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
 	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;

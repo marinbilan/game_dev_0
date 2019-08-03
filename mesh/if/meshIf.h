@@ -2,13 +2,11 @@
 #include <iostream>
 
 #include "commonTypes.h"
-// TODO: Remove
-#include "cameraIf.h"
-#include "cameraDefault.h"
-// ----
 
+#include "cameraIf.h"
 #include "shaderIf.h"
 #include "defaultShader.h"
+#include "lightIf.h"
 
 #include "gpuObjectIf.h"
 
@@ -29,7 +27,11 @@ public:
 	virtual void preInit() {};
 	virtual void postInit() {};
 
-	virtual void render(const glm::mat4& modelMatrix, const GPUObject::Mesh modelMesh, const GPUObject::TextureStructure textureStruct) {};
+	virtual void render(const glm::mat4& modelMatrix, 
+		const GPUObject::Mesh modelMesh, 
+		const GPUObject::TextureStructure textureStruct, 
+		const std::shared_ptr<Camera::CameraIf>& camera,
+		const std::shared_ptr<Light::LightIf>& light) {};
 
 	virtual void cmdPrompt(const std::string& arg0)
 	{

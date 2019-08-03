@@ -29,16 +29,9 @@ void Mesh::DefaultMesh::postInit()
 	/*
 	    smartMesh_0    shader     smartShader_0
 	*/
-	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>( FACTORY.getShaderIf(shaderDbName) );
+	m_defaultShader = std::dynamic_pointer_cast<Shader::DefaultShader>(FACTORY.getShaderIf(shaderDbName));
 
 	setShaderIDs();
-
-	// TODO: Move Camera to Model
-	// ----
-	std::string cameraDbName;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraDbName);
-	m_cameraIf = FACTORY.getCameraIf(cameraDbName);
-	// ----
 }
 
 
@@ -64,7 +57,11 @@ void Mesh::DefaultMesh::setShaderIDs()
 }
 
 
-void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, const GPUObject::Mesh modelMesh, const GPUObject::TextureStructure textureStruct)
+void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, 
+	const GPUObject::Mesh modelMesh, 
+	const GPUObject::TextureStructure textureStruct, 
+	const std::shared_ptr<Camera::CameraIf>& camera,
+	const std::shared_ptr<Light::LightIf>& light)
 {
 	// ---- ModelGPUObject StructOfMeshe for each mesh ----
 	glBindVertexArray(modelMesh.m_VAO);
@@ -87,11 +84,10 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, const GPUObject::Me
 
 	// [ VERTEX SHADER UNIFORMS ]
 	// Projection matrix updated in shader constructor (Only once)
-
 	// ---- Camera ----
-	glUniformMatrix4fv(m_viewMatrixID, 1, GL_FALSE, &m_cameraIf->getViewMatrix()[0][0]);
-	m_cameraIf->invertCameraMatrix();
-	glUniformMatrix4fv(m_viewMatrixInvID, 1, GL_FALSE, &m_cameraIf->getInvViewMatrix()[0][0]);
+	glUniformMatrix4fv(m_viewMatrixID, 1, GL_FALSE, &camera->getViewMatrix()[0][0]);
+	camera->invertCameraMatrix();
+	glUniformMatrix4fv(m_viewMatrixInvID, 1, GL_FALSE, &camera->getInvViewMatrix()[0][0]);
 	// ---- ----
 
 	// ---- Model Matrix ----
@@ -99,10 +95,7 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, const GPUObject::Me
 	// ---- ----
 
 	// ---- Light ----
-	// TODO: Remove light from here
-	glm::vec3 lightPositionModelPTN(385.0f, 77.0f, 385.0f);
-	glm::vec3 lightColorModelPTN(1.0f, 1.0f, 1.0f);
-	glUniform3f(m_lightPositionID, lightPositionModelPTN[0], lightPositionModelPTN[1], lightPositionModelPTN[2]);
+	glUniform3f(m_lightPositionID, light->getLightPosition()[0], light->getLightPosition()[1], light->getLightPosition()[2]);
 	// ---- ----
 
 	glm::vec4 planeModelPTN(0.0f, -1.0f, 0.0f, 100000.0f);
@@ -110,7 +103,7 @@ void Mesh::DefaultMesh::render(const glm::mat4& modelMatrix, const GPUObject::Me
 
 	// [ FRAGMENT SHADER UNIFORMS ]
 	// ---- Light ----
-	glUniform3f(m_lightColourID, lightColorModelPTN[0], lightColorModelPTN[1], lightColorModelPTN[2]);
+	glUniform3f(m_lightColourID, light->getLightColors()[0], light->getLightColors()[1], light->getLightColors()[2]);
 	// ---- ----
 
 	// // ---- TextureGPUObject StructOfTexture for each mesh ----

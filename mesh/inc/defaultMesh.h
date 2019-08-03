@@ -2,7 +2,6 @@
 #include "meshIf.h"
 
 
-
 namespace Mesh
 {
 class DefaultMesh : public MeshIf
@@ -22,7 +21,11 @@ public:
 
 	// Get
 
-	void render(const glm::mat4& modelMatrix, const GPUObject::Mesh modelMesh, const GPUObject::TextureStructure textureStruct);
+	void render(const glm::mat4& modelMatrix, 
+		const GPUObject::Mesh modelMesh, 
+		const GPUObject::TextureStructure textureStruct, 
+		const std::shared_ptr<Camera::CameraIf>& camera,
+		const std::shared_ptr<Light::LightIf>& light);
 
 	void cmdPrompt(const std::string& arg0);
 

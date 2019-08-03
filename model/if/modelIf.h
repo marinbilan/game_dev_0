@@ -4,6 +4,8 @@
 #include "commonTypes.h"
 
 #include "gpuObjectIf.h"
+#include "cameraIf.h"
+#include "LightIf.h"
 #include "meshIf.h"
 
 namespace Model

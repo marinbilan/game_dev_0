@@ -42,6 +42,9 @@ glm::mat4                 m_modelMatrix;
 std::shared_ptr<GPUObject::GPUObjectIf>    m_gpuObjectIf;
 std::shared_ptr<GPUObject::GPUObjectIf>    m_gpuObjectTextureIf;
 
+std::shared_ptr<Camera::CameraIf> m_cameraIf;
+std::shared_ptr<Light::LightIf>   m_lightIf;
+
 std::vector<std::shared_ptr<Mesh::MeshIf>> m_vecOfdefaultMeshIf;
 };
 } // end of namespace
