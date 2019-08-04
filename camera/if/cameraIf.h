@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 
+#include "glew.h"
+#include "glfw3.h"
+
 #include "glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -12,7 +15,6 @@ class CameraIf
 public:
 	virtual ~CameraIf()
 	{
-		std::cout << "Error: CameraIf::~CameraIf() called from CameraIf!" << '\n';
 	}
 
 	virtual const std::string& getName()
@@ -27,14 +29,12 @@ public:
 	// Get
 	virtual glm::mat4& getViewMatrix() 
 	{ 
-		std::cout << "Error: CameraIf::getViewMatrix() called from CameraIf!" << '\n';
 		glm::mat4 tempMatrix = glm::mat4(1.0f);
 		return tempMatrix;
 	}
 
 	virtual glm::mat4& getInvViewMatrix() 
 	{
-		std::cout << "Error: CameraIf::getInvViewMatrix() called from CameraIf!" << '\n';
 		glm::mat4 tempMatrix = glm::mat4(1.0f);
 		return tempMatrix;
 	}
@@ -42,9 +42,18 @@ public:
 	// Set
 	virtual void invertCameraMatrix() 
 	{
-		std::cout << "Error: CameraIf::invertCameraMatrix() called from CameraIf!" << '\n';
 	}
 
+	// Keyboard part
+	virtual void moveCameraForward(GLfloat deltaTime) {};
+	virtual void moveCameraBack(GLfloat deltaTime) {};
+	virtual void moveCameraStrafeLeft(GLfloat deltaTime) {};
+	virtual void moveCameraStrafeRight(GLfloat deltaTime) {};
+
+	// Mouse part
+	virtual void cameraFront(glm::vec3 cameraFront) {};
+
+	virtual void updateCameraPosition() {};
 	// OPERATORs	
 };
 } // End of namespace

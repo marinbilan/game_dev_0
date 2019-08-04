@@ -1,62 +1,59 @@
+#pragma once
 #include "controlDefault.h"
-#include "error.h"
+
+#include "factory.h"
 
 
-Control::ControlDefault::ControlDefault(Common::Error& err, const std::string& name) : m_name(name)
+// ---- GLOBAL VARs ----
+// KeyBoard
+bool keys[1024];
+
+// Mouse
+bool firstMouse = true;
+// ---- ----
+
+GLfloat yaw = -90.0f;
+GLfloat pitch = 0.0f;
+// GLfloat savePitch = 0.0f;
+GLuint WIDTH;
+GLuint HEIGHT = 768;
+GLfloat lastX = WIDTH / 2.0;
+GLfloat lastY = HEIGHT / 2.0;
+
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 front;
+
+
+Control::ControlDefault::ControlDefault(const std::string& name) : m_name(name)
 {
-	std::cout << "ControlDefault created!" << std::endl;
+	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " created.");
+	WIDTH = 1024;
 }
 
 
 Control::ControlDefault::~ControlDefault()
 {
-	std::cout << "ControlDefault destructor called!" << std::endl;
 }
 
 
 void Control::ControlDefault::preInit()
 {
-
 }
 
 
 void Control::ControlDefault::postInit()
 {
-	std::cout << "postInit function called!" << std::endl;
+	m_camera = FACTORY.getCameraIf("smartCamera_0");
 }
 
 
-
-//
-// Camera (View)
-//
-/*
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 front;
-
-GLfloat yaw = -90.0f;
-GLfloat pitch = 0.0f;
-GLfloat savePitch = 0.0f;
-GLfloat lastX = WIDTH / 2.0;
-GLfloat lastY = HEIGHT / 2.0;
-
-bool keys[1024];
-bool firstMouse = true;
-//
-// KEYBOARD
-//
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+void Control::ControlDefault::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
-	if (key == GLFW_KEY_C)
-	{
-		char c;
-		std::cout << "> ";
-		std::cin >> c;
-	}
+
 	if (key >= 0 && key < 1024)
 	{
 		if (action == GLFW_PRESS)
@@ -65,10 +62,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			keys[key] = false;
 	}
 }
-//
-// MOUSE
-//
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+
+
+void Control::ControlDefault::mouseCallback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
@@ -100,31 +96,43 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	cameraFront = glm::normalize(front);
 
-	camera->camFront(cameraFront);
-	camera->updateCameraPosition();
 }
 
-void do_movement()
+
+void Control::ControlDefault::updateCameraPosition(GLfloat deltaTime)
+{
+	doCameraKeyboardMovement(deltaTime);
+	doCameraMouseMovement();
+
+	m_camera->updateCameraPosition();
+}
+
+
+void Control::ControlDefault::doCameraKeyboardMovement(GLfloat deltaTime)
 {
 	if (keys[GLFW_KEY_W])
 	{
-		camera->moveForward(deltaTime);
-		camera->updateCameraPosition();
+		m_camera->moveCameraForward(deltaTime);
 	}
 	if (keys[GLFW_KEY_S])
 	{
-		camera->moveBack(deltaTime);
-		camera->updateCameraPosition();
+		m_camera->moveCameraBack(deltaTime);
 	}
 	if (keys[GLFW_KEY_A])
 	{
-		camera->strafeLeft(deltaTime);
-		camera->updateCameraPosition();
+		m_camera->moveCameraStrafeLeft(deltaTime);
 	}
 	if (keys[GLFW_KEY_D])
 	{
-		camera->strafeRight(deltaTime);
-		camera->updateCameraPosition();
+		m_camera->moveCameraStrafeRight(deltaTime);
 	}
 }
-*/
+
+
+void Control::ControlDefault::doCameraMouseMovement()
+{
+	m_camera->cameraFront(cameraFront);
+}
+
+
+

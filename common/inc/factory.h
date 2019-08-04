@@ -9,6 +9,9 @@
 #include "error.h"
 #include "log.h"
 
+#include "controlIf.h"
+#include "controlDefault.h"
+
 #include "cameraIf.h"
 #include "cameraDefault.h"
 
@@ -160,6 +163,9 @@ public:
 	void registerClass()
 	{
 		// CameraIf
+		REGISTER_CLASS(Control::ControlDefault);
+
+		// CameraIf
 		REGISTER_CLASS(Camera::CameraDefault);
 
 		// LightIf
@@ -189,6 +195,9 @@ public:
 	 */
 	void createObjects()
 	{
+		// Create Cameras
+		createObjects("Control::", "ControlIf");
+
 		// Create Cameras
 		createObjects("Camera::", "CameraIf");
 
@@ -230,6 +239,14 @@ public:
 		auto it1 = vecObjectNames.begin();
 		for (auto it0 = vecClassNames.begin(); it0 != vecClassNames.end(); ++it0)
 		{
+			if (!interFace.compare("ControlIf"))
+			{
+				std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, control);
+
+				std::cout << " -----------------> " << m_vecOfControlIf.size() << '\n';
+				std::cout << FACTORY.getControlIf("smartControl_0")->getName() << '\n';
+			}
 			if (!interFace.compare("CameraIf"))
 			{
 				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
@@ -304,6 +321,10 @@ public:
 		{
 			printName(m_vecOfShaderIf);
 		}
+		else if (!objNameIf.compare("ControlIf"))
+		{
+			printName(m_vecOfControlIf);
+		}
 		else if (!objNameIf.compare("CameraIf"))
 		{
 			printName(m_vecOfCameraIf);
@@ -314,8 +335,8 @@ public:
 		}
 		else
 		{
-			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
-			FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
+			// FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
+			// FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
 		}
 	}
 	
@@ -343,11 +364,15 @@ public:
 	template<class T>
 	void storeInContainer(const std::string& objNameIf, const T& derivedObject)
 	{
-		if (!objNameIf.compare("CameraIf"))
+		if (!objNameIf.compare("ControlIf"))
+		{
+			m_vecOfControlIf.push_back(std::dynamic_pointer_cast<Control::ControlIf>(derivedObject));
+		}
+		else if (!objNameIf.compare("CameraIf"))
 		{
 		    m_vecOfCameraIf.push_back(std::dynamic_pointer_cast<Camera::CameraIf>(derivedObject));
 		}
-		if (!objNameIf.compare("LightIf"))
+		else if (!objNameIf.compare("LightIf"))
 		{
 			m_vecOfLightIf.push_back(std::dynamic_pointer_cast<Light::LightIf>(derivedObject));
 		}
@@ -385,6 +410,11 @@ public:
 	 *  @param - derivedObject
 	 *  @return void
 	 */
+	std::shared_ptr<Control::ControlIf>& getControlIf(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfControlIf, arg0);
+	}
+
 	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfCameraIf, arg0);
@@ -463,7 +493,9 @@ private:
 	std::unique_ptr<Common::Log> m_log;
 
 
-	// Container Stuff 
+	// Container Stuff
+	std::vector<std::shared_ptr<Control::ControlIf>>     m_vecOfControlIf;
+
 	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
 	std::vector<std::shared_ptr<Light::LightIf>>         m_vecOfLightIf;
 

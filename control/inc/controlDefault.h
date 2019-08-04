@@ -1,22 +1,47 @@
 #pragma once
-
 #include "controlIf.h"
-#include "error.h"
+
+#include "camera.h"
+#include "cameraDefault.h"
 
 namespace Control
 {
+
 class ControlDefault : public ControlIf
 {
 public:
-	ControlDefault(Common::Error& err, const std::string& name);
+	ControlDefault(const std::string& name);
 
 	~ControlDefault();
 
-	void preInit();
+	const std::string& getName()
+	{
+		return m_name;
+	}
 
+	void preInit();
 	void postInit();
+
+	static void keyCallback(
+		GLFWwindow* window,
+		int key,
+		int scancode,
+		int action,
+		int mods);
+
+	static void mouseCallback(
+		GLFWwindow* window,
+		double xpos,
+		double ypos);
+
+	void updateCameraPosition(GLfloat deltaTime);
+
+	void doCameraKeyboardMovement(GLfloat deltaTime);
+	void doCameraMouseMovement();
 
 private:
 	std::string m_name;
+
+	std::shared_ptr<Camera::CameraIf> m_camera;
 };
 }

@@ -7,6 +7,10 @@
 /*****************************************************************/
 
 // ---- ==== ==== FACTORY ==== ==== ----
+// OBJECT CREATION:
+
+Create    ControlIf   ControlDefault   smartControl_0
+
 Create    CameraIf    CameraDefault    smartCamera_0
 Create    CameraIf    CameraDefault    smartCamera_1
 
@@ -29,6 +33,7 @@ Create    ShaderIf    DefaultShader    smartShader_0
 
 
 // ---- ==== ==== CAMERAs ==== ==== ----
+// Add camera parameters ... position ...
 // ---- ==== ==== ==== ==== ----
 
 
@@ -114,16 +119,6 @@ smartMesh_4    shader     smartShader_0
 smartMesh_5    shader     smartShader_0
 
 // ---- ==== ==== ==== ==== ----
-
-
-// TODO: Move this in Model
-smartMesh_0 camera smartCamera_0
-smartMesh_1 camera smartCamera_0
-smartMesh_2 camera smartCamera_0
-smartMesh_3 camera smartCamera_0
-smartMesh_4 camera smartCamera_0
-smartMesh_5 camera smartCamera_0
-
 
 
 
