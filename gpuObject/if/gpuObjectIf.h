@@ -10,6 +10,15 @@ namespace GPUObject
 
 struct MeshStructure
 {
+	MeshStructure(const std::string& name) : m_name(name) {};
+
+	std::string& getName()
+	{
+		return m_name;
+	}
+
+std::string m_name;
+
 GLuint m_VAO;
 GLuint m_VBO;
 GLuint m_IBO;
@@ -28,6 +37,7 @@ struct RawTextureStructure
 	}
 
 std::string m_name;
+
 GLuint m_textureId;
 };
 
@@ -38,6 +48,7 @@ struct TextureStructure
 	TextureStructure(const std::string& name) : m_name(name) {};
 
 std::string m_name;
+
 GLuint m_textureId;
 
 GLuint m_shineDamper;

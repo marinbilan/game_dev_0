@@ -43,6 +43,10 @@ namespace Common
 		void getFloat21(const std::string& set0, const std::string& set1, GLfloat& get0);
 
 		void getVec3_21(const std::string& dbEntry, const std::string& dbTarget, glm::vec3& dbParam);
+
+		// Get name0
+		// _vanquish/vanquish.3ds    meshStructure    name0
+		void getAll21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
 	private:
 		std::string m_name;
 	};

@@ -41,10 +41,11 @@ public:
 private:
 	void loadModel();	
 	void initScene(const aiScene* _pScene);
-	void initMesh(GLuint _index, const aiMesh* _paiMesh);
+	void initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
 	
 	std::string m_name;
 
+	std::vector<std::string> m_meshStructNameTempVec;
 	GLuint m_VAO;
 
 	const aiScene*    pScene;

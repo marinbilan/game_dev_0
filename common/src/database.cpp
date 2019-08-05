@@ -249,3 +249,24 @@ void Common::Database::getVec3_21(const std::string& instanceName, const std::st
 		}
 	}
 }
+
+
+void Common::Database::getAll21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0)
+{
+	// dB File - m_name - database text file name
+	std::ifstream dBFile(m_name);
+	// dB Line
+	std::string dBLine;
+	// db Regex - dbEntry (name of the operation) dbTarget (Interface - class of objects with the same interface)
+	std::string first("([^\\s]+)");
+	std::regex regexLine(first + "\\s+" + set1 + "\\s+(\\w+)");
+
+	std::smatch match;
+	while (std::getline(dBFile, dBLine))
+	{
+		if (std::regex_search(dBLine, match, regexLine))
+		{
+			get0.push_back(match.str(2));
+		}
+	}
+}

@@ -44,7 +44,7 @@ void Model::StaticModel::postInit()
 	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " postInit method called!");
 
 	std::string gpuObjectString;
-	FACTORY.getDatabase()->getRest(m_name, "GPUObject", gpuObjectString);
+	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", gpuObjectString);
 
 
 	std::string gpuObjectTextureString;

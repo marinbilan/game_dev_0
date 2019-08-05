@@ -34,27 +34,45 @@ void Loader::ModelLoader::postInit()
 
 void Loader::ModelLoader::loadModel()
 {
-	std::string modelStr;
-	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", modelStr);
-	
-	Assimp::Importer Importer;
-	pScene = Importer.ReadFile(modelStr.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-	if (pScene)
+	std::vector<std::string> GPUObjectModelVec;
+	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", GPUObjectModelVec);
+	/*
+	    // m_name                              // GPUObjectModelVec
+	    modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
+		...
+	*/
+
+	for (auto GPUObjectModelString : GPUObjectModelVec)
 	{
-		// CREATE OBJECT //
-		// TODO: get this object from DB and create it on stack
-		m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>("vanquishGPUObject");
 
-		// Store created GPU object in factory container
-		Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
+		FACTORY.getDatabase()->getAll21(GPUObjectModelString, "meshStructure", m_meshStructNameTempVec);
+		/*
+		    _vanquish/vanquish.3ds    meshStructure    name0
+            _vanquish/vanquish.3ds    meshStructure    name1
+			...
+		*/
 
-		initScene(pScene);
-		// TODO: store GPU_Object in Factory and get that object from Model instance
+		// FOREACH MODEL STRING
+		Assimp::Importer Importer;
+		pScene = Importer.ReadFile(GPUObjectModelString.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+		if (pScene)
+		{
+			// CREATE OBJECT //
+			m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(GPUObjectModelString);
+
+			// Store created GPU object in factory container
+			Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
+
+			initScene(pScene);
+			// TODO: store GPU_Object in Factory and get that object from Model instance
+		}
+		else
+		{
+		}
 	}
-	else
-	{
-	}	
+
 }
 
 
@@ -72,18 +90,20 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model
+	std::vector<std::string>::iterator it0 = m_meshStructNameTempVec.begin();
+
 	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
 	{
 		const aiMesh* paiMesh = _pScene->mMeshes[i];
 
-		initMesh(i, paiMesh);
+		initMesh(*it0, i, paiMesh);
+		++it0;
 	}
-
 }
 
 
 // MESH
-void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
+void Loader::ModelLoader::initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh)
 {
 	std::vector<Vert>         vertices; // PER MESH [position (x, y, z), texture(u, v), noraml(x, y, z)]
 	std::vector<unsigned int> indices;  // PER MESH
@@ -140,7 +160,7 @@ void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
 	// Store Stuff
-	GPUObject::MeshStructure tempMesh;
+ 	GPUObject::MeshStructure tempMesh(meshName);
 	tempMesh.m_VAO = m_VAO;
 	tempMesh.m_VBO = VBO;
 	tempMesh.m_IBO = IBO;
