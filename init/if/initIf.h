@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <string>
 
 
@@ -10,7 +9,6 @@ class InitIf
 public:
 	~InitIf()
 	{
-		std::cout << "Error: InitIf::~InitIf() called from InitIf!" << '\n';
 	}
 
 	// TODO: getName

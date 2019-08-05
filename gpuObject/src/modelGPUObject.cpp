@@ -30,13 +30,13 @@ void GPUObject::ModelGPUObject::postInit()
 }
 
 
-void GPUObject::ModelGPUObject::setMeshInVec(const Mesh& mesh)
+void GPUObject::ModelGPUObject::setMeshInVec(const MeshStructure& mesh)
 {
 	m_vecOfMeshes.push_back(mesh);
 }
 
 
-std::vector<GPUObject::Mesh>& GPUObject::ModelGPUObject::getMeshVec()
+std::vector<GPUObject::MeshStructure>& GPUObject::ModelGPUObject::getMeshVec()
 {
 	return m_vecOfMeshes;
 }

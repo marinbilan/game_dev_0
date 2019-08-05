@@ -22,7 +22,7 @@ public:
 	// Get
 
 	void render(const glm::mat4& modelMatrix, 
-		const GPUObject::Mesh modelMesh, 
+		const GPUObject::MeshStructure modelMesh,
 		const GPUObject::TextureStructure textureStruct, 
 		const std::shared_ptr<Camera::CameraIf>& camera,
 		const std::shared_ptr<Light::LightIf>& light);

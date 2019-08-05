@@ -7,7 +7,7 @@
 /*****************************************************************/
 
 // ---- ==== ==== FACTORY ==== ==== ----
-// OBJECT CREATION:
+// OBJECTs CREATION:
 
 Create    ControlIf   ControlDefault   smartControl_0
 
@@ -33,21 +33,22 @@ Create    ShaderIf    DefaultShader    smartShader_0
 
 
 // ---- ==== ==== CAMERAs ==== ==== ----
-// Add camera parameters ... position ...
+// Add cameras parameters ... position ...
 // ---- ==== ==== ==== ==== ----
 
 
 // ---- ==== ==== LIGHTs ==== ==== ----
+
+private:
 light_0	   lightPosition        385.0 77.0 385.0
 light_0	   lightColor           1.0 1.0 1.0
 // ---- ==== ==== ==== ==== ----
 
 
 // ---- ==== ==== LOADERs ==== ==== ----
-modelLoader_0      GPUObject           _vanquish/vanquish.3ds
+modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
 
 // TODO: Add detailed description for each mesh
-
 
 // Load all textures
 textureLoader_0    load    _vanquish/textures/texture0.png
@@ -56,6 +57,7 @@ textureLoader_0    load    _vanquish/textures/texture2.png
 textureLoader_0    load    _vanquish/textures/texture3.png
 textureLoader_0    load    _vanquish/textures/texture4.png
 textureLoader_0    load    _vanquish/textures/texture5.png
+
 
 // 1] Get all GPUObjectTexture
 textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture

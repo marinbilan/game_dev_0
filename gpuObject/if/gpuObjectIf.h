@@ -8,7 +8,7 @@
 namespace GPUObject
 {
 
-struct Mesh
+struct MeshStructure
 {
 GLuint m_VAO;
 GLuint m_VBO;
@@ -37,8 +37,8 @@ struct TextureStructure
 {
 	TextureStructure(const std::string& name) : m_name(name) {};
 
-GLuint m_textureId;
 std::string m_name;
+GLuint m_textureId;
 
 GLuint m_shineDamper;
 GLuint m_reflectivity;
@@ -61,9 +61,9 @@ public:
 	virtual void postInit() {};
 
 	// Mesh
-	virtual void setMeshInVec(const Mesh& mesh) {}
+	virtual void setMeshInVec(const MeshStructure& mesh) {}
 
-	virtual std::vector<Mesh>& getMeshVec() 
+	virtual std::vector<MeshStructure>& getMeshVec()
 	{ 
 		return dummy;
 	}
@@ -80,7 +80,7 @@ public:
 
 private:
 
-std::vector<Mesh> dummy;
+std::vector<MeshStructure> dummy;
 std::vector<TextureStructure> dummyTextureVector;
 };
 }

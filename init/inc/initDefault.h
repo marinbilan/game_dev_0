@@ -1,15 +1,13 @@
 #pragma once
 #include "initIf.h"
 
-#include "error.h"
-
 
 namespace Init
 {
 class InitDefault : public InitIf
 {
 public:
-	InitDefault(Common::Error& err, const std::string& name);
+	InitDefault(const std::string& name);
 
 	~InitDefault();
 
@@ -17,6 +15,7 @@ public:
 	void postInit();
 
 private:
+
 std::string m_name;
 };
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include "error.h"
 
 #include <string>
 #include <iostream>
@@ -10,8 +9,7 @@ namespace Common
 class CmdPrompt
 {
 public:
-	CmdPrompt(Common::Error& err, const std::string& name);
-
+	CmdPrompt(const std::string& name);
 	~CmdPrompt();
 
 	void preInit();
@@ -21,6 +19,5 @@ public:
 
 private:
 std::string m_name;
-std::string m_error;
 };
 }

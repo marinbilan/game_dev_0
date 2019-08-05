@@ -1,15 +1,47 @@
 #include "engineCtrlDefault.h"
 
+#include "factory.h"
 
-EngineCtrl::EngineCtrlDefault::EngineCtrlDefault(Common::Error& err, const std::string& name) : m_name(name)
+
+EngineCtrl::EngineCtrlDefault::EngineCtrlDefault(const std::string& name) : 
+	m_name(name), 
+	m_deltaTime(0.0f), 
+	m_lastFrame(0.0f)
 {
-	std::cout << "EngineCtrl::EngineCtrlDefault::EngineCtrlDefault() constructor called" << '\n';
+	std::cout << "EngineCtrlDefault " << m_name << " created." << '\n';
+
+	// Database initialization because of second main parameter from main.cpp
 }
 
 
 EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 {
-	std::cout << "EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault() destructor called" << '\n';
+}
+
+
+void EngineCtrl::EngineCtrlDefault::preInit()
+{
+	// Create defaultInit 
+	m_defaultInit0 = std::make_unique <Init::InitDefault>("DefaultInit0");
+	// Init All Objects
+	m_defaultInit0->preInit();
+
+	// Create cmdPrompt
+	m_cmdPrompt0 = std::make_unique<Common::CmdPrompt>("CmdPrompt0");
+}
+
+
+void EngineCtrl::EngineCtrlDefault::postInit()
+{
+	m_defaultInit0->postInit();
+
+	// START CMD PROMPT
+	// TODO: thread 1
+	m_cmdPrompt0->runCmdPrompt();	
+
+	// START RENDERing
+	// TODO: thread 2
+	render();
 }
 
 
@@ -23,30 +55,89 @@ void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)
 }
 
 
-void EngineCtrl::EngineCtrlDefault::preInit()
+void EngineCtrl::EngineCtrlDefault::glfwInitialization()
 {
-	std::cout << "EngineCtrl::EngineCtrlDefault::preInit() called" << '\n';
+	if (!glfwInit())
+	{
+		// Print error or something
+	}
 
-	// Get stuff from db
-	Common::Error err;
+	// TODO: Get this window information from Database!
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 8);
 
-	// Create defaultInit 
-	defaultInit0 = new Init::InitDefault(err, "DefaultInit0");
+	/* Create a windowed mode window and its OpenGL context */
+	m_window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
+	if (!m_window)
+	{
+		glfwTerminate();
+		// Print error or something
+	}
 
-	// Init All Objects
-	defaultInit0->preInit();
+	/* Make the window's context current */
+	glfwMakeContextCurrent(m_window);
+	glfwSetKeyCallback(m_window, Control::ControlDefault::keyCallback);
+	glfwSetCursorPosCallback(m_window, Control::ControlDefault::mouseCallback);
 
-	// Create cmdPrompt
-	cmdPrompt0 = new Common::CmdPrompt(err, "CmdPrompt0");
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// Initialize GLEW to setup the OpenGL Function pointers
+	if (glewInit() != GLEW_OK)
+	{
+		// std::cout << "Failed to initialize GLEW" << std::endl;
+	}
+
+
+
+	// Set some vaules
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 }
 
 
-void EngineCtrl::EngineCtrlDefault::postInit()
+void EngineCtrl::EngineCtrlDefault::gameLoop()
 {
-	std::cout << "EngineCtrl::EngineCtrlDefault::postInit() called" << '\n';
 
-	defaultInit0->postInit();
+}
 
-	cmdPrompt0->runCmdPrompt();	
+void EngineCtrl::EngineCtrlDefault::render()
+{
+	std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("smartControl_0");
+	control->postInit();
+
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(m_window))
+	{
+		// Calculate Time Frame
+		// ----
+		// Calculate deltatime of current frame
+		GLfloat currentFrame = glfwGetTime();
+		m_deltaTime = currentFrame - m_lastFrame;
+		m_lastFrame = currentFrame;
+		// ----
+
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_CLIP_DISTANCE0);
+
+
+		// Camera movement
+		control->updateCameraPosition(m_deltaTime);
+
+		Common::Factory::getInstance().getModelIf("smartModel_0")->render();
+
+		/* Swap front and back buffers */
+		glfwSwapBuffers(m_window);
+
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
 }
 

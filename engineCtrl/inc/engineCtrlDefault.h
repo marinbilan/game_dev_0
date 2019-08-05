@@ -1,39 +1,38 @@
 #pragma once
 #include "engineCtrlIf.h"
 
-#include <iostream>
-#include <string>
-
-#include "commonTypes.h"
-#include "error.h"
-
-#include "initIf.h"
-#include "initDefault.h"
-#include "cmdPrompt.h"
-#include "database.h"
-#include "factory.h"
-
 
 namespace EngineCtrl
 {
 class EngineCtrlDefault : public EngineCtrlIf
 {
 public:
-	EngineCtrlDefault(Common::Error& err, const std::string& name);
-
+	EngineCtrlDefault(const std::string& name);
 	~EngineCtrlDefault();
-
-	// Database init before preInit and postInit
-	void databaseInit(const std::string& dbName);
 
 	void preInit();
 	void postInit();
 
+	// Database init before preInit and postInit
+	void databaseInit(const std::string& dbName);
+
+	void glfwInitialization();
+
+	// Render
+	void gameLoop();
+
+	void render();
+
 private:
 std::string m_name;
 
-// TODO: uniquePtr
-Init::InitIf* defaultInit0;
-Common::CmdPrompt* cmdPrompt0;
+std::unique_ptr<Init::InitIf> m_defaultInit0;
+
+std::unique_ptr<Common::CmdPrompt> m_cmdPrompt0;
+
+GLFWwindow* m_window;
+
+GLfloat m_deltaTime;
+GLfloat m_lastFrame;
 };
 }

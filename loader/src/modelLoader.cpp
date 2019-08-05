@@ -35,7 +35,7 @@ void Loader::ModelLoader::postInit()
 void Loader::ModelLoader::loadModel()
 {
 	std::string modelStr;
-	FACTORY.getDatabase()->getRest(m_name, "GPUObject", modelStr);
+	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", modelStr);
 	
 	Assimp::Importer Importer;
 	pScene = Importer.ReadFile(modelStr.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -140,7 +140,7 @@ void Loader::ModelLoader::initMesh(GLuint _index, const aiMesh* _paiMesh)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
 	// Store Stuff
-	GPUObject::Mesh tempMesh;
+	GPUObject::MeshStructure tempMesh;
 	tempMesh.m_VAO = m_VAO;
 	tempMesh.m_VBO = VBO;
 	tempMesh.m_IBO = IBO;

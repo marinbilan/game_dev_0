@@ -19,16 +19,16 @@ public:
 	void postInit();
 
 	// Set
-	void setMeshInVec(const Mesh& mesh) override;
+	void setMeshInVec(const MeshStructure& mesh) override;
 
 	// Get
-	std::vector<Mesh>& getMeshVec() override;
+	std::vector<MeshStructure>& getMeshVec() override;
 
 	void info();
 
 private:
 	std::string m_name;
 
-	std::vector<Mesh> m_vecOfMeshes;
+	std::vector<MeshStructure> m_vecOfMeshes;
 };
 } // End of Namespace
