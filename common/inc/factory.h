@@ -171,11 +171,13 @@ public:
 		// LightIf
 		REGISTER_CLASS(Light::LightDefault);
 
+		// ----
 		// LoaderIf
 		REGISTER_CLASS(Loader::ModelLoader);
 		REGISTER_CLASS(Loader::TextureLoader);
+		// ----
 
-		// GPUObjectIf
+		// GPUObjectIf - Created by loaders (not DB driven)
 		REGISTER_CLASS(GPUObject::ModelGPUObject);
 		REGISTER_CLASS(GPUObject::TextureGPUObject);
 
@@ -204,14 +206,16 @@ public:
 		// Create Lights
 		createObjects("Light::", "LightIf");
 
-		// Create Meshes
-		createObjects("Mesh::", "MeshIf");
-
+		// ----
 		// Create Loaders
 		createObjects("Loader::", "LoaderIf");
+		// ----
 
 		// Create Models
 		createObjects("Model::", "ModelIf");
+
+		// Create Meshes
+		createObjects("Mesh::", "MeshIf");
 
 		// Create Shaders
 		createObjects("Shader::", "ShaderIf");
@@ -243,9 +247,6 @@ public:
 			{
 				std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, control);
-
-				std::cout << " -----------------> " << m_vecOfControlIf.size() << '\n';
-				std::cout << FACTORY.getControlIf("smartControl_0")->getName() << '\n';
 			}
 			if (!interFace.compare("CameraIf"))
 			{
@@ -257,20 +258,22 @@ public:
 				std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, light);
 			}
-			else if (!interFace.compare("MeshIf"))
-			{
-				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, mesh);
-			}
+			// ----
 			else if (!interFace.compare("LoaderIf"))
 			{
 				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, loader);
 			}
+			// ----
 			else if (!interFace.compare("ModelIf"))
 			{
 				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, model);
+			}
+			else if (!interFace.compare("MeshIf"))
+			{
+				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(nameSpace + *it0, *it1));
+				storeInContainer(interFace, mesh);
 			}
 			else if (!interFace.compare("ShaderIf"))
 			{
@@ -301,10 +304,24 @@ public:
 	 */
 	void showMeObjects(const std::string& objNameIf)
 	{
-		if (!objNameIf.compare("LoaderIf"))
+		if (!objNameIf.compare("ControlIf"))
+		{
+			printName(m_vecOfControlIf);
+		}
+		else if (!objNameIf.compare("CameraIf"))
+		{
+			printName(m_vecOfCameraIf);
+		}
+		else if (!objNameIf.compare("LightIf"))
+		{
+			printName(m_vecOfLightIf);
+		}
+		// ----
+		else if (!objNameIf.compare("LoaderIf"))
 		{
 			printName(m_vecOfLoaderIf);
 		}
+		// ----
 		else if (!objNameIf.compare("GPUObjectIf"))
 		{
 			printName(m_vecOfGPUObjectIf);
@@ -321,22 +338,9 @@ public:
 		{
 			printName(m_vecOfShaderIf);
 		}
-		else if (!objNameIf.compare("ControlIf"))
-		{
-			printName(m_vecOfControlIf);
-		}
-		else if (!objNameIf.compare("CameraIf"))
-		{
-			printName(m_vecOfCameraIf);
-		}
-		else if (!objNameIf.compare("LightIf"))
-		{
-			printName(m_vecOfLightIf);
-		}
 		else
 		{
-			// FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
-			// FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
+			// Print something ... msg
 		}
 	}
 	
@@ -351,6 +355,11 @@ public:
 	}
 
 	// TODO: Remove Template setter (store)
+	void storeInContainer(const std::shared_ptr<GPUObject::MeshStructure>& meshStruct)
+	{
+		m_vecOfMeshStructure.push_back(meshStruct);
+	}
+
 	void storeInContainer(const std::shared_ptr<GPUObject::RawTextureStructure>& rawTextureStruct)
 	{
 		m_vecOfRawTextureStructure.push_back(rawTextureStruct);
@@ -376,10 +385,12 @@ public:
 		{
 			m_vecOfLightIf.push_back(std::dynamic_pointer_cast<Light::LightIf>(derivedObject));
 		}
+		// ----
 		else if (!objNameIf.compare("LoaderIf"))
 		{
 			m_vecOfLoaderIf.push_back(std::dynamic_pointer_cast<Loader::LoaderIf>(derivedObject));
 		}
+		// ----
 		else if (!objNameIf.compare("GPUObjectIf"))
 		{
 			m_vecOfGPUObjectIf.push_back(std::dynamic_pointer_cast<GPUObject::GPUObjectIf>(derivedObject));
@@ -398,8 +409,8 @@ public:
 		}
 		else
 		{
-			FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
-			FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
+			// FACTORY.getErrorObject()->setError("ERROR: " + objNameIf + " can not be found!");
+			// FACTORY.getLog()->LOGFILE(LOG "ERROR: " + objNameIf + " can not be found!");
 		}
 	}
 
@@ -450,6 +461,11 @@ public:
 		return getObjectFromVec(m_vecOfShaderIf, arg0);
 	}
 
+	std::shared_ptr<GPUObject::MeshStructure>& getMeshStructure(const std::string& arg0)
+	{
+		return getObjectFromVec(m_vecOfMeshStructure, arg0);
+	}
+
 	std::shared_ptr<GPUObject::RawTextureStructure>& getRawTextureStructure(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfRawTextureStructure, arg0);
@@ -467,9 +483,10 @@ public:
 			}
 		}
 
-		FACTORY.getErrorObject()->setError("ERROR: " + arg1 + " can not be found!");
-		FACTORY.getLog()->LOGFILE(LOG "ERROR: " + arg1 + " can not be found!");
+		// FACTORY.getErrorObject()->setError("ERROR: " + arg1 + " can not be found!");
+		// FACTORY.getLog()->LOGFILE(LOG "ERROR: " + arg1 + " can not be found!");
 
+		// If not found, return something
 		return vec0[0];
 	}
 
@@ -498,8 +515,9 @@ private:
 
 	std::vector<std::shared_ptr<Camera::CameraIf>>       m_vecOfCameraIf;
 	std::vector<std::shared_ptr<Light::LightIf>>         m_vecOfLightIf;
-
+	// ----
 	std::vector<std::shared_ptr<Loader::LoaderIf>>       m_vecOfLoaderIf;
+	// ----
 	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
 
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
@@ -507,6 +525,7 @@ private:
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
 
 	// ----
+	std::vector<std::shared_ptr<GPUObject::MeshStructure>>       m_vecOfMeshStructure;
 	std::vector<std::shared_ptr<GPUObject::RawTextureStructure>> m_vecOfRawTextureStructure;
 };
 } // End of namespace

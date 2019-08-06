@@ -4,7 +4,7 @@
 
 Common::CmdPrompt::CmdPrompt(const std::string& name) : m_name(name)
 {
-	std::cout << "CmdPrompt " << m_name << " created!" << std::endl;
+	// std::cout << "CmdPrompt " << m_name << " created!" << std::endl;
 }
 
 
@@ -29,17 +29,18 @@ void Common::CmdPrompt::runCmdPrompt()
 	std::string commandLineString;
 	std::smatch match;
 
-	// Common::Factory::getInstance().showMeObjects("LoaderIf");
-
 	do
 	{
 		std::cout << "$ ";
 		// Waiting for command
 		std::getline(std::cin, commandLineString);
 
-		Common::Factory::getInstance().getModelIf(commandLineString)->cmdPrompt(commandLineString);
-		// Common::Factory::getInstance().getMeshIf(commandLineString)->cmdPrompt(commandLineString);
-		// Common::Factory::getInstance().getShaderIf(commandLineString)->cmdPrompt(commandLineString);
+		std::regex models("models");
+		if (std::regex_search(commandLineString, match, models))
+		{
+			Common::Factory::getInstance().showMeObjects("ModelIf");
+		}
 
-	} while (commandLineString != "exit");
+
+	} while (commandLineString != "run");
 }

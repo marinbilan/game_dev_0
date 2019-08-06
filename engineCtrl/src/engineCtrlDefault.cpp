@@ -37,7 +37,7 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 
 	// START CMD PROMPT
 	// TODO: thread 1
-	m_cmdPrompt0->runCmdPrompt();	
+	m_cmdPrompt0->runCmdPrompt();
 
 	// START RENDERing
 	// TODO: thread 2

@@ -38,14 +38,13 @@ void Loader::ModelLoader::loadModel()
 	std::vector<std::string> GPUObjectModelVec;
 	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", GPUObjectModelVec);
 	/*
-	    // m_name                              // GPUObjectModelVec
 	    modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
 		...
 	*/
 
 	for (auto GPUObjectModelString : GPUObjectModelVec)
 	{
-
+		// Get column
 		FACTORY.getDatabase()->getAll21(GPUObjectModelString, "meshStructure", m_meshStructNameTempVec);
 		/*
 		    _vanquish/vanquish.3ds    meshStructure    name0
@@ -59,7 +58,7 @@ void Loader::ModelLoader::loadModel()
 
 		if (pScene)
 		{
-			// CREATE OBJECT //
+			// CREATE GPU OBJECT //
 			m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(GPUObjectModelString);
 
 			// Store created GPU object in factory container
@@ -86,18 +85,30 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 
 	m_VAO = VAO;
 
-	//m_GPUObjectIf->setVAO(VAO);
-
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model
 	std::vector<std::string>::iterator it0 = m_meshStructNameTempVec.begin();
 
+	std::string normalMapString;
 	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
 	{
-		const aiMesh* paiMesh = _pScene->mMeshes[i];
+		FACTORY.getDatabase()->getStringFromDB(*it0, "normalMap", normalMapString);
+		/*
+			name0    normalMap    false
+			name1    normalMap    true
+			...
+		*/
+		if (!normalMapString.compare("false"))
+		{
+		    const aiMesh* paiMesh = _pScene->mMeshes[i];
+			initMesh(*it0, i, paiMesh);
+			++it0;
+		}
+		else if(!normalMapString.compare("true"))
+		{
+			// Load NormalMap mesh
+		}
 
-		initMesh(*it0, i, paiMesh);
-		++it0;
 	}
 }
 
@@ -167,4 +178,16 @@ void Loader::ModelLoader::initMesh(const std::string& meshName, GLuint _index, c
 	tempMesh.m_NumOfInds = vertices.size();
 
 	m_GPUObjectIf->setMeshInVec(tempMesh);
+
+	// ----
+	std::shared_ptr<GPUObject::MeshStructure> tempMeshShared = std::make_shared<GPUObject::MeshStructure>(meshName);
+	tempMeshShared->m_VAO = m_VAO;;
+	tempMeshShared->m_VBO = VBO;
+	tempMeshShared->m_IBO = IBO;
+	tempMeshShared->m_NumOfInds = vertices.size();
+	// ----
+
+	// Copy store in Factory
+	FACTORY.storeInContainer(tempMeshShared);
+
 }

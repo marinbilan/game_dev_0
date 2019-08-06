@@ -91,7 +91,7 @@ public:
 
 private:
 
-std::vector<MeshStructure> dummy;
+std::vector<MeshStructure>    dummy;
 std::vector<TextureStructure> dummyTextureVector;
 };
 }

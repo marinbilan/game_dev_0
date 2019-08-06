@@ -16,17 +16,19 @@ Create    CameraIf    CameraDefault    smartCamera_1
 
 Create    LightIf     LightDefault     light_0
 
+// ----
+Create    LoaderIf    ModelLoader      modelLoader_0
+Create    LoaderIf    TextureLoader    textureLoader_0
+// ----
+
+Create    ModelIf     StaticModel      smartModel_0
+
 Create    MeshIf      DefaultMesh      smartMesh_0
 Create    MeshIf      DefaultMesh      smartMesh_1
 Create    MeshIf      DefaultMesh      smartMesh_2
 Create    MeshIf      DefaultMesh      smartMesh_3
 Create    MeshIf      DefaultMesh      smartMesh_4
 Create    MeshIf      DefaultMesh      smartMesh_5
-
-Create    LoaderIf    ModelLoader      modelLoader_0
-Create    LoaderIf    TextureLoader    textureLoader_0
-
-Create    ModelIf     StaticModel      smartModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
 // ---- ==== ==== ==== ==== ----
@@ -39,25 +41,15 @@ Create    ShaderIf    DefaultShader    smartShader_0
 
 // ---- ==== ==== LIGHTs ==== ==== ----
 
-private:
 light_0	   lightPosition        385.0 77.0 385.0
 light_0	   lightColor           1.0 1.0 1.0
+
 // ---- ==== ==== ==== ==== ----
 
 
 // ---- ==== ==== LOADERs ==== ==== ----
-modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
-textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
 
-// Load all meshes
-_vanquish/vanquish.3ds    meshStructure    name0
-_vanquish/vanquish.3ds    meshStructure    name1
-_vanquish/vanquish.3ds    meshStructure    name2
-_vanquish/vanquish.3ds    meshStructure    name3
-_vanquish/vanquish.3ds    meshStructure    name4
-_vanquish/vanquish.3ds    meshStructure    name5
-
-// Load all textures
+// RAW Textures
 textureLoader_0    load    _vanquish/textures/texture0.png
 textureLoader_0    load    _vanquish/textures/texture1.png
 textureLoader_0    load    _vanquish/textures/texture2.png
@@ -65,15 +57,35 @@ textureLoader_0    load    _vanquish/textures/texture3.png
 textureLoader_0    load    _vanquish/textures/texture4.png
 textureLoader_0    load    _vanquish/textures/texture5.png
 
+modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
+// ...
+textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
+// ...
+
 // ---- ==== ==== ==== ==== ----
 
 
 // ---- ==== ==== MODELs ==== ==== ----
 smartModel_0     GPUObjectModel    _vanquish/vanquish.3ds
-
 smartModel_0     GPUObjectTexture  vanquishGPUObjectTexture
+
 smartModel_0     camera            smartCamera_0
 smartModel_0     light             light_0
+// ----
+
+_vanquish/vanquish.3ds    meshStructure    name0
+name0                     normalMap        false
+_vanquish/vanquish.3ds    meshStructure    name1
+name0                     normalMap        false
+_vanquish/vanquish.3ds    meshStructure    name2
+name0                     normalMap        false
+_vanquish/vanquish.3ds    meshStructure    name3
+name0                     normalMap        false
+_vanquish/vanquish.3ds    meshStructure    name4
+name0                     normalMap        false
+_vanquish/vanquish.3ds    meshStructure    name5
+name0                     normalMap        false
+
 
 vanquishGPUObjectTexture    defaultShader NAME0
 NAME0    texture      _vanquish/textures/texture0.png
