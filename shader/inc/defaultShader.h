@@ -91,6 +91,14 @@ public:
 		return m_name;
 	}
 
+
+	void render(const glm::mat4& modelMatrix,
+		const GPUObject::MeshStructure modelMesh,
+		const GPUObject::TextureStructure textureStruct,
+		const std::shared_ptr<Camera::CameraIf>& camera,
+		const std::shared_ptr<Light::LightIf>& light);
+
+
 	// OPERATORs
 	void printINFO();
 
@@ -99,22 +107,22 @@ public:
 		output << "" << std::endl;
 		output << "[ SHADER ]" << std::endl;
 		output << " Shader Name:              " << info.m_name << std::endl;
-		output << " ShaderProgramID:          " << info.shaderProgramID << std::endl;
+		output << " ShaderProgramID:          " << info.m_shaderProgramID << std::endl;
 		output << "  [ VERTEX SHADER ]" << std::endl;
-		output << "     positionsID         = " << info.positionsID << std::endl;
-		output << "     textureCoordsID     = " << info.textureCoordsID << std::endl;
-		output << "     normalsID           = " << info.normalsID << std::endl;
-		output << "      projectionMatrixID = " << info.projectionMatrixID << std::endl;
-		output << "      viewMatrixID       = " << info.viewMatrixID << std::endl;
-		output << "      viewMatrixInvID    = " << info.viewMatrixInvID << std::endl;
-		output << "      modelMatrixID      = " << info.modelMatrixID << std::endl;
-		output << "      lightPositionID    = " << info.lightPositionID << std::endl;
-		output << "      planeID            = " << info.planeID << std::endl;
+		output << "     positionsID         = " << info.m_positionsID << std::endl;
+		output << "     textureCoordsID     = " << info.m_textureCoordsID << std::endl;
+		output << "     normalsID           = " << info.m_normalsID << std::endl;
+		output << "      projectionMatrixID = " << info.m_projectionMatrixID << std::endl;
+		output << "      viewMatrixID       = " << info.m_viewMatrixID << std::endl;
+		output << "      viewMatrixInvID    = " << info.m_viewMatrixInvID << std::endl;
+		output << "      modelMatrixID      = " << info.m_modelMatrixID << std::endl;
+		output << "      lightPositionID    = " << info.m_lightPositionID << std::endl;
+		output << "      planeID            = " << info.m_planeID << std::endl;
 		output << "  [ FRAGMENT SHADER ]" << std::endl;
-		output << "      lightColourID      = " << info.lightColourID << std::endl;
-		output << "      shineDamperID      = " << info.shineDamperID << std::endl;
-		output << "      reflectivityID     = " << info.reflectivityID << std::endl;
-		output << "      modelTextureID     = " << info.modelTextureID << std::endl;
+		output << "      lightColourID      = " << info.m_lightColourID << std::endl;
+		output << "      shineDamperID      = " << info.m_shineDamperID << std::endl;
+		output << "      reflectivityID     = " << info.m_reflectivityID << std::endl;
+		output << "      modelTextureID     = " << info.m_modelTextureID << std::endl;
 		output << "" << std::endl;
 		return output;
 	}
@@ -122,29 +130,30 @@ public:
 	void cmdPrompt(const std::string& arg0);
 
 // Members
+//private:
 std::string m_name;
 
-glm::mat4   projectionMatrix;
+glm::mat4   m_projectionMatrix;
 
-GLuint shaderProgramID;
+GLuint m_shaderProgramID;
 
 // VERTEX SHADER
-GLuint positionsID;
-GLuint textureCoordsID;
-GLuint normalsID;
+GLuint m_positionsID;
+GLuint m_textureCoordsID;
+GLuint m_normalsID;
 
-GLuint projectionMatrixID;
-GLuint viewMatrixID;
-GLuint viewMatrixInvID;
-GLuint modelMatrixID;
+GLuint m_projectionMatrixID;
+GLuint m_viewMatrixID;
+GLuint m_viewMatrixInvID;
+GLuint m_modelMatrixID;
 
-GLuint lightPositionID;
-GLuint planeID;
+GLuint m_lightPositionID;
+GLuint m_planeID;
 
 // FRAGMENT SHADER
-GLuint lightColourID;
-GLuint shineDamperID;
-GLuint reflectivityID;
-GLuint modelTextureID;
+GLuint m_lightColourID;
+GLuint m_shineDamperID;
+GLuint m_reflectivityID;
+GLuint m_modelTextureID;
 };
 }

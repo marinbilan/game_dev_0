@@ -117,25 +117,16 @@ NAME5    texture    _vanquish/textures/texture5.png
 NAME5    shineDumper  5.0
 NAME5    reflectivity 0.1
 
-smartModel_0    mesh    smartMesh_0
-smartModel_0    mesh    smartMesh_1
-smartModel_0    mesh    smartMesh_2
-smartModel_0    mesh    smartMesh_3
-smartModel_0    mesh    smartMesh_4
-smartModel_0    mesh    smartMesh_5
+
+smartModel_0    shader    smartShader_0
+smartModel_0    shader    smartShader_1
+smartModel_0    shader    smartShader_2
+smartModel_0    shader    smartShader_3
+smartModel_0    shader    smartShader_4
+smartModel_0    shader    smartShader_5
 // ---- ==== ====  ==== ==== ----
 
 
-// ---- ==== ==== MESHes ==== ==== ----
-
-smartMesh_0    shader     smartShader_0
-smartMesh_1    shader     smartShader_0
-smartMesh_2    shader     smartShader_0
-smartMesh_3    shader     smartShader_0
-smartMesh_4    shader     smartShader_0
-smartMesh_5    shader     smartShader_0
-
-// ---- ==== ==== ==== ==== ----
 
 
 

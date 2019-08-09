@@ -10,32 +10,32 @@ Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 	GLfloat projMatrixWidth = 800;
 	GLfloat projMatrixHeight = 600;
 
-	shaderProgramID = createShader(VertexShaderPTN, FragmentShaderPTN);
+	m_shaderProgramID = createShader(VertexShaderPTN, FragmentShaderPTN);
 	// [ VERTEX SHADER ]
 	//   ATTRIBUTEs
-	positionsID = glGetAttribLocation(shaderProgramID, "position");
-	textureCoordsID = glGetAttribLocation(shaderProgramID, "textureCoordinates");
-	normalsID = glGetAttribLocation(shaderProgramID, "normal");
+	m_positionsID = glGetAttribLocation(m_shaderProgramID, "position");
+	m_textureCoordsID = glGetAttribLocation(m_shaderProgramID, "textureCoordinates");
+	m_normalsID = glGetAttribLocation(m_shaderProgramID, "normal");
 	// [ UNIFORMs ]
-	projectionMatrixID = glGetUniformLocation(shaderProgramID, "projectionMatrix");
-	viewMatrixID = glGetUniformLocation(shaderProgramID, "viewMatrix");
-	viewMatrixInvID = glGetUniformLocation(shaderProgramID, "viewMatrixInv");
-	modelMatrixID = glGetUniformLocation(shaderProgramID, "transformationMatrix");
+	m_projectionMatrixID = glGetUniformLocation(m_shaderProgramID, "projectionMatrix");
+	m_viewMatrixID = glGetUniformLocation(m_shaderProgramID, "viewMatrix");
+	m_viewMatrixInvID = glGetUniformLocation(m_shaderProgramID, "viewMatrixInv");
+	m_modelMatrixID = glGetUniformLocation(m_shaderProgramID, "transformationMatrix");
 
-	lightPositionID = glGetUniformLocation(shaderProgramID, "lightPosition");
-	planeID = glGetUniformLocation(shaderProgramID, "plane");
+	m_lightPositionID = glGetUniformLocation(m_shaderProgramID, "lightPosition");
+	m_planeID = glGetUniformLocation(m_shaderProgramID, "plane");
 	// [ FRAGMENT SHADER ]
 	//   UNIFORMs
-	lightColourID = glGetUniformLocation(shaderProgramID, "lightColour");
-	shineDamperID = glGetUniformLocation(shaderProgramID, "shineDamper");
-	reflectivityID = glGetUniformLocation(shaderProgramID, "reflectivity");
-	modelTextureID = glGetUniformLocation(shaderProgramID, "modelTexture");
+	m_lightColourID = glGetUniformLocation(m_shaderProgramID, "lightColour");
+	m_shineDamperID = glGetUniformLocation(m_shaderProgramID, "shineDamper");
+	m_reflectivityID = glGetUniformLocation(m_shaderProgramID, "reflectivity");
+	m_modelTextureID = glGetUniformLocation(m_shaderProgramID, "modelTexture");
 	//
 	// Set Projection Matrix
 	// 
-	projectionMatrix = glm::perspective(glm::radians(60.0f), projMatrixWidth / projMatrixHeight, 0.1f, 1000.f);
-	glUseProgram(shaderProgramID);
-	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projectionMatrix[0][0]);
+	m_projectionMatrix = glm::perspective(glm::radians(60.0f), projMatrixWidth / projMatrixHeight, 0.1f, 1000.f);
+	glUseProgram(m_shaderProgramID);
+	glUniformMatrix4fv(m_projectionMatrixID, 1, GL_FALSE, &m_projectionMatrix[0][0]);
 	glUseProgram(0);
 
 }
@@ -55,6 +55,79 @@ void Shader::DefaultShader::preInit()
 void Shader::DefaultShader::postInit()
 {
 }
+
+
+void Shader::DefaultShader::render(const glm::mat4& modelMatrix,
+	const GPUObject::MeshStructure modelMesh,
+	const GPUObject::TextureStructure textureStruct,
+	const std::shared_ptr<Camera::CameraIf>& camera,
+	const std::shared_ptr<Light::LightIf>& light)
+{
+	// ---- ModelGPUObject StructOfMeshe for each mesh ----
+	glBindVertexArray(modelMesh.m_VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, modelMesh.m_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelMesh.m_IBO);
+	// ---- ----
+
+	// ---- Shader ----
+	glUseProgram(m_shaderProgramID);
+	// ---- ----
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 32, (const GLvoid*)12); // 3 (x, y, z) * 4 (BYTEs) = 12 (BYTES)
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 32, (const GLvoid*)20); // 3 (x, y, z) * 4 (BYTEs) + 2 (u, v) * 4 (BYTEs) = 20 (BYTES)
+
+	glEnableVertexAttribArray(0); // VERTEXs
+	glEnableVertexAttribArray(1); // TEXTURECOORDs
+	glEnableVertexAttribArray(2); // NORMALs
+
+	// [ VERTEX SHADER UNIFORMS ]
+	// Projection matrix updated in shader constructor (Only once)
+	// ---- Camera ----
+	glUniformMatrix4fv(m_viewMatrixID, 1, GL_FALSE, &camera->getViewMatrix()[0][0]);
+	camera->invertCameraMatrix();
+	glUniformMatrix4fv(m_viewMatrixInvID, 1, GL_FALSE, &camera->getInvViewMatrix()[0][0]);
+	// ---- ----
+
+	// ---- Model Matrix ----
+	glUniformMatrix4fv(m_modelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+	// ---- ----
+
+	// ---- Light ----
+	glUniform3f(m_lightPositionID, light->getLightPosition()[0], light->getLightPosition()[1], light->getLightPosition()[2]);
+	// ---- ----
+
+	glm::vec4 planeModelPTN(0.0f, -1.0f, 0.0f, 100000.0f);
+	glUniform4f(m_planeID, planeModelPTN[0], planeModelPTN[1], planeModelPTN[2], planeModelPTN[3]);
+
+	// [ FRAGMENT SHADER UNIFORMS ]
+	// ---- Light ----
+	glUniform3f(m_lightColourID, light->getLightColors()[0], light->getLightColors()[1], light->getLightColors()[2]);
+	// ---- ----
+
+	// // ---- TextureGPUObject StructOfTexture for each mesh ----
+	glUniform1f(m_shineDamperID, textureStruct.m_shineDamper);
+	glUniform1f(m_reflectivityID, textureStruct.m_reflectivity);
+
+	glUniform1i(m_modelTextureID, 0);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_textureId);
+
+	// ---- RENDER MESH ----
+	// ---- ModelGPUObject StructOfMeshe for each mesh ----
+	glDrawElements(GL_TRIANGLES, modelMesh.m_NumOfInds, GL_UNSIGNED_INT, 0);
+	// ---- ----
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+
+	glBindVertexArray(0);
+
+	glUseProgram(0);
+};
 
 
 // OPERATORs

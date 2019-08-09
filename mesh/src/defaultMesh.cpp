@@ -38,22 +38,22 @@ void Mesh::DefaultMesh::postInit()
 void Mesh::DefaultMesh::setShaderIDs()
 {
 	// ShaderId
-	m_defaultShaderID = m_defaultShader->shaderProgramID;
+	m_defaultShaderID = m_defaultShader->m_shaderProgramID;
 
 	// VERTEX SHADER
 	// m_projectionMatrixID = m_shaderIf->getProjectionMatrixID();
-	m_viewMatrixID = m_defaultShader->viewMatrixID;
-	m_viewMatrixInvID = m_defaultShader->viewMatrixInvID;
-	m_modelMatrixID = m_defaultShader->modelMatrixID;
+	m_viewMatrixID = m_defaultShader->m_viewMatrixID;
+	m_viewMatrixInvID = m_defaultShader->m_viewMatrixInvID;
+	m_modelMatrixID = m_defaultShader->m_modelMatrixID;
 
-	m_lightPositionID = m_defaultShader->lightPositionID;
-	m_planeID = m_defaultShader->planeID;
+	m_lightPositionID = m_defaultShader->m_lightPositionID;
+	m_planeID = m_defaultShader->m_planeID;
 
 	// FRAGMENT SHADER
-	m_lightColourID = m_defaultShader->lightColourID;
-	m_shineDamperID = m_defaultShader->shineDamperID;
-	m_reflectivityID = m_defaultShader->reflectivityID;
-	m_modelTextureID = m_defaultShader->modelTextureID;
+	m_lightColourID = m_defaultShader->m_lightColourID;
+	m_shineDamperID = m_defaultShader->m_shineDamperID;
+	m_reflectivityID = m_defaultShader->m_reflectivityID;
+	m_modelTextureID = m_defaultShader->m_modelTextureID;
 }
 
 

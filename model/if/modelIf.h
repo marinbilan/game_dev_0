@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
+#include <vector>
+#include <memory>
 
 #include "commonTypes.h"
 
 #include "gpuObjectIf.h"
 #include "cameraIf.h"
 #include "LightIf.h"
-#include "meshIf.h"
+
+#include "shaderIf.h"
 
 namespace Model
 {
@@ -24,8 +27,6 @@ public:
 	{ 
 		return "Not implemented in ModelIf"; 
 	}
-
-	// virtual void connect() {};
 
 	virtual void render() {};
 

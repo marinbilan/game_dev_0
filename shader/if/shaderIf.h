@@ -3,9 +3,14 @@
 
 #include "glew.h"
 #include "glfw3.h"
-
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp" // For projection matrix
+
+#include "commonTypes.h"
+
+#include "cameraIf.h"
+#include "lightIf.h"
+#include "gpuObjectIf.h"
 
 
 namespace Shader
@@ -45,6 +50,12 @@ public:
 
 		return shaderID;
 	}
+
+	virtual void render(const glm::mat4& modelMatrix,
+		const GPUObject::MeshStructure modelMesh,
+		const GPUObject::TextureStructure textureStruct,
+		const std::shared_ptr<Camera::CameraIf>& camera,
+		const std::shared_ptr<Light::LightIf>& light) {};
 
 	// OPERATORs
 	virtual void printINFO() {};

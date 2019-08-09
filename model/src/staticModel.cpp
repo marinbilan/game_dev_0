@@ -2,6 +2,7 @@
 
 #include "factory.h"
 
+
 Model::StaticModel::StaticModel(const std::string& name) : 
 	m_name(name), 
 	m_modelPosition(glm::vec3(0.0f, 0.0f, 0.0f)),
@@ -56,24 +57,21 @@ void Model::StaticModel::postInit()
 	std::string lightString;
 	FACTORY.getDatabase()->getRest(m_name, "light", lightString);
 
-	// 2] Get gpuObject instance from Factory
+	// 1] Get gpuObject instance from Factory
 	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
 	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString);
 	m_lightIf = Common::Factory::getInstance().getLightIf(lightString);
 
-	// std::cout << " ---------------------------> " << m_lightIf->getLightPosition()[0] << " " << m_lightIf->getLightPosition()[1] << " " << m_lightIf->getLightPosition()[2] << '\n';
-	// std::cout << " ---------------------------> " << m_lightIf->getLightColors()[0] << " " << m_lightIf->getLightColors()[1] << " " << m_lightIf->getLightColors()[2] << '\n';
+	// 2] Get vector (column) of Shader instances names from DB
+	std::vector<std::string> vecOfStringShaderNames;
+	FACTORY.getDatabase()->get(m_name, "shader", vecOfStringShaderNames);
 
-	// 4] Get vector (column) of Mesh instances names from DB
-	std::vector<std::string> vecOfStringMeshesNames;
-	FACTORY.getDatabase()->get(m_name, "mesh", vecOfStringMeshesNames);
-
-	// 5] Set meshIf pointers in vector of mesh interfaces
-	for (auto it1 = vecOfStringMeshesNames.begin(); it1 < vecOfStringMeshesNames.end(); ++it1)
+	// 3] Set shaderIf pointers in vector of shader interfaces
+	for (auto it = vecOfStringShaderNames.begin(); it < vecOfStringShaderNames.end(); ++it)
 	{
-		std::shared_ptr<Mesh::MeshIf>& m_meshIf = FACTORY.getMeshIf(*it1);
-		m_vecOfdefaultMeshIf.push_back(m_meshIf);
+		std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(*it);
+		m_vecOfdefaultShaderIf.push_back(m_meshIf);
 	}
 }
 
@@ -95,19 +93,16 @@ void Model::StaticModel::postInit()
 // 5 ] Disable everything
 void Model::StaticModel::render() 
 {
-	// glBindVertexArray(m_VAO);
+	auto it0 = m_gpuObjectIf->getMeshVec().begin();
+	auto it1 = m_gpuObjectTextureIf->getTextureStructVec().begin();
 
-	auto itt = m_gpuObjectIf->getMeshVec().begin();
-	auto itTextureStructs = m_gpuObjectTextureIf->getTextureStructVec().begin();
-
-	for (auto it = m_vecOfdefaultMeshIf.begin(); it != m_vecOfdefaultMeshIf.end(); ++it)
+	for (auto it = m_vecOfdefaultShaderIf.begin(); it != m_vecOfdefaultShaderIf.end(); ++it)
 	{
 		// RENDER EACH MESH IN MODEL
-		// (*it)->render(m_modelMatrix, itt->m_VAO, itt->m_VBO, itt->m_IBO, itt->m_NumOfInds, *itTextureStructs);
-		(*it)->render(m_modelMatrix, *itt, *itTextureStructs, m_cameraIf, m_lightIf);
+		(*it)->render(m_modelMatrix, *it0, *it1, m_cameraIf, m_lightIf);
 
-		++itt;
-		++itTextureStructs;
+		++it0;
+		++it1;
 	}
 };
 
