@@ -1,7 +1,6 @@
 #pragma once
 #include <map>  
 #include <string>  
-#include <iostream>  
 #include <memory>  
 #include <vector>  
 
@@ -28,9 +27,6 @@
 
 #include "modelIf.h"
 #include "staticModel.h"
-
-#include "meshIf.h"
-#include "defaultMesh.h"
 
 #include "shaderIf.h"
 #include "defaultShader.h"
@@ -184,9 +180,6 @@ public:
 		// ModelIf
 		REGISTER_CLASS(Model::StaticModel);
 
-		// MeshIf
-		REGISTER_CLASS(Mesh::DefaultMesh);
-
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);
 	}
@@ -213,9 +206,6 @@ public:
 
 		// Create Models
 		createObjects("Model::", "ModelIf");
-
-		// Create Meshes
-		createObjects("Mesh::", "MeshIf");
 
 		// Create Shaders
 		createObjects("Shader::", "ShaderIf");
@@ -269,11 +259,6 @@ public:
 			{
 				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, model);
-			}
-			else if (!interFace.compare("MeshIf"))
-			{
-				std::shared_ptr<Mesh::MeshIf> mesh((Mesh::MeshIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, mesh);
 			}
 			else if (!interFace.compare("ShaderIf"))
 			{
@@ -329,10 +314,6 @@ public:
 		else if (!objNameIf.compare("ModelIf"))
 		{
 			printName(m_vecOfModelIf);
-		}
-		else if (!objNameIf.compare("MeshIf"))
-		{
-			printName(m_vecOfMeshIf);
 		}
 		else if (!objNameIf.compare("ShaderIf"))
 		{
@@ -399,10 +380,6 @@ public:
 		{
 			m_vecOfModelIf.push_back(std::dynamic_pointer_cast<Model::ModelIf>(derivedObject));
 		}
-		else if (!objNameIf.compare("MeshIf"))
-		{
-			m_vecOfMeshIf.push_back(std::dynamic_pointer_cast<Mesh::MeshIf>(derivedObject));
-		}
 		else if (!objNameIf.compare("ShaderIf"))
 		{
 			m_vecOfShaderIf.push_back(std::dynamic_pointer_cast<Shader::ShaderIf>(derivedObject));
@@ -449,11 +426,6 @@ public:
 	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfModelIf, arg0);
-	}
-
-	std::shared_ptr<Mesh::MeshIf>& getMeshIf(const std::string& arg0)
-	{
-		return getObjectFromVec(m_vecOfMeshIf, arg0);
 	}
 
 	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
@@ -521,7 +493,6 @@ private:
 	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>> m_vecOfGPUObjectIf;
 
 	std::vector<std::shared_ptr<Model::ModelIf>>         m_vecOfModelIf;
-	std::vector<std::shared_ptr<Mesh::MeshIf>>           m_vecOfMeshIf;
 	std::vector<std::shared_ptr<Shader::ShaderIf>>       m_vecOfShaderIf;
 
 	// ----
