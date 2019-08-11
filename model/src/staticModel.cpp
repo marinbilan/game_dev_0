@@ -47,7 +47,6 @@ void Model::StaticModel::postInit()
 	std::string gpuObjectString;
 	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", gpuObjectString);
 
-
 	std::string gpuObjectTextureString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
 

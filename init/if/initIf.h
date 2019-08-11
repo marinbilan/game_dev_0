@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+//#include "controlIf.h"
+//#include "controlDefault.h"
+
 
 namespace Init
 {
@@ -15,5 +18,6 @@ public:
 
 	virtual void preInit() {};
 	virtual void postInit() {};
+
 };
 }

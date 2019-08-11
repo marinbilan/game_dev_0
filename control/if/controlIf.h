@@ -4,6 +4,7 @@
 #include "glew.h"
 #include "glfw3.h"
 
+
 namespace Control
 {
 class ControlIf
@@ -15,7 +16,7 @@ public:
 
 	virtual const std::string& getName()
 	{
-		return "Error: ControlIf::getName() called from ControlIf!";
+		return returnErrorStr;
 	}
 
 	virtual void preInit() {};
@@ -25,5 +26,8 @@ public:
 
 	virtual void doCameraKeyboardMovement(GLfloat deltaTime) {};
 	virtual void doCameraMouseMovement() {};
+
+private:
+	std::string returnErrorStr= "Error: ControlIf::getName() called from ControlIf!";
 };
 }

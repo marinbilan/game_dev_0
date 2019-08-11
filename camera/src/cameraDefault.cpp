@@ -11,13 +11,6 @@ Camera::CameraDefault::CameraDefault(const std::string& name) :
 	m_viewMatrixInv(glm::mat4(1.0f)),
 	velocityFactor(17.0f)
 {
-	// Move to preInit (read from DB)
-	m_cameraPos =   glm::vec3(375, 25, 420);
-	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	m_cameraUp =    glm::vec3(0.0f, 1.0f, 0.0f);
-
-	m_viewMatrix = glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
-
 	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " created.");
 }
 
@@ -29,11 +22,20 @@ Camera::CameraDefault::~CameraDefault()
 
 void Camera::CameraDefault::preInit()
 {
+	// Read this from DB
+	m_cameraPos = glm::vec3(375, 25, 420);
+	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+	m_viewMatrix = glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
+
+	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " preInit().");
 }
 
 
 void Camera::CameraDefault::postInit()
 {
+	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " postInit().");
 }
 
 

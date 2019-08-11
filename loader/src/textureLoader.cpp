@@ -21,16 +21,16 @@ const std::string& Loader::TextureLoader::getName()
 
 void Loader::TextureLoader::preInit()
 {
-	// ---- [ 1] LOAD ALL TEXTUREs AND CREATE RAW TEXTURE OBJECTs] ----
-	loadAllTexturesAndCreateRawTextureStructs();
-
-	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
-	createGPUObjectTextures();
 }
 
 
 void Loader::TextureLoader::postInit()
 {
+	// ---- [ 1] LOAD ALL TEXTUREs AND CREATE RAW TEXTURE OBJECTs] ----
+	loadAllTexturesAndCreateRawTextureStructs();
+
+	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
+	createGPUObjectTextures();
 }
 
 

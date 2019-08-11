@@ -105,8 +105,6 @@ public:
 		m_log = std::make_unique<Common::Log>("log_0");
 
 		registerClass();
-
-		createObjects();
 	}
 
 
@@ -190,6 +188,7 @@ public:
 	 */
 	void createObjects()
 	{
+		std::cout << " [CREATING OBJECTs] ";
 		// Create Cameras
 		createObjects("Control::", "ControlIf");
 
@@ -209,6 +208,8 @@ public:
 
 		// Create Shaders
 		createObjects("Shader::", "ShaderIf");
+
+		std::cout << '\n';
 	}
 
 
@@ -237,33 +238,39 @@ public:
 			{
 				std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, control);
+				std::cout << ".";
 			}
 			if (!interFace.compare("CameraIf"))
 			{
 				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, camera);
+				std::cout << ".";
 			}
 			else if (!interFace.compare("LightIf"))
 			{
 				std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, light);
+				std::cout << ".";
 			}
 			// ----
 			else if (!interFace.compare("LoaderIf"))
 			{
 				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, loader);
+				std::cout << ".";
 			}
 			// ----
 			else if (!interFace.compare("ModelIf"))
 			{
 				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, model);
+				std::cout << ".";
 			}
 			else if (!interFace.compare("ShaderIf"))
 			{
 				std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, shader);
+				std::cout << ".";
 			}
 
 			++it1;
@@ -325,7 +332,6 @@ public:
 		}
 	}
 	
-
 	template<class T>
 	void printName(T& vec0)
 	{
@@ -398,41 +404,84 @@ public:
 	 *  @param - derivedObject
 	 *  @return void
 	 */
+	// -- Controls --
+	std::vector<std::shared_ptr<Control::ControlIf>>& getControlIfVec()
+	{
+		return m_vecOfControlIf;
+	}
 	std::shared_ptr<Control::ControlIf>& getControlIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfControlIf, arg0);
 	}
+	// ----
 
+	// -- Cameras --
+	std::vector<std::shared_ptr<Camera::CameraIf>>& getCameraIfVec()
+	{
+		return m_vecOfCameraIf;
+	}
 	std::shared_ptr<Camera::CameraIf>& getCameraIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfCameraIf, arg0);
 	}
+	// ----
 
+	// -- Lights --
+	std::vector<std::shared_ptr<Light::LightIf>>& getLightIfVec()
+	{
+		return m_vecOfLightIf;
+	}
 	std::shared_ptr<Light::LightIf>& getLightIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfLightIf, arg0);
 	}
+	// ----
 
+	// -- Loaders --
+	std::vector<std::shared_ptr<Loader::LoaderIf>>& getLoaderIfVec()
+	{
+		return m_vecOfLoaderIf;
+	}
 	std::shared_ptr<Loader::LoaderIf>& getLoaderIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfLoaderIf, arg0);
 	}
+	// ----
 
+	// -- GPUObjects --
+	std::vector<std::shared_ptr<GPUObject::GPUObjectIf>>& getGPUObjectIfVec()
+	{
+		return m_vecOfGPUObjectIf;
+	}
 	std::shared_ptr<GPUObject::GPUObjectIf>& getGPUObjectIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfGPUObjectIf, arg0);
 	}
+	// ----
 
+	// -- Model --
+	std::vector<std::shared_ptr<Model::ModelIf>>& getModelIfVec()
+	{
+		return m_vecOfModelIf;
+	}
 	std::shared_ptr<Model::ModelIf>& getModelIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfModelIf, arg0);
 	}
+	// ----
 
+	// -- Shader --
+	std::vector<std::shared_ptr<Shader::ShaderIf>>& getShaderIfVec()
+	{
+		return m_vecOfShaderIf;
+	}
 	std::shared_ptr<Shader::ShaderIf>& getShaderIf(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfShaderIf, arg0);
 	}
+	// ----
 
+	// -- Loaders stuff --
 	std::shared_ptr<GPUObject::MeshStructure>& getMeshStructure(const std::string& arg0)
 	{
 		return getObjectFromVec(m_vecOfMeshStructure, arg0);

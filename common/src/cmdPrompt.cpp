@@ -4,7 +4,6 @@
 
 Common::CmdPrompt::CmdPrompt(const std::string& name) : m_name(name)
 {
-	// std::cout << "CmdPrompt " << m_name << " created!" << std::endl;
 }
 
 
@@ -40,7 +39,11 @@ void Common::CmdPrompt::runCmdPrompt()
 		{
 			Common::Factory::getInstance().showMeObjects("ModelIf");
 		}
-
+		std::regex shaders("shaders");
+		if (std::regex_search(commandLineString, match, shaders))
+		{
+			Common::Factory::getInstance().showMeObjects("ShaderIf");
+		}
 
 	} while (commandLineString != "run");
 }

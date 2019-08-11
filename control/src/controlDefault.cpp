@@ -22,6 +22,7 @@ GLfloat lastY = HEIGHT / 2.0;
 
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 front;
+// ---- ----
 
 
 Control::ControlDefault::ControlDefault(const std::string& name) : m_name(name)
@@ -38,11 +39,14 @@ Control::ControlDefault::~ControlDefault()
 
 void Control::ControlDefault::preInit()
 {
+	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " preInit().");
 }
 
 
 void Control::ControlDefault::postInit()
 {
+	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " postInit().");
+	// TODO: Get this from DB
 	m_camera = FACTORY.getCameraIf("smartCamera_0");
 }
 

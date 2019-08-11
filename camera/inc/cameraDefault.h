@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cameraIf.h"
-// #include "error.h"
 
 
 namespace Camera

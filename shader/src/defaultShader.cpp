@@ -5,7 +5,17 @@
 Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 {
 	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
+}
 
+
+Shader::DefaultShader::~DefaultShader()
+{
+}
+
+
+// FUNCTIONs
+void Shader::DefaultShader::preInit()
+{
 	// TODO remove this
 	GLfloat projMatrixWidth = 800;
 	GLfloat projMatrixHeight = 600;
@@ -37,18 +47,6 @@ Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 	glUseProgram(m_shaderProgramID);
 	glUniformMatrix4fv(m_projectionMatrixID, 1, GL_FALSE, &m_projectionMatrix[0][0]);
 	glUseProgram(0);
-
-}
-
-
-Shader::DefaultShader::~DefaultShader()
-{
-}
-
-
-// FUNCTIONs
-void Shader::DefaultShader::preInit()
-{
 }
 
 

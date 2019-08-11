@@ -19,6 +19,8 @@ namespace Common
 
 		void INFOCMD(const char* date, const char* time, const char* file, int line, const std::string& msg);
 
+		void INFOCMDNONEWLINE(const char* date, const char* time, const char* file, int line, const std::string& msg);
+
 	private:
 
 		std::string m_name;

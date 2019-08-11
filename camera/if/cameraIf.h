@@ -19,14 +19,13 @@ public:
 
 	virtual const std::string& getName()
 	{
-		return "Error: CameraIf::getName() called from CameraIf!";
+		return returnErrorStr;
 	}
 
 	virtual void preInit() {};
 	virtual void postInit() {};
 
 	// FUNCTIONs
-	// Get
 	virtual glm::mat4& getViewMatrix() 
 	{ 
 		glm::mat4 tempMatrix = glm::mat4(1.0f);
@@ -39,7 +38,6 @@ public:
 		return tempMatrix;
 	}
 
-	// Set
 	virtual void invertCameraMatrix() 
 	{
 	}
@@ -55,5 +53,8 @@ public:
 
 	virtual void updateCameraPosition() {};
 	// OPERATORs	
+
+private:
+	std::string returnErrorStr = "Error: CameraIf::getName() called from CameraIf!";
 };
 } // End of namespace
