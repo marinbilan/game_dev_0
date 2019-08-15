@@ -26,6 +26,25 @@ private:
 };
 
 
+struct VertNormalMap
+{
+public:
+	VertNormalMap(glm::vec3 position, glm::vec2 textureCoord, glm::vec3 normal, glm::vec3 tangemt) :
+		m_position(position),
+		m_texCoords(textureCoord),
+		m_normal(normal),
+		m_tangent(tangemt)
+	{
+	}
+
+private:
+	glm::vec3 m_position;
+	glm::vec2 m_texCoords;
+	glm::vec3 m_normal;
+	glm::vec3 m_tangent;
+};
+
+
 class ModelLoader : public LoaderIf
 {
 public:
@@ -42,6 +61,7 @@ private:
 	void loadModel();	
 	void initScene(const aiScene* _pScene);
 	void initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
+	void initNormalMapMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
 	
 	std::string m_name;
 

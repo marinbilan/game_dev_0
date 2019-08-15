@@ -24,6 +24,7 @@ Create    LoaderIf    TextureLoader    textureLoader_0
 Create    ModelIf     StaticModel      smartModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
+Create    ShaderIf    TerrainShader    terrain0
 // ---- ==== ==== ==== ==== ----
 
 

@@ -30,6 +30,7 @@
 
 #include "shaderIf.h"
 #include "defaultShader.h"
+#include "terrainShader.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
 
@@ -180,6 +181,7 @@ public:
 
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);
+		REGISTER_CLASS(Shader::TerrainShader);
 	}
 
 
