@@ -22,6 +22,7 @@ Create    LoaderIf    TextureLoader    textureLoader_0
 // ----
 
 Create    ModelIf     StaticModel      smartModel_0
+Create    ModelIf     TerrainModel     terrainModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
 Create    ShaderIf    TerrainShader    terrain0
@@ -44,18 +45,42 @@ light_0	   lightColor           1.0 1.0 1.0
 // ---- ==== ==== LOADERs ==== ==== ----
 
 // RAW Textures
-textureLoader_0    load    _vanquish/textures/texture0.png
-textureLoader_0    load    _vanquish/textures/texture1.png
-textureLoader_0    load    _vanquish/textures/texture2.png
-textureLoader_0    load    _vanquish/textures/texture3.png
-textureLoader_0    load    _vanquish/textures/texture4.png
-textureLoader_0    load    _vanquish/textures/texture5.png
+textureLoader_0    loadTexture    _vanquish/textures/texture0.png
+textureLoader_0    loadTexture    _vanquish/textures/texture1.png
+textureLoader_0    loadTexture    _vanquish/textures/texture2.png
+textureLoader_0    loadTexture    _vanquish/textures/texture3.png
+textureLoader_0    loadTexture    _vanquish/textures/texture4.png
+textureLoader_0    loadTexture    _vanquish/textures/texture5.png
+// Terrain
+textureLoader_0    loadTerrainTexture    _src/textures/grass.png
+textureLoader_0    loadTerrainTexture    _src/textures/dirt.png
+textureLoader_0    loadTerrainTexture    _src/textures/sand.png
+textureLoader_0    loadTerrainTexture    _src/textures/hardwood.png
+textureLoader_0    loadTerrainTexture    _src/textures/blendMap2.png
+
 
 modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
 // ...
 textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
+textureLoader_0    GPUObjectTexture    terrainGPUObjectTexture
 // ...
 
+// ---- ==== ==== ==== ==== ----
+
+
+// ---- ==== ==== TERRAINs ==== ==== ----
+terrainModel_0      shader              terrain0
+terrainModel_0      camera              smartCamera_0
+terrainModel_0      GPUObjectTexture    terrainGPUObjectTexture
+
+terrainGPUObjectTexture    terrainShader    TERRAINNAME0
+TERRAINNAME0    texture0      _src/textures/grass.png
+TERRAINNAME0    texture1      _src/textures/dirt.png
+TERRAINNAME0    texture2      _src/textures/sand.png
+TERRAINNAME0    texture3      _src/textures/hardwood.png
+TERRAINNAME0    texture4      _src/textures/blendMap2.png
+TERRAINNAME0    shineDumper  5.0
+TERRAINNAME0    reflectivity 0.1
 // ---- ==== ==== ==== ==== ----
 
 

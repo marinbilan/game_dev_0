@@ -48,8 +48,17 @@ struct TextureStructure
 	TextureStructure(const std::string& name) : m_name(name) {};
 
 std::string m_name;
-
 GLuint m_textureId;
+
+// Terrain Texture Ids
+std::string m_nameName1;
+GLuint m_texture1;
+std::string m_nameName2;
+GLuint m_texture2;
+std::string m_nameName3;
+GLuint m_texture3;
+std::string m_nameName4;
+GLuint m_texture4;
 
 GLuint m_shineDamper;
 GLuint m_reflectivity;

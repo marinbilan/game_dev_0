@@ -18,14 +18,21 @@ public:
 	void preInit();
 	void postInit();
 
-	// Step 1
+	// Step 1.1
 	void loadAllTexturesAndCreateRawTextureStructs();
+	// Step 1.2
+	void loadTerrainTexturesAndCreateRawTextureStructs();
 
-	// Step 2
+	// Step 2.1
 	void createGPUObjectTextures();
 	void createDefaultShader(const std::string& defaultShaderName);
+	void createTerrainShader(const std::string& defaultShaderName);
 	
+	// Default Texture
 	GLuint createTexture(const std::string& _textureName);
+
+	// Terrain Texture
+	GLuint createTerrainTexture(const std::string& _textureName);
 	
 private:
 	std::string m_name;

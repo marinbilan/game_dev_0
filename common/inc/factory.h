@@ -27,6 +27,7 @@
 
 #include "modelIf.h"
 #include "staticModel.h"
+#include "terrainModel.h"
 
 #include "shaderIf.h"
 #include "defaultShader.h"
@@ -178,6 +179,7 @@ public:
 
 		// ModelIf
 		REGISTER_CLASS(Model::StaticModel);
+		REGISTER_CLASS(Model::TerrainModel);
 
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);

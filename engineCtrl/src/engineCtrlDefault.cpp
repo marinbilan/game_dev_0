@@ -122,14 +122,17 @@ void EngineCtrl::EngineCtrlDefault::render()
 		// ----
 
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_CLIP_DISTANCE0);
+		/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_CLIP_DISTANCE0);*/
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
 
 		// Camera movement
 		control->updateCameraPosition(m_deltaTime);
 
 		Common::Factory::getInstance().getModelIf("smartModel_0")->render();
+		Common::Factory::getInstance().getModelIf("terrainModel_0")->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_window);
