@@ -31,6 +31,7 @@
 
 #include "shaderIf.h"
 #include "defaultShader.h"
+#include "normalMapShader.h"
 #include "terrainShader.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
@@ -183,6 +184,7 @@ public:
 
 		// ShaderIf
 		REGISTER_CLASS(Shader::DefaultShader);
+		REGISTER_CLASS(Shader::NormalMapShader);
 		REGISTER_CLASS(Shader::TerrainShader);
 	}
 
@@ -408,7 +410,7 @@ public:
 	 *  @param - derivedObject
 	 *  @return void
 	 */
-	// -- Controls --
+	// -- Get Controls via Interface --
 	std::vector<std::shared_ptr<Control::ControlIf>>& getControlIfVec()
 	{
 		return m_vecOfControlIf;

@@ -1,10 +1,4 @@
-/*****************************************************************/
-/* CREATE
-/* 0 arg - Key word           (ex Create)
-/* 1 arg - Group identifier   (ex CameraIf) for all derived classes
-/* 2 arg - Derived class name (ex CameraDefault)
-/* 3 arg - Instance name      (ex smartCamera_0)
-/*****************************************************************/
+// X3non3D Visualisation Engine
 
 // ---- ==== ==== FACTORY ==== ==== ----
 // OBJECTs CREATION:
@@ -25,6 +19,7 @@ Create    ModelIf     StaticModel      smartModel_0
 Create    ModelIf     TerrainModel     terrainModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
+Create    ShaderIf    NormalMapShader  normalMapShader_0
 Create    ShaderIf    TerrainShader    terrain0
 // ---- ==== ==== ==== ==== ----
 
