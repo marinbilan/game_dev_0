@@ -127,6 +127,14 @@ void Loader::TextureLoader::createGPUObjectTextures()
 				*/
 				createDefaultShader(*it);
 			}
+			else if (!s.compare("normalMapShader"))
+			{
+				/*
+					NORMALMAPNAME0
+					...
+				*/
+				createNormalMapShader(*it);
+			}
 			else if (!s.compare("terrainShader"))
 			{
 				/*
@@ -149,6 +157,43 @@ void Loader::TextureLoader::createDefaultShader(const std::string& defaultShader
 
 	std::string tempTexture;
 	FACTORY.getDatabase()->getRest(defaultShaderName, "texture", tempTexture);
+	/*
+		_vanquish/textures/texture0.png
+	*/
+	GLfloat shineDumper;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "shineDumper", shineDumper);
+	/*
+		shineDumper
+	*/
+	GLfloat reflectivity;
+	FACTORY.getDatabase()->getFloat21(defaultShaderName, "reflectivity", reflectivity);
+	/*
+		reflectivity
+	*/
+
+	std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(tempTexture);
+
+	tempTextureStruct.m_name = tempRawTextureStruct->m_name;
+	tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
+	tempTextureStruct.m_shineDamper = shineDumper;
+	tempTextureStruct.m_reflectivity = reflectivity;
+
+	// Store this (for ex defaultShader struct) in vector of structs
+	m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
+}
+
+
+void Loader::TextureLoader::createNormalMapShader(const std::string& defaultShaderName)
+{
+	GPUObject::TextureStructure tempTextureStruct(defaultShaderName);
+
+	std::string tempTexture;
+	FACTORY.getDatabase()->getRest(defaultShaderName, "texture", tempTexture);
+	/*
+		_vanquish/textures/texture0.png
+	*/
+	std::string tempNormalMapTexture;
+	FACTORY.getDatabase()->getRest(defaultShaderName, "textureNormalMap", tempNormalMapTexture);
 	/*
 		_vanquish/textures/texture0.png
 	*/

@@ -46,6 +46,8 @@ textureLoader_0    loadTexture    _vanquish/textures/texture2.png
 textureLoader_0    loadTexture    _vanquish/textures/texture3.png
 textureLoader_0    loadTexture    _vanquish/textures/texture4.png
 textureLoader_0    loadTexture    _vanquish/textures/texture5.png
+// Normal Map Texture
+
 // Terrain
 textureLoader_0    loadTerrainTexture    _src/textures/grass.png
 textureLoader_0    loadTerrainTexture    _src/textures/dirt.png

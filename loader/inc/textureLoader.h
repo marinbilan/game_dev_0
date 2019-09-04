@@ -25,12 +25,13 @@ public:
 
 	// Step 2.1
 	void createGPUObjectTextures();
+
 	void createDefaultShader(const std::string& defaultShaderName);
+	void createNormalMapShader(const std::string& defaultShaderName);
 	void createTerrainShader(const std::string& defaultShaderName);
 	
 	// Default Texture
 	GLuint createTexture(const std::string& _textureName);
-
 	// Terrain Texture
 	GLuint createTerrainTexture(const std::string& _textureName);
 	

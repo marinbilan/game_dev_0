@@ -20,26 +20,27 @@ void Shader::NormalMapShader::preInit()
 	GLfloat projMatrixWidth = 800;
 	GLfloat projMatrixHeight = 600;
 
-	m_shaderProgramID = createShader(VertexShaderPTN, FragmentShaderPTN);
+	m_shaderProgramID = createShader(VertexShaderNormalMapPTNT, FragmentShaderNormalMapPTNT);
 	// [ VERTEX SHADER ]
 	//   ATTRIBUTEs
 	m_positionsID = glGetAttribLocation(m_shaderProgramID, "position");
 	m_textureCoordsID = glGetAttribLocation(m_shaderProgramID, "textureCoordinates");
 	m_normalsID = glGetAttribLocation(m_shaderProgramID, "normal");
+	m_tangentsID = glGetAttribLocation(m_shaderProgramID, "tangent");
 	// [ UNIFORMs ]
 	m_projectionMatrixID = glGetUniformLocation(m_shaderProgramID, "projectionMatrix");
 	m_viewMatrixID = glGetUniformLocation(m_shaderProgramID, "viewMatrix");
-	m_viewMatrixInvID = glGetUniformLocation(m_shaderProgramID, "viewMatrixInv");
+	//m_viewMatrixInvID = glGetUniformLocation(m_shaderProgramID, "viewMatrixInv");
 	m_modelMatrixID = glGetUniformLocation(m_shaderProgramID, "transformationMatrix");
 
-	m_lightPositionID = glGetUniformLocation(m_shaderProgramID, "lightPosition");
-	m_planeID = glGetUniformLocation(m_shaderProgramID, "plane");
+	m_lightPositionEyeSpaceID = glGetUniformLocation(m_shaderProgramID, "lightPositionEyeSpace");
 	// [ FRAGMENT SHADER ]
 	//   UNIFORMs
 	m_lightColourID = glGetUniformLocation(m_shaderProgramID, "lightColour");
 	m_shineDamperID = glGetUniformLocation(m_shaderProgramID, "shineDamper");
 	m_reflectivityID = glGetUniformLocation(m_shaderProgramID, "reflectivity");
 	m_modelTextureID = glGetUniformLocation(m_shaderProgramID, "modelTexture");
+	m_modelNormalMapID = glGetUniformLocation(m_shaderProgramID, "normalMap");
 	//
 	// Set Projection Matrix
 	// 
@@ -75,17 +76,17 @@ void Shader::NormalMapShader::render(const glm::mat4& modelMatrix,
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 32, (const GLvoid*)12); // 3 (x, y, z) * 4 (BYTEs) = 12 (BYTES)
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 32, (const GLvoid*)20); // 3 (x, y, z) * 4 (BYTEs) + 2 (u, v) * 4 (BYTEs) = 20 (BYTES)
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 32, (const GLvoid*)32); // Tangent
 
 	glEnableVertexAttribArray(0); // VERTEXs
 	glEnableVertexAttribArray(1); // TEXTURECOORDs
 	glEnableVertexAttribArray(2); // NORMALs
+	glEnableVertexAttribArray(3); // TANGENTs
 
 	// [ VERTEX SHADER UNIFORMS ]
 	// Projection matrix updated in shader constructor (Only once)
 	// ---- Camera ----
 	glUniformMatrix4fv(m_viewMatrixID, 1, GL_FALSE, &camera->getViewMatrix()[0][0]);
-	camera->invertCameraMatrix();
-	glUniformMatrix4fv(m_viewMatrixInvID, 1, GL_FALSE, &camera->getInvViewMatrix()[0][0]);
 	// ---- ----
 
 	// ---- Model Matrix ----
@@ -93,25 +94,29 @@ void Shader::NormalMapShader::render(const glm::mat4& modelMatrix,
 	// ---- ----
 
 	// ---- Light ----
-	glUniform3f(m_lightPositionID, light->getLightPosition()[0], light->getLightPosition()[1], light->getLightPosition()[2]);
+	glm::vec3 lightPositionEyeSpace(395.0f, 7.0f, 385.0f);
+	glUniform3f(m_lightPositionEyeSpaceID, lightPositionEyeSpace[0], lightPositionEyeSpace[1], lightPositionEyeSpace[2]);
 	// ---- ----
-
-	glm::vec4 planeModelPTN(0.0f, -1.0f, 0.0f, 100000.0f);
-	glUniform4f(m_planeID, planeModelPTN[0], planeModelPTN[1], planeModelPTN[2], planeModelPTN[3]);
 
 	// [ FRAGMENT SHADER UNIFORMS ]
 	// ---- Light ----
-	glUniform3f(m_lightColourID, light->getLightColors()[0], light->getLightColors()[1], light->getLightColors()[2]);
+	glm::vec3 lightColorModelPTN(1.0f, 1.0f, 1.0f);
+	glUniform3f(m_lightColourID, lightColorModelPTN[0], lightColorModelPTN[1], lightColorModelPTN[2]);
 	// ---- ----
 
 	// // ---- TextureGPUObject StructOfTexture for each mesh ----
-	glUniform1f(m_shineDamperID, textureStruct.m_shineDamper);
-	glUniform1f(m_reflectivityID, textureStruct.m_reflectivity);
+	glUniform1f(m_shineDamperID, 15.0f);
+	glUniform1f(m_reflectivityID, 0.2f);
 
+	// Texture
 	glUniform1i(m_modelTextureID, 0);
-
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureStruct.m_textureId);
+
+	// NormalMap Texture
+	glUniform1i(m_modelNormalMapID, 1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_textureNormalMapId);
 
 	// ---- RENDER MESH ----
 	// ---- ModelGPUObject StructOfMeshe for each mesh ----
@@ -121,6 +126,7 @@ void Shader::NormalMapShader::render(const glm::mat4& modelMatrix,
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
 
 	glBindVertexArray(0);
 

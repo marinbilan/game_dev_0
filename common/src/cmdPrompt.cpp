@@ -43,7 +43,7 @@ void Common::CmdPrompt::runCmdPrompt()
 		if (std::regex_search(commandLineString, match, shaders))
 		{
 			// Common::Factory::getInstance().showMeObjects("ShaderIf");
-			FACTORY.getInstance().getShaderIf("terrain0")->printINFO();
+			FACTORY.getInstance().getShaderIf("normalMapShader_0")->printINFO();
 		}
 
 	} while (commandLineString != "run");

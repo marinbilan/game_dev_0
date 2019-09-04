@@ -49,6 +49,8 @@ struct TextureStructure
 
 std::string m_name;
 GLuint m_textureId;
+// NormalMap Texture
+GLuint m_textureNormalMapId;
 
 // Terrain Texture Ids
 std::string m_nameName1;
