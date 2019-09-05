@@ -268,6 +268,7 @@ public:
 			// ----
 			else if (!interFace.compare("ModelIf"))
 			{
+				std::cout << " ---- xxxx Creating Model object " << nameSpace + *it0 << " " << *it1 << '\n';
 				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, model);
 				std::cout << ".";

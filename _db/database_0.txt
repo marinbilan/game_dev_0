@@ -10,12 +10,13 @@ Create    CameraIf    CameraDefault    smartCamera_1
 
 Create    LightIf     LightDefault     light_0
 
-// ----
+// ---- ONLY ONE LOADER PER DERIVED OBJECT ----
 Create    LoaderIf    ModelLoader      modelLoader_0
 Create    LoaderIf    TextureLoader    textureLoader_0
 // ----
 
 Create    ModelIf     StaticModel      smartModel_0
+Create    ModelIf     StaticModel      cubeModel_0
 Create    ModelIf     TerrainModel     terrainModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
@@ -46,7 +47,9 @@ textureLoader_0    loadTexture    _vanquish/textures/texture2.png
 textureLoader_0    loadTexture    _vanquish/textures/texture3.png
 textureLoader_0    loadTexture    _vanquish/textures/texture4.png
 textureLoader_0    loadTexture    _vanquish/textures/texture5.png
+textureLoader_0    loadTexture    _src/textures/cube.png
 // Normal Map Texture
+textureLoader_0    loadTexture    _src/textures/cubeNM.png
 
 // Terrain
 textureLoader_0    loadTerrainTexture    _src/textures/grass.png
@@ -55,10 +58,12 @@ textureLoader_0    loadTerrainTexture    _src/textures/sand.png
 textureLoader_0    loadTerrainTexture    _src/textures/hardwood.png
 textureLoader_0    loadTerrainTexture    _src/textures/blendMap2.png
 
-
+// ----
 modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
+modelLoader_0      GPUObjectModel      _src/models/cube.3ds
 // ...
 textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
+textureLoader_0    GPUObjectTexture    cubeGPUObjectTexture
 textureLoader_0    GPUObjectTexture    terrainGPUObjectTexture
 // ...
 
@@ -141,6 +146,7 @@ smartModel_0    shader    smartShader_3
 smartModel_0    shader    smartShader_4
 smartModel_0    shader    smartShader_5
 // ---- ==== ====  ==== ==== ----
+
 
 
 

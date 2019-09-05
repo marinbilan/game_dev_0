@@ -5,7 +5,7 @@
 
 Loader::ModelLoader::ModelLoader(const std::string& name) : m_name(name)
 {
-	postInit();
+	//postInit();
 }
 
 
@@ -34,7 +34,7 @@ void Loader::ModelLoader::postInit()
 
 void Loader::ModelLoader::loadModel()
 {
-
+	std::cout << " -----------> LOAD MODELS" << '\n';
 	std::vector<std::string> GPUObjectModelVec;
 	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", GPUObjectModelVec);
 	/*
@@ -42,10 +42,21 @@ void Loader::ModelLoader::loadModel()
 		...
 	*/
 
+	std::cout << " -----xxxx------> GPUObjectModelVec[0] " << GPUObjectModelVec[0] << '\n';
+	std::cout << " -----xxxx------> GPUObjectModelVec[1] " << GPUObjectModelVec[1] << '\n';
+
 	for (auto GPUObjectModelString : GPUObjectModelVec)
 	{
 		// Get column
-		FACTORY.getDatabase()->getAll21(GPUObjectModelString, "meshStructure", m_meshStructNameTempVec);
+		std::string::size_type start = GPUObjectModelString.find('/');
+		std::string::size_type stop = GPUObjectModelString.find('.');
+		std::string meshStructName = GPUObjectModelString.substr(start + 1, stop - start - 1);
+
+		FACTORY.getDatabase()->getAll21(meshStructName, "meshStructure", m_meshStructNameTempVec);
+
+		std::cout << " -----xx  xx------> meshStructName " << meshStructName << '\n';
+
+		
 		/*
 		    _vanquish/vanquish.3ds    meshStructure    name0
             _vanquish/vanquish.3ds    meshStructure    name1
@@ -70,8 +81,11 @@ void Loader::ModelLoader::loadModel()
 		else
 		{
 		}
+
+		m_meshStructNameTempVec.clear();
 	}
 
+	
 }
 
 
@@ -80,10 +94,12 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	// CREATE GPU MODEL
 	GLuint VAO;
 
+
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	m_VAO = VAO;
+	std::cout << " -----------> VAO" << VAO <<'\n';
 
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model

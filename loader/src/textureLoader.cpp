@@ -28,6 +28,7 @@ void Loader::TextureLoader::postInit()
 {
 	// ---- [ 1] LOAD ALL TEXTUREs AND CREATE RAW TEXTURE OBJECTs] ----
 	loadAllTexturesAndCreateRawTextureStructs();
+
 	loadTerrainTexturesAndCreateRawTextureStructs();
 
 	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
@@ -209,9 +210,12 @@ void Loader::TextureLoader::createNormalMapShader(const std::string& defaultShad
 	*/
 
 	std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureStruct = FACTORY.getRawTextureStructure(tempTexture);
+	std::shared_ptr<GPUObject::RawTextureStructure> tempRawTextureNMStruct = FACTORY.getRawTextureStructure(tempNormalMapTexture);
 
 	tempTextureStruct.m_name = tempRawTextureStruct->m_name;
+	// Textures
 	tempTextureStruct.m_textureId = tempRawTextureStruct->m_textureId;
+	tempTextureStruct.m_textureNormalMapId = tempRawTextureNMStruct->m_textureId;
 	tempTextureStruct.m_shineDamper = shineDumper;
 	tempTextureStruct.m_reflectivity = reflectivity;
 

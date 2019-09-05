@@ -258,8 +258,8 @@ void Common::Database::getAll21(const std::string& set0, const std::string& set1
 	// dB Line
 	std::string dBLine;
 	// db Regex - dbEntry (name of the operation) dbTarget (Interface - class of objects with the same interface)
-	std::string first("([^\\s]+)");
-	std::regex regexLine(first + "\\s+" + set1 + "\\s+(\\w+)");
+	//std::string first("([^\\s]+)");
+	std::regex regexLine(set0 + "\\s+" + set1 + "\\s+(\\w+)");
 
 	std::smatch match;
 	while (std::getline(dBFile, dBLine))
