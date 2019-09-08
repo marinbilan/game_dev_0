@@ -84,7 +84,7 @@ void Model::TerrainModel::preInit()
 	// ----
 
 	// ----
-		// CREATE VAO 
+	// CREATE VAO 
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
 
@@ -127,24 +127,12 @@ void Model::TerrainModel::preInit()
 	m_modelMatrix = glm::scale(m_modelMatrix, m_modelScale);
 
 
-	// TEXTURE STUFF
+	// TODO: remove from here
 	backgroundTextureID = loadTexturePNG("_src/textures/grass.png");
 	rTextureID = loadTexturePNG("_src/textures/dirt.png");
 	gTextureID = loadTexturePNG("_src/textures/sand.png");
 	bTextureID = loadTexturePNG("_src/textures/hardwood.png");
 	blendMapID = loadTexturePNG("_src/textures/blendMap2.png");
-
-	std::cout << " xxxx VAO = " << m_VAO << "\n";
-	std::cout << " xxxx vboID1 = " << vboID1 << "\n";
-	std::cout << " xxxx vboID2 = " << vboID2 << "\n";
-	std::cout << " xxxx vboID3 = " << vboID3 << "\n";
-	std::cout << " xxxx indexBufferID = " << indexBufferID << "\n";
-
-	std::cout << " xxxx rTextureID = " << backgroundTextureID << "\n";
-	std::cout << " xxxx rTextureID = " << rTextureID << "\n";
-	std::cout << " xxxx gTextureID = " << gTextureID << "\n";
-	std::cout << " xxxx bTextureID = " << bTextureID << "\n";
-	std::cout << " xxxx blendMapID = " << blendMapID << "\n";
 }
 
 
@@ -157,23 +145,15 @@ void Model::TerrainModel::postInit()
 	FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderName);
 	m_terrainShaderIf = FACTORY.getShaderIf(shaderName);
 
-	std::cout << " ---- shader name: " << m_terrainShaderIf->getName()<< '\n';
-
 	std::string gpuObjectTextureString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
-
-    std::cout << " ---- gpuObjectTextureString: " << gpuObjectTextureString << '\n';
-	std::cout << " ---- m_gpuObjectTextureIf name: " << m_gpuObjectTextureIf->getName() << '\n';
-
-	std::cout << " ---- m_nameName4 name: " << m_gpuObjectTextureIf->getTextureStructVec()[0].m_texture4 << '\n';
 
 	// Get Camera
 	std::string cameraName;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraName);
 	m_cameraIf = FACTORY.getCameraIf(cameraName);
 
-	std::cout << " ---- camera name: " << m_cameraIf->getName() << '\n';
 }
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 

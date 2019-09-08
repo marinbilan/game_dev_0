@@ -5,7 +5,7 @@
 
 Loader::ModelLoader::ModelLoader(const std::string& name) : m_name(name)
 {
-	//postInit();
+
 }
 
 
@@ -34,38 +34,50 @@ void Loader::ModelLoader::postInit()
 
 void Loader::ModelLoader::loadModel()
 {
-	std::cout << " -----------> LOAD MODELS" << '\n';
-	std::vector<std::string> GPUObjectModelVec;
-	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", GPUObjectModelVec);
+	std::vector<std::string> vec0;
+	std::vector<std::string> vec1;
+	FACTORY.getDatabase()->getColumnOfStrings22(m_name, "GPUObjectModel", vec0, vec1);
 	/*
-	    modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
-		...
+	                                   vec0                  vec1
+	modelLoader_0    GPUObjectModel    (vanquishGPUModel)    (_vanquish/vanquish.3ds)
+	modelLoader_0    GPUObjectModel    (cubeGPUModel)        (_src/models/cube.3ds)
+	...
+    */
+	// PRINT
+	// ----
+		std::vector<std::string>::iterator it1 = vec1.begin();
+		for (auto s : vec0)
+		{
+			FACTORY.getLog()->LOGFILE(LOG "> " + m_name + "    GPUObjectModel    " + s + "    " + *it1);
+			++it1;
+		}
+	// ----
+
+	std::vector<std::string>::iterator itVec1 = vec1.begin(); // vec1
+	/*
+		Iterate ovec vec0 and load vec1 models
 	*/
-
-	std::cout << " -----xxxx------> GPUObjectModelVec[0] " << GPUObjectModelVec[0] << '\n';
-	std::cout << " -----xxxx------> GPUObjectModelVec[1] " << GPUObjectModelVec[1] << '\n';
-
-	for (auto GPUObjectModelString : GPUObjectModelVec)
+	for (auto GPUObjectModelString : vec0) // vec0
 	{
 		// Get column
-		std::string::size_type start = GPUObjectModelString.find('/');
-		std::string::size_type stop = GPUObjectModelString.find('.');
-		std::string meshStructName = GPUObjectModelString.substr(start + 1, stop - start - 1);
-
-		FACTORY.getDatabase()->getAll21(meshStructName, "meshStructure", m_meshStructNameTempVec);
-
-		std::cout << " -----xx  xx------> meshStructName " << meshStructName << '\n';
-
-		
+		FACTORY.getDatabase()->getColumn21(GPUObjectModelString, "meshStructure", m_meshStructNameTempVec);
 		/*
-		    _vanquish/vanquish.3ds    meshStructure    name0
-            _vanquish/vanquish.3ds    meshStructure    name1
+		    vec0                                 m_meshStructNameTempVec
+		    vanquishGPUModel    meshStructure    (vanName0)
+            vanquishGPUModel    meshStructure    (vanName1)
 			...
 		*/
+		// PRINT
+        // ----
+			for (auto s : m_meshStructNameTempVec)
+			{
+				FACTORY.getLog()->LOGFILE(LOG "> " + GPUObjectModelString + "    meshStructure    " + s);
+			}
+		// ----
 
 		// FOREACH MODEL STRING
 		Assimp::Importer Importer;
-		pScene = Importer.ReadFile(GPUObjectModelString.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+		pScene = Importer.ReadFile((*itVec1).c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 		if (pScene)
 		{
@@ -76,16 +88,16 @@ void Loader::ModelLoader::loadModel()
 			Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
 
 			initScene(pScene);
-			// TODO: store GPU_Object in Factory and get that object from Model instance
 		}
 		else
 		{
 		}
 
+		++itVec1;
+		// std::cout << " MESH VECTOR SIZE BEFORE: " << m_meshStructNameTempVec.size() << '\n';
 		m_meshStructNameTempVec.clear();
+		// std::cout << " MESH VECTOR SIZE AFTER: " << m_meshStructNameTempVec.size() << '\n';
 	}
-
-	
 }
 
 
@@ -94,12 +106,10 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	// CREATE GPU MODEL
 	GLuint VAO;
 
-
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	m_VAO = VAO;
-	std::cout << " -----------> VAO" << VAO <<'\n';
 
 	// START CREATING MESHes
 	// Create VBO and IBO for each Mesh in Model
@@ -110,10 +120,14 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 	{
 		FACTORY.getDatabase()->getStringFromDB(*it0, "normalMap", normalMapString);
 		/*
-			name0    normalMap    false
-			name1    normalMap    true
+		                             normalMapString
+			vanName0    normalMap    (false)
+			...
+			vanName1    normalMap    (true)
 			...
 		*/
+		FACTORY.getLog()->LOGFILE(LOG "> " + *it0 + "    normalMap    " + normalMapString);
+
 		if (!normalMapString.compare("false"))
 		{
 		    const aiMesh* paiMesh = _pScene->mMeshes[i];
@@ -208,7 +222,6 @@ void Loader::ModelLoader::initMesh(const std::string& meshName, GLuint _index, c
 
 	// Copy store in Factory
 	FACTORY.storeInContainer(tempMeshShared);
-
 }
 
 

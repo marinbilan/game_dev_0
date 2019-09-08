@@ -209,6 +209,33 @@ void Common::Database::getColumnOfStrings12(const std::string& set0, std::vector
 }
 
 
+void Common::Database::getColumnOfStrings22(const std::string& set0, const std::string& set1, std::vector<std::string>& get0, std::vector<std::string>& get1)
+{
+	// dB File - m_name - database text file name
+	std::ifstream dBFile(m_name);
+	// dB Line
+	std::string dBLine;
+	// db Regex - dbEntry (name of the operation) dbTarget (Interface - class of objects with the same interface)
+	std::regex regexLine(set0 + "\\s+" + set1 + "\\s+(\\w+)" + "\\s+(.+)");
+
+	std::smatch match;
+	while (std::getline(dBFile, dBLine))
+	{
+		if (std::regex_search(dBLine, match, regexLine))
+		{
+			get0.push_back(match.str(1)); // match.str(0) // Whole matched string
+			get1.push_back(match.str(2)); // 
+		}
+	}
+	/*
+	if (!arg0.compare("")) // Raise error if no param in DB
+	{
+		// error = true;
+	}
+	*/
+}
+
+
 void Common::Database::getFloat21(const std::string& set0, const std::string& set1, GLfloat& get0)
 {
 	// dB File
@@ -251,14 +278,12 @@ void Common::Database::getVec3_21(const std::string& instanceName, const std::st
 }
 
 
-void Common::Database::getAll21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0)
+void Common::Database::getColumn21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0)
 {
 	// dB File - m_name - database text file name
 	std::ifstream dBFile(m_name);
 	// dB Line
 	std::string dBLine;
-	// db Regex - dbEntry (name of the operation) dbTarget (Interface - class of objects with the same interface)
-	//std::string first("([^\\s]+)");
 	std::regex regexLine(set0 + "\\s+" + set1 + "\\s+(\\w+)");
 
 	std::smatch match;
@@ -266,7 +291,7 @@ void Common::Database::getAll21(const std::string& set0, const std::string& set1
 	{
 		if (std::regex_search(dBLine, match, regexLine))
 		{
-			get0.push_back(match.str(2));
+			get0.push_back(match.str(1));
 		}
 	}
 }

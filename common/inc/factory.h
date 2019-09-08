@@ -268,7 +268,6 @@ public:
 			// ----
 			else if (!interFace.compare("ModelIf"))
 			{
-				std::cout << " ---- xxxx Creating Model object " << nameSpace + *it0 << " " << *it1 << '\n';
 				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
 				storeInContainer(interFace, model);
 				std::cout << ".";
@@ -511,10 +510,8 @@ public:
 			}
 		}
 
-		// FACTORY.getErrorObject()->setError("ERROR: " + arg1 + " can not be found!");
-		// FACTORY.getLog()->LOGFILE(LOG "ERROR: " + arg1 + " can not be found!");
-
 		// If not found, return something
+		std::cout << " NOT FOUND: " << arg1 << " Returning: " << vec0[0]->getName() << '\n';
 		return vec0[0];
 	}
 

@@ -263,23 +263,18 @@ void Loader::TextureLoader::createTerrainShader(const std::string& defaultShader
 	// Common stuff
 	tempTextureStruct.m_name = tempRawTextureStruct0->m_name;
 	tempTextureStruct.m_textureId = tempRawTextureStruct0->m_textureId;
-	std::cout << " --------> texture0: " << tempRawTextureStruct0->m_textureId << '\n';
 	// Terrain stuff
 	tempTextureStruct.m_nameName1 = tempRawTextureStruct1->m_name;
 	tempTextureStruct.m_texture1 = tempRawTextureStruct1->m_textureId;
-	std::cout << " --------> texture1: " << tempRawTextureStruct1->m_textureId << '\n';
 
 	tempTextureStruct.m_nameName2 = tempRawTextureStruct2->m_name;
 	tempTextureStruct.m_texture2 = tempRawTextureStruct2->m_textureId;
-	std::cout << " --------> texture2: " << tempRawTextureStruct2->m_textureId << '\n';
 
 	tempTextureStruct.m_nameName3 = tempRawTextureStruct3->m_name;
 	tempTextureStruct.m_texture3 = tempRawTextureStruct3->m_textureId;
-	std::cout << " --------> texture3: " << tempRawTextureStruct3->m_textureId << '\n';
 
 	tempTextureStruct.m_nameName4 = tempRawTextureStruct4->m_name;
 	tempTextureStruct.m_texture4 = tempRawTextureStruct4->m_textureId;
-	std::cout << " --------> texture4: " << tempRawTextureStruct4->m_textureId << '\n';
 
 	// Terrain property
 	tempTextureStruct.m_shineDamper = shineDumper;

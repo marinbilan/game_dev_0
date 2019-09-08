@@ -45,7 +45,7 @@ void Model::StaticModel::postInit()
 	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " postInit method called!");
 
 	std::string gpuObjectString;
-	FACTORY.getDatabase()->getRest(m_name, "GPUObjectModel", gpuObjectString);
+	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectModel", gpuObjectString);
 
 	std::string gpuObjectTextureString;
 	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
@@ -59,6 +59,7 @@ void Model::StaticModel::postInit()
 	// 1] Get gpuObject instance from Factory
 	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
+
 	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString);
 	m_lightIf = Common::Factory::getInstance().getLightIf(lightString);
 
@@ -109,5 +110,11 @@ void Model::StaticModel::render()
 void Model::StaticModel::cmdPrompt(const std::string& arg0)
 {
 	std::cout << "StaticModel: " << m_name << std::endl;
-	std::cout << " Model < model name > { info | set | get | help } " << std::endl;
+	// std::cout << " Model < model name > { info | set | get | help } " << std::endl;
+
+	std::cout << "m_gpuObjectIf name: " << m_gpuObjectIf->getName() << std::endl;
+	// std::cout << "VAO: " << m_VAO << std::endl;
+	m_gpuObjectIf->info();
+
+
 }

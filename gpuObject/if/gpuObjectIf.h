@@ -10,11 +10,21 @@ namespace GPUObject
 
 struct MeshStructure
 {
+public:
 	MeshStructure(const std::string& name) : m_name(name) {};
 
 	std::string& getName()
 	{
 		return m_name;
+	}
+
+	void dump()
+	{
+		std::cout << " mesh name  : " << m_name << '\n';
+		std::cout << "  VAO       : " << m_VAO << '\n';
+		std::cout << "   VBO      : " << m_VBO << '\n';
+		std::cout << "   IBO      : " << m_IBO << '\n';
+		std::cout << "   numOfInds: " << m_NumOfInds << '\n';
 	}
 
 std::string m_name;
@@ -76,7 +86,7 @@ public:
 
 	virtual const std::string& getName()
 	{
-		return "nameFromInterfaca";
+		return "nameFromInterface";
 	}
 
 	virtual void preInit() {};

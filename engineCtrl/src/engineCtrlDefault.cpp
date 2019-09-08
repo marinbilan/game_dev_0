@@ -131,7 +131,7 @@ void EngineCtrl::EngineCtrlDefault::render()
 		// Camera movement
 		control->updateCameraPosition(m_deltaTime);
 
-		Common::Factory::getInstance().getModelIf("smartModel_0")->render();
+		Common::Factory::getInstance().getModelIf("vanquishModel")->render();
 		Common::Factory::getInstance().getModelIf("terrainModel_0")->render();
 
 		/* Swap front and back buffers */

@@ -37,7 +37,9 @@ void Common::CmdPrompt::runCmdPrompt()
 		std::regex models("models");
 		if (std::regex_search(commandLineString, match, models))
 		{
-			Common::Factory::getInstance().showMeObjects("ModelIf");
+			//Common::Factory::getInstance().showMeObjects("ModelIf");
+			Common::Factory::getInstance().getModelIf("vanquishModel")->cmdPrompt("dummy");
+			Common::Factory::getInstance().getModelIf("cubeModel_0")->cmdPrompt("cubeModel_0");
 		}
 		std::regex shaders("shaders");
 		if (std::regex_search(commandLineString, match, shaders))

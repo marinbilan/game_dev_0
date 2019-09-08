@@ -44,5 +44,10 @@ std::vector<GPUObject::MeshStructure>& GPUObject::ModelGPUObject::getMeshVec()
 
 void GPUObject::ModelGPUObject::info()
 {	
+	std::cout << " modelGPUObject name: " << m_name << '\n';
+	for (auto mesh : m_vecOfMeshes)
+	{
+		mesh.dump();
+	}
 }
 

@@ -40,13 +40,13 @@ namespace Common
 		// ---- NEW ----
 		void getColumnOfStrings12(const std::string& set0, std::vector<std::string>& get0, std::vector<std::string>& get1);
 
+		void getColumnOfStrings22(const std::string& set0, const std::string& set1, std::vector<std::string>& get0, std::vector<std::string>& get1);
+
 		void getFloat21(const std::string& set0, const std::string& set1, GLfloat& get0);
 
 		void getVec3_21(const std::string& dbEntry, const std::string& dbTarget, glm::vec3& dbParam);
 
-		// Get name0
-		// _vanquish/vanquish.3ds    meshStructure    name0
-		void getAll21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
+		void getColumn21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
 	private:
 		std::string m_name;
 	};

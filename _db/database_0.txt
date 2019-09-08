@@ -10,13 +10,13 @@ Create    CameraIf    CameraDefault    smartCamera_1
 
 Create    LightIf     LightDefault     light_0
 
-// ---- ONLY ONE LOADER PER DERIVED OBJECT ----
+// ---- Only one loader per object ----
 Create    LoaderIf    ModelLoader      modelLoader_0
+Create    ModelIf     StaticModel      cubeModel_0
 Create    LoaderIf    TextureLoader    textureLoader_0
 // ----
 
-Create    ModelIf     StaticModel      smartModel_0
-Create    ModelIf     StaticModel      cubeModel_0
+Create    ModelIf     StaticModel      vanquishModel
 Create    ModelIf     TerrainModel     terrainModel_0
 
 Create    ShaderIf    DefaultShader    smartShader_0
@@ -39,8 +39,7 @@ light_0	   lightColor           1.0 1.0 1.0
 
 
 // ---- ==== ==== LOADERs ==== ==== ----
-
-// RAW Textures
+// Textures
 textureLoader_0    loadTexture    _vanquish/textures/texture0.png
 textureLoader_0    loadTexture    _vanquish/textures/texture1.png
 textureLoader_0    loadTexture    _vanquish/textures/texture2.png
@@ -48,20 +47,21 @@ textureLoader_0    loadTexture    _vanquish/textures/texture3.png
 textureLoader_0    loadTexture    _vanquish/textures/texture4.png
 textureLoader_0    loadTexture    _vanquish/textures/texture5.png
 textureLoader_0    loadTexture    _src/textures/cube.png
-// Normal Map Texture
+
 textureLoader_0    loadTexture    _src/textures/cubeNM.png
 
-// Terrain
+// Terrain Textures
 textureLoader_0    loadTerrainTexture    _src/textures/grass.png
 textureLoader_0    loadTerrainTexture    _src/textures/dirt.png
 textureLoader_0    loadTerrainTexture    _src/textures/sand.png
 textureLoader_0    loadTerrainTexture    _src/textures/hardwood.png
 textureLoader_0    loadTerrainTexture    _src/textures/blendMap2.png
 
-// ----
-modelLoader_0      GPUObjectModel      _vanquish/vanquish.3ds
-modelLoader_0      GPUObjectModel      _src/models/cube.3ds
-// ...
+// ---- ---- Models ---- ----
+modelLoader_0      GPUObjectModel      vanquishGPUModel    _vanquish/vanquish.3ds
+modelLoader_0      GPUObjectModel      cubeGPUModel        _src/models/cube.3ds
+
+// ---- Textures ----
 textureLoader_0    GPUObjectTexture    vanquishGPUObjectTexture
 textureLoader_0    GPUObjectTexture    cubeGPUObjectTexture
 textureLoader_0    GPUObjectTexture    terrainGPUObjectTexture
@@ -87,25 +87,26 @@ TERRAINNAME0    reflectivity 0.1
 
 
 // ---- ==== ==== MODELs ==== ==== ----
-smartModel_0     GPUObjectModel    _vanquish/vanquish.3ds
-smartModel_0     GPUObjectTexture  vanquishGPUObjectTexture
+// ---- Vanquish ----
+vanquishModel    GPUObjectModel    vanquishGPUModel
+vanquishModel    GPUObjectTexture  vanquishGPUObjectTexture
 
-smartModel_0     camera            smartCamera_0
-smartModel_0     light             light_0
+vanquishModel    camera            smartCamera_0
+vanquishModel    light             light_0
 // ----
 
-_vanquish/vanquish.3ds    meshStructure    name0
-name0                     normalMap        false
-_vanquish/vanquish.3ds    meshStructure    name1
-name0                     normalMap        false
-_vanquish/vanquish.3ds    meshStructure    name2
-name0                     normalMap        false
-_vanquish/vanquish.3ds    meshStructure    name3
-name0                     normalMap        false
-_vanquish/vanquish.3ds    meshStructure    name4
-name0                     normalMap        false
-_vanquish/vanquish.3ds    meshStructure    name5
-name0                     normalMap        false
+vanquishGPUModel    meshStructure    vanName0
+vanName0            normalMap        false
+vanquishGPUModel    meshStructure    vanName1
+vanName1               normalMap        false
+vanquishGPUModel    meshStructure    vanName2
+vanName2               normalMap        false
+vanquishGPUModel    meshStructure    vanName3
+vanName3               normalMap        false
+vanquishGPUModel    meshStructure    vanName4
+vanName4               normalMap        false
+vanquishGPUModel    meshStructure    vanName5
+vanName5               normalMap        false
 
 
 vanquishGPUObjectTexture    defaultShader NAME0
@@ -139,12 +140,36 @@ NAME5    shineDumper  5.0
 NAME5    reflectivity 0.1
 
 // Shaders
-smartModel_0    shader    smartShader_0
-smartModel_0    shader    smartShader_1
-smartModel_0    shader    smartShader_2
-smartModel_0    shader    smartShader_3
-smartModel_0    shader    smartShader_4
-smartModel_0    shader    smartShader_5
+vanquishModel    shader    smartShader_0
+vanquishModel    shader    smartShader_0
+vanquishModel    shader    smartShader_0
+vanquishModel    shader    smartShader_0
+vanquishModel    shader    smartShader_0
+vanquishModel    shader    smartShader_0
+
+
+// ---- Cube ----
+// ----
+cubeModel_0    GPUObjectModel    cubeGPUModel
+cubeModel_0    GPUObjectTexture  cubeGPUObjectTexture
+
+cubeModel_0    camera            smartCamera_0
+cubeModel_0    light             light_0
+// ----
+
+// Assimp - GPU model
+cubeGPUModel    meshStructure    cubeName1
+cubeName1       normalMap        true
+
+// Texture - GPU model
+cubeGPUObjectTexture    normalMapShader    cubeShaderName0
+cubeShaderName0    texture                 _src/textures/cube.png
+cubeShaderName0    textureNormalMap        _src/textures/cubeNM.png
+cubeShaderName0    shineDumper             5.0
+cubeShaderName0    reflectivity            0.1
+
+// Shaders
+cubeModel_0    shader    normalMapShader_0
 // ---- ==== ====  ==== ==== ----
 
 
