@@ -175,7 +175,36 @@ cubeModel_0    shader    normalMapShader_0
 
 
 
+================================================================
+NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE
+================================================================
+/* 
+    0th STAGE of creation - define clusters of objects (interfaces)
+*/
+clusters    string    models
 
+/* 
+    1st STAGE of models creation 
+    [dbPath]: models
+*/
+models    string    staticModel
+
+/* 
+    2st STAGE of models creation 
+    [dbPath]: models_staticModel
+    constructor and instanceNames - the same pattern
+*/
+models_staticModel_constructorName    string    Model::StaticModel
+models_staticModel_instanceNames      string    vanquish   
+
+/* 
+    3th STAGE of models creation - preInitialisation
+    ex [dbPathName]: models_staticModel_vanquish
+    NOTE:
+    This stage is triggered in preInitialize method of each already created
+    instance (object) - using instaceDbPath (models_staticModel)
+*/
+models_staticModel_vanquish_position   vec3    385.0 0.0 375.0
 
 
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <regex>
 #include <vector>
 #include "glew.h"
@@ -47,6 +48,15 @@ namespace Common
 		void getVec3_21(const std::string& dbEntry, const std::string& dbTarget, glm::vec3& dbParam);
 
 		void getColumn21(const std::string& set0, const std::string& set1, std::vector<std::string>& get0);
+
+
+	    // ========================================================================================
+        // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+        // ========================================================================================
+		void getStringsFromDB(const std::string& dbPath, std::vector<std::string>& vectorOfStrings);
+
+		void getVec3(const std::string& dbPath, glm::vec3& vec3);
+
 	private:
 		std::string m_name;
 	};

@@ -85,6 +85,7 @@ public:
 	void registerClass(std::string const& constructorName)
 	{
 		m_classesMap.insert(std::make_pair(constructorName, &constructor<T>));
+		// m_classesMapN.insert(std::make_pair(constructorName, &constructor<T>));
 	}
 
 	/*! @brief Method for object creation
@@ -99,6 +100,15 @@ public:
 		return i->second(arg0);
 	}
 
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void* constructObject(std::string const& constructorName, const std::string& arg0, const std::string& arg1)
+	{
+		mapTypeN::iterator i = m_classesMapN.find(constructorName);
+		if (i == m_classesMapN.end()) return 0; // or throw or whatever you want  
+		return i->second(arg0, arg1);
+	}
 
 	void preInit()
 	{
@@ -179,7 +189,11 @@ public:
 		REGISTER_CLASS(GPUObject::TextureGPUObject);
 
 		// ModelIf
+		// ========================================================================================
+		// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+		// ========================================================================================
 		REGISTER_CLASS(Model::StaticModel);
+		// 
 		REGISTER_CLASS(Model::TerrainModel);
 
 		// ShaderIf
@@ -215,7 +229,91 @@ public:
 		// Create Shaders
 		createObjects("Shader::", "ShaderIf");
 
+		// ========================================================================================
+        // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+        // ========================================================================================
+		createAllClusters();
+
 		std::cout << '\n';
+	}
+
+
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void createAllClusters()
+	{
+		std::string clusters("clusters");
+		std::vector<std::string> vecOfClustersStrings;
+		/*
+			0st STAGE of creation
+			db ex:
+			clusters    string    models    somethingElse ...
+		*/
+
+		// vecOfClustersStrings: "models    somethingElse"
+		Common::Factory::getInstance().getDatabase()->getStringsFromDB(clusters, vecOfClustersStrings);
+		for (auto s : vecOfClustersStrings)
+		{
+			// std::cout << " CLUSTERS: " << s << '\n';
+			createModels(s);
+		}
+	}
+	void createModels(const std::string& cluster)
+	{
+		/*
+	        1st STAGE of models creation - object tags
+	        [dbPath]: models
+	        db ex: 
+			models    string    staticModel dynamicModels  otherModels ...
+        */	    
+		std::string dbPath1 = cluster;
+
+		std::vector<std::string> vecOfModelsStrings;
+
+		// vecOfModelsStrings: "staticModel dynamicModels  otherModels"
+		Common::Factory::getInstance().getDatabase()->getStringsFromDB(dbPath1, vecOfModelsStrings);
+
+		for (auto s : vecOfModelsStrings)
+		{
+			/*
+	            2st STAGE of models creation - constructor and instanceNames
+                ex [dbPath]: models_staticModel
+                db ex:
+				models_staticModel_constructorName    string    Model::StaticModel
+                models_staticModel_instanceNames      string    vanquish
+            */
+			// dB ex:
+			// instanceDbPath: "models_staticModel_"
+			std::string instanceDbPath = dbPath1 + "_" + s + "_";
+
+			std::string constructorNameDbPath = dbPath1 + "_" + s + "_" + "constructorName";
+			std::string instanceNameDbPath = dbPath1 + "_" + s + "_" + "instanceNames";
+			std::vector<std::string> vecOfConstructorString;
+			std::vector<std::string> vecOfInstanceString;
+
+			// vecOfConstructorString[0]: "Model::StaticModel"
+			Common::Factory::getInstance().getDatabase()->getStringsFromDB(constructorNameDbPath, vecOfConstructorString);
+
+			// vecOfInstanceString[0]: "vanquish ..."
+			Common::Factory::getInstance().getDatabase()->getStringsFromDB(instanceNameDbPath, vecOfInstanceString);
+			// foreach instanceNames
+			for (auto s : vecOfInstanceString)
+			{
+				// std::cout << " Creating instance - Constructor: " << vecOfConstructorString[0] << " - InstanceName: " << s << " " << s.size() << '\n';
+
+				if (!dbPath1.compare("models"))
+				{
+					std::shared_ptr<Model::ModelIf> model = std::make_shared<Model::StaticModel>(instanceDbPath, s);
+					// TODO: remove
+					model->preInitialization();
+				}
+				else {
+					
+				}
+			}
+		}
+
 	}
 
 
@@ -526,6 +624,13 @@ private:
 	typedef void*(*constructor_t)(const std::string&);
 	typedef std::map<std::string, constructor_t> mapType;
 	mapType m_classesMap;
+
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	typedef void* (*constructor_n)(const std::string&, const std::string&);
+	typedef std::map<std::string, constructor_n> mapTypeN;
+	mapTypeN m_classesMapN;
 
 	// DataBase
 	std::unique_ptr<Common::Database> m_database;

@@ -15,8 +15,24 @@ Model::StaticModel::StaticModel(const std::string& name) :
 }
 
 
+Model::StaticModel::StaticModel(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name),
+	m_modelPosition(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_modelScale(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_modelRotateAround(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_angle(0.0f),
+	m_modelMatrix(glm::mat4(0.0f))
+{
+	m_dbPathName = m_dbPath + m_name;
+	// FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
+	std::cout << " CREATION INSTACE - m_dbPathName: " << m_dbPathName << " modelName: " << m_name << '\n';
+}
+
+
 Model::StaticModel::~StaticModel()
 {
+	
 }
 
 
@@ -73,6 +89,30 @@ void Model::StaticModel::postInit()
 		std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(*it);
 		m_vecOfdefaultShaderIf.push_back(m_meshIf);
 	}
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Model::StaticModel::preInitialization()
+{
+	// 1] Update model position
+	std::string dBKey = m_dbPathName + "_position";
+	FACTORY.getDatabase()->getVec3(dBKey, m_modelPosition);
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
+	
+	// 2] Update model rotation around axes
+	// ...
+
+	// 3] Update model with scale factor
+	// ...
+}
+
+
+void Model::StaticModel::postInitialization()
+{
+	// std::cout << " POSTITIALIZATION " << '\n';
 }
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 
