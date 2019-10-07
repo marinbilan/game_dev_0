@@ -32,6 +32,18 @@ Control::ControlDefault::ControlDefault(const std::string& name) : m_name(name)
 }
 
 
+Control::ControlDefault::ControlDefault(const std::string& dbPath, const std::string& name) : 
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " created.");
+	WIDTH = 1024;
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Control::ControlDefault::~ControlDefault()
 {
 }
@@ -48,6 +60,21 @@ void Control::ControlDefault::postInit()
 	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " postInit().");
 	// TODO: Get this from DB
 	m_camera = FACTORY.getCameraIf("smartCamera_0");
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Control::ControlDefault::preInitialization()
+{
+
+}
+
+
+void Control::ControlDefault::postInitialization()
+{
+	// GET CAMERA! "smartCamera_0" - get string via db
 }
 
 

@@ -178,33 +178,59 @@ cubeModel_0    shader    normalMapShader_0
 ================================================================
 NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE
 ================================================================
-/* 
-    0th STAGE of creation - define clusters of objects (interfaces)
-*/
-clusters    string    models
+/***************************************************************
+ |  0th STAGE of creation - define clusters of objects (interfaces)
+****************************************************************/
 
-/* 
-    1st STAGE of models creation 
-    [dbPath]: models
-*/
+clusters    string    controls cameras lights models
+
+
+/***************************************************************
+ |  1st STAGE of clusters creation - tags
+ |  ex [dbPath]: "models"
+****************************************************************/
+controls  string    defaultControls
+cameras   string    defaultCamera
+lights    string    defaultLight
 models    string    staticModel
 
-/* 
-    2st STAGE of models creation 
-    [dbPath]: models_staticModel
-    constructor and instanceNames - the same pattern
-*/
-models_staticModel_constructorName    string    Model::StaticModel
-models_staticModel_instanceNames      string    vanquish   
 
-/* 
-    3th STAGE of models creation - preInitialisation
-    ex [dbPathName]: models_staticModel_vanquish
-    NOTE:
-    This stage is triggered in preInitialize method of each already created
-    instance (object) - using instaceDbPath (models_staticModel)
-*/
+/***************************************************************
+ |  2st STAGE of clusters creation 
+ |  ex [dbPath]: "models_staticModel"
+ |  NOTE:
+ |  constructor and instanceNames - the same pattern
+****************************************************************/
+[CONTROLS]
+controls_defaultControls_constructorName    string    Control::ControlDefault
+controls_defaultControls_instanceNames      string    defaultControls
+
+[CAMERAS]
+cameras_defaultCamera_constructorName    string    Camera::CameraDefault
+cameras_defaultCamera_instanceNames      string    defaultCamera
+
+[LIGHTS]
+lights_defaultLight_constructorName    string    Light::LightDefault
+lights_defaultLight_instanceNames      string    defaultLight
+
+[MODELS]
+models_staticModel_constructorName    string    Model::StaticModel
+models_staticModel_instanceNames      string    vanquish
+
+
+/***************************************************************
+ |  3th STAGE of clusters creation - PREINITIALIZATION
+ |  ex [dbPathName]: models_staticModel_vanquish
+ |  NOTE:
+ |  This stage is triggered in preInitialize method of each already created
+ |  instance (object) - using instaceDbPath (ex: models_staticModel)
+****************************************************************/
+[DEFAULT CTRLS]
+controls_defaultControls_defaultControls string something
+
+[VANQUISH]
 models_staticModel_vanquish_position   vec3    385.0 0.0 375.0
+
 
 
 

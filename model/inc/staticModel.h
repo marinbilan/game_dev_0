@@ -33,7 +33,7 @@ public:
 
 private:
 std::string m_dbPath;
-std::string m_dbPathName;
+std::string m_dbPathWithName;
 std::string m_name;
 GLuint      m_VAO;
 

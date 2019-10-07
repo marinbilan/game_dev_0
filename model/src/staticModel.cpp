@@ -24,9 +24,9 @@ Model::StaticModel::StaticModel(const std::string& dbPath, const std::string& na
 	m_angle(0.0f),
 	m_modelMatrix(glm::mat4(0.0f))
 {
-	m_dbPathName = m_dbPath + m_name;
+	m_dbPathWithName = m_dbPath + m_name + "_";
 	// FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
-	std::cout << " CREATION INSTACE - m_dbPathName: " << m_dbPathName << " modelName: " << m_name << '\n';
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 }
 
 
@@ -98,7 +98,7 @@ void Model::StaticModel::postInit()
 void Model::StaticModel::preInitialization()
 {
 	// 1] Update model position
-	std::string dBKey = m_dbPathName + "_position";
+	std::string dBKey = m_dbPathWithName + "position";
 	FACTORY.getDatabase()->getVec3(dBKey, m_modelPosition);
 	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
 	

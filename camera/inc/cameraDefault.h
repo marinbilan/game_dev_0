@@ -9,6 +9,7 @@ class CameraDefault : public CameraIf
 {
 public:
 	CameraDefault(const std::string& name);
+	CameraDefault(const std::string& dbPath, const std::string& name);
 	~CameraDefault();
 
 	const std::string& getName() 
@@ -18,6 +19,12 @@ public:
 
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	// Get
 	glm::mat4& getViewMatrix();
@@ -40,6 +47,8 @@ public:
 	// OPERATORs
 
 private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
 std::string m_name;
 
 glm::vec3 m_cameraPos;

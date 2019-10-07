@@ -35,6 +35,9 @@
 #include "terrainShader.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
+// 0] map in members (ClassName, constructorPtr(const str&, const str&)
+// 1] register class in map with registerClassNew method
+#define REGISTER_CLASS_NEW(ConstructorName) Common::Factory::getInstance().registerClassNew<ConstructorName>(#ConstructorName)
 
 /*
 Factory:
@@ -57,6 +60,16 @@ namespace Common
 template <class T> void* constructor(const std::string& objectName)
 {
 	return (void*)new T(objectName);
+}
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+// 3] constructor type (const str&, const str&)
+// arg0 - instanceDbPath (without instance name)
+// arg1 - instanceName
+template <class T> void* constructorNew(const std::string& arg0, const std::string& arg1)
+{
+	return (void*)new T(arg0, arg1);
 }
 
 
@@ -85,9 +98,16 @@ public:
 	void registerClass(std::string const& constructorName)
 	{
 		m_classesMap.insert(std::make_pair(constructorName, &constructor<T>));
-		// m_classesMapN.insert(std::make_pair(constructorName, &constructor<T>));
 	}
-
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	// 2] constructorName (ex: Model::StaticModel) 
+	template <class T>
+	void registerClassNew(std::string const& constructorName)
+	{
+		m_classesMapNew.insert(std::make_pair(constructorName, &constructorNew<T>));
+	}
 	/*! @brief Method for object creation
 	*   @param constructorName Namespace::constructorName
 	*   @param arg0 object name
@@ -103,10 +123,11 @@ public:
 	// ========================================================================================
     // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
     // ========================================================================================
-	void* constructObject(std::string const& constructorName, const std::string& arg0, const std::string& arg1)
+	// 4] Find constructor pointer with constructorName and create object using that constructor pointer
+	void* constructObjectNew(std::string const& constructorName, const std::string& arg0, const std::string& arg1)
 	{
-		mapTypeN::iterator i = m_classesMapN.find(constructorName);
-		if (i == m_classesMapN.end()) return 0; // or throw or whatever you want  
+		mapTypeNew::iterator i = m_classesMapNew.find(constructorName);
+		if (i == m_classesMapNew.end()) return 0; // or throw or whatever you want  
 		return i->second(arg0, arg1);
 	}
 
@@ -169,7 +190,7 @@ public:
      */
 	void registerClass()
 	{
-		// CameraIf
+		// ControlIf
 		REGISTER_CLASS(Control::ControlDefault);
 
 		// CameraIf
@@ -189,9 +210,6 @@ public:
 		REGISTER_CLASS(GPUObject::TextureGPUObject);
 
 		// ModelIf
-		// ========================================================================================
-		// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-		// ========================================================================================
 		REGISTER_CLASS(Model::StaticModel);
 		// 
 		REGISTER_CLASS(Model::TerrainModel);
@@ -200,6 +218,25 @@ public:
 		REGISTER_CLASS(Shader::DefaultShader);
 		REGISTER_CLASS(Shader::NormalMapShader);
 		REGISTER_CLASS(Shader::TerrainShader);
+
+		// ========================================================================================
+        // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+        // ========================================================================================
+		// ControlIf
+		REGISTER_CLASS_NEW(Control::ControlDefault);
+
+		// CameraIf
+	    REGISTER_CLASS_NEW(Camera::CameraDefault);
+
+		// LightIf
+		REGISTER_CLASS_NEW(Light::LightDefault);
+
+		// ----
+		// LoaderIf
+		//REGISTER_CLASS_NEW(Loader::ModelLoader);
+		//REGISTER_CLASS_NEW(Loader::TextureLoader);
+		// ----
+		REGISTER_CLASS_NEW(Model::StaticModel);
 	}
 
 
@@ -271,9 +308,8 @@ public:
 
 		std::vector<std::string> vecOfModelsStrings;
 
-		// vecOfModelsStrings: "staticModel dynamicModels  otherModels"
+		// vecOfModelsStrings: "staticModel dynamicModels  otherModels ..."
 		Common::Factory::getInstance().getDatabase()->getStringsFromDB(dbPath1, vecOfModelsStrings);
-
 		for (auto s : vecOfModelsStrings)
 		{
 			/*
@@ -281,34 +317,49 @@ public:
                 ex [dbPath]: models_staticModel
                 db ex:
 				models_staticModel_constructorName    string    Model::StaticModel
-                models_staticModel_instanceNames      string    vanquish
+                models_staticModel_instanceNames      string    vanquish ...
             */
 			// dB ex:
 			// instanceDbPath: "models_staticModel_"
-			std::string instanceDbPath = dbPath1 + "_" + s + "_";
-
+			std::string instanceDbPath = dbPath1 + "_" + s + "_"; // arg0 of constructor
+			
 			std::string constructorNameDbPath = dbPath1 + "_" + s + "_" + "constructorName";
-			std::string instanceNameDbPath = dbPath1 + "_" + s + "_" + "instanceNames";
 			std::vector<std::string> vecOfConstructorString;
-			std::vector<std::string> vecOfInstanceString;
-
-			// vecOfConstructorString[0]: "Model::StaticModel"
+			// ex vecOfConstructorString[0]: "Model::StaticModel"
 			Common::Factory::getInstance().getDatabase()->getStringsFromDB(constructorNameDbPath, vecOfConstructorString);
 
-			// vecOfInstanceString[0]: "vanquish ..."
+			std::string instanceNameDbPath = dbPath1 + "_" + s + "_" + "instanceNames";
+			std::vector<std::string> vecOfInstanceString;
+			// ex vecOfInstanceString: "vanquish ..."
 			Common::Factory::getInstance().getDatabase()->getStringsFromDB(instanceNameDbPath, vecOfInstanceString);
-			// foreach instanceNames
+
+			// ex: vanquish ...
 			for (auto s : vecOfInstanceString)
 			{
-				// std::cout << " Creating instance - Constructor: " << vecOfConstructorString[0] << " - InstanceName: " << s << " " << s.size() << '\n';
-
-				if (!dbPath1.compare("models"))
+				if (!dbPath1.compare("controls"))
 				{
-					std::shared_ptr<Model::ModelIf> model = std::make_shared<Model::StaticModel>(instanceDbPath, s);
+					std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					// TODO: remove
+				}
+				else if (!dbPath1.compare("cameras"))
+				{
+					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					// TODO: remove
+				}
+				else if (!dbPath1.compare("lights"))
+				{
+					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					// TODO: remove
+				}
+				else if (!dbPath1.compare("models"))
+				{
+					// arg0: constructorName (to find in map), arg1: dbPath (models_staticModel_), arg2: instanceName (ex: vanquish)
+					std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					// TODO: remove
 					model->preInitialization();
 				}
-				else {
+				else 
+				{
 					
 				}
 			}
@@ -628,9 +679,10 @@ private:
 	// ========================================================================================
     // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
     // ========================================================================================
-	typedef void* (*constructor_n)(const std::string&, const std::string&);
-	typedef std::map<std::string, constructor_n> mapTypeN;
-	mapTypeN m_classesMapN;
+	// 0] Create map(ConstructorName, constructorPtr) constructorPtr(str, str)
+	typedef void* (*constructor_NEW)(const std::string&, const std::string&);
+	typedef std::map<std::string, constructor_NEW> mapTypeNew;
+	mapTypeNew m_classesMapNew;
 
 	// DataBase
 	std::unique_ptr<Common::Database> m_database;

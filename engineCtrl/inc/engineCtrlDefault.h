@@ -13,6 +13,12 @@ public:
 	void preInit();
 	void postInit();
 
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
+
 	// Database init before preInit and postInit
 	void databaseInit(const std::string& dbName);
 

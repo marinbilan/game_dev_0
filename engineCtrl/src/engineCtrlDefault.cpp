@@ -22,7 +22,7 @@ EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 void EngineCtrl::EngineCtrlDefault::preInit()
 {
 	// Create defaultInit 
-	m_defaultInit0 = std::make_unique <Init::InitDefault>("DefaultInit0");
+	m_defaultInit0 = std::make_unique<Init::InitDefault>("DefaultInit0");
 	// Init All Objects
 	m_defaultInit0->preInit();
 
@@ -44,6 +44,20 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 	render();
 }
 
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void EngineCtrl::EngineCtrlDefault::preInitialization()
+{
+
+}
+
+
+void EngineCtrl::EngineCtrlDefault::postInitialization()
+{
+	// std::cout << " POSTITIALIZATION " << '\n';
+}
 
 void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)
 {

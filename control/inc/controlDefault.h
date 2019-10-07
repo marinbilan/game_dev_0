@@ -11,6 +11,7 @@ class ControlDefault : public ControlIf
 {
 public:
 	ControlDefault(const std::string& name);
+	ControlDefault(const std::string& dbPath, const std::string& name);
 
 	~ControlDefault();
 
@@ -21,6 +22,12 @@ public:
 
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	static void keyCallback(
 		GLFWwindow* window,
@@ -40,8 +47,10 @@ public:
 	void doCameraMouseMovement();
 
 private:
-	std::string m_name;
+std::string m_dbPath;
+std::string m_dbPathWithName;
+std::string m_name;
 
-	std::shared_ptr<Camera::CameraIf> m_camera;
+std::shared_ptr<Camera::CameraIf> m_camera;
 };
 }

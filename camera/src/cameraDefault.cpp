@@ -15,6 +15,23 @@ Camera::CameraDefault::CameraDefault(const std::string& name) :
 }
 
 
+Camera::CameraDefault::CameraDefault(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name),
+	m_cameraPos(glm::vec3(0, 0, 0)),
+	m_cameraFront(glm::vec3(0, 0, 1)),
+	m_cameraUp(glm::vec3(0, 1, 0)),
+	m_viewMatrix(glm::mat4(1.0f)),
+	m_viewMatrixInv(glm::mat4(1.0f)),
+	velocityFactor(17.0f)
+{
+	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " created.");
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Camera::CameraDefault::~CameraDefault()
 {
 }
@@ -36,6 +53,21 @@ void Camera::CameraDefault::preInit()
 void Camera::CameraDefault::postInit()
 {
 	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " postInit().");
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Camera::CameraDefault::preInitialization()
+{
+
+}
+
+
+void Camera::CameraDefault::postInitialization()
+{
+	// Get Camera position and create viewMatrix
 }
 
 

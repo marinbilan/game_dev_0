@@ -7,6 +7,16 @@ Light::LightDefault::LightDefault(const std::string& name) : m_name(name)
 }
 
 
+Light::LightDefault::LightDefault(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	preInit(); // TODO: remove this
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Light::LightDefault::~LightDefault()
 {
 }
@@ -25,6 +35,22 @@ void Light::LightDefault::preInit()
 void Light::LightDefault::postInit()
 {
 }
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Camera::CameraDefault::preInitialization()
+{
+	// GET light position and light color from DB
+}
+
+
+void Camera::CameraDefault::postInitialization()
+{
+	// Get Camera position and create viewMatrix
+}
+
 
 glm::vec3& Light::LightDefault::getLightPosition()
 {
