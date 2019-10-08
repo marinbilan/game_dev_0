@@ -8,6 +8,17 @@ Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 }
 
 
+Shader::DefaultShader::DefaultShader(const std::string& dbPath, const std::string& name) : 
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Shader::DefaultShader::~DefaultShader()
 {
 }
@@ -51,6 +62,19 @@ void Shader::DefaultShader::preInit()
 
 
 void Shader::DefaultShader::postInit()
+{
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Shader::DefaultShader::preInitialization()
+{
+}
+
+
+void Shader::DefaultShader::postInitialization()
 {
 }
 

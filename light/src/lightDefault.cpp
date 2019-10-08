@@ -27,7 +27,6 @@ void Light::LightDefault::preInit()
 	FACTORY.getLog()->LOGFILE(LOG "LightDefault " + m_name + " created!");
 
 	FACTORY.getDatabase()->getVec3_21(m_name, "lightPosition", m_lightPosition);
-
 	FACTORY.getDatabase()->getVec3_21(m_name, "lightColor", m_lightColors);
 }
 
@@ -40,15 +39,16 @@ void Light::LightDefault::postInit()
 // ========================================================================================
 // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
 // ========================================================================================
-void Camera::CameraDefault::preInitialization()
+void Light::LightDefault::preInitialization()
 {
+	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 	// GET light position and light color from DB
 }
 
 
-void Camera::CameraDefault::postInitialization()
+void Light::LightDefault::postInitialization()
 {
-	// Get Camera position and create viewMatrix
+	std::cout << " postInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 }
 
 

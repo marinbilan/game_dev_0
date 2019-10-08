@@ -86,11 +86,19 @@ class TerrainShader : public ShaderIf
 
 public:
 	TerrainShader(const std::string& name);
+	TerrainShader(const std::string& dbPath, const std::string& name);
+
 	~TerrainShader();
 
 	// FUNCTIONs
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	const std::string& getName()
 	{
@@ -113,6 +121,8 @@ public:
 
 // Members
 //private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
 std::string m_name;
 
 GLuint m_shaderProgramID;

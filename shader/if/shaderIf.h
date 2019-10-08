@@ -31,6 +31,12 @@ public:
 	virtual void preInit() {};
 	virtual void postInit() {};
 
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	virtual void preInitialization() {};
+	virtual void postInitialization() {};
+
 	// FUNCTIONs
 	virtual GLuint createShader(const char* vertexShader, const char* fragmentShader)
 	{

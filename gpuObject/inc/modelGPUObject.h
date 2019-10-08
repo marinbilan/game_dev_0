@@ -10,6 +10,7 @@ class ModelGPUObject : public GPUObjectIf
 {
 public:
 	ModelGPUObject(const std::string& name);
+	ModelGPUObject(const std::string& dbPath, const std::string& name);
 
 	~ModelGPUObject();
 	
@@ -17,6 +18,12 @@ public:
 
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	// Set
 	void setMeshInVec(const MeshStructure& mesh) override;
@@ -27,6 +34,8 @@ public:
 	void info();
 
 private:
+	std::string m_dbPath;
+	std::string m_dbPathWithName;
 	std::string m_name;
 
 	std::vector<MeshStructure> m_vecOfMeshes;

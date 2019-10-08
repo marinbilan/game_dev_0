@@ -8,6 +8,7 @@ class TerrainModel : public ModelIf
 {
 public:
 	TerrainModel(const std::string& name);
+	TerrainModel(const std::string& dbPath, const std::string& name);
 
 	~TerrainModel();
 
@@ -20,6 +21,12 @@ public:
 	void preInit();
 	void postInit();
 
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void preInitialization();
+	void postInitialization();
+
 	// TODO: remove
 	GLuint loadTexturePNG(const char* filename);
 
@@ -28,7 +35,10 @@ public:
 	void cmdPrompt(const std::string& arg0);
 
 private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
 std::string m_name;
+
 GLuint m_VAO;
 
 glm::vec3                 m_modelPosition;

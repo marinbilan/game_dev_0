@@ -114,11 +114,18 @@ class NormalMapShader : public ShaderIf
 
 public:
 	NormalMapShader(const std::string& name);
+	NormalMapShader(const std::string& dbPath, const std::string& name);
 	~NormalMapShader();
 
 	// FUNCTIONs
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	const std::string& getName()
 	{
@@ -165,6 +172,8 @@ public:
 
 // Members
 //private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
 std::string m_name;
 
 glm::mat4   m_projectionMatrix;

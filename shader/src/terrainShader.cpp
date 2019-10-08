@@ -9,6 +9,17 @@ Shader::TerrainShader::TerrainShader(const std::string& name) : m_name(name)
 }
 
 
+Shader::TerrainShader::TerrainShader(const std::string& dbPath, const std::string& name) : 
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	FACTORY.getLog()->LOGFILE(LOG "Terrain: " + m_name + " created.");
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Shader::TerrainShader::~TerrainShader()
 {
 }
@@ -55,6 +66,19 @@ void Shader::TerrainShader::preInit()
 
 
 void Shader::TerrainShader::postInit()
+{
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Shader::TerrainShader::preInitialization()
+{
+}
+
+
+void Shader::TerrainShader::postInitialization()
 {
 }
 

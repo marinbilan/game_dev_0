@@ -15,6 +15,22 @@ Model::TerrainModel::TerrainModel(const std::string& name) :
 }
 
 
+Model::TerrainModel::TerrainModel(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name),
+	m_modelPosition(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_modelScale(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_modelRotateAround(glm::vec3(0.0f, 0.0f, 0.0f)),
+	m_angle(0.0f),
+	m_modelMatrix(glm::mat4(0.0f))
+{
+	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Model::TerrainModel::~TerrainModel()
 {
 }
@@ -155,6 +171,20 @@ void Model::TerrainModel::postInit()
 	m_cameraIf = FACTORY.getCameraIf(cameraName);
 
 }
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Model::TerrainModel::preInitialization()
+{
+}
+
+
+void Model::TerrainModel::postInitialization()
+{
+}
+
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 
 // 2 ] Bind VBO        (glBindBuffer (VBO)); 

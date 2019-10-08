@@ -10,6 +10,7 @@ class TextureLoader : public LoaderIf
 {
 public:
 	TextureLoader(const std::string& name);
+	TextureLoader(const std::string& dbPath, const std::string& name);
 
 	~TextureLoader();
 
@@ -17,6 +18,12 @@ public:
 
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	// Step 1.1
 	void loadAllTexturesAndCreateRawTextureStructs();
@@ -36,7 +43,9 @@ public:
 	GLuint createTerrainTexture(const std::string& _textureName);
 	
 private:
-	std::string m_name;
+std::string m_dbPath;
+std::string m_dbPathWithName;
+std::string m_name;
 
 	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIfTemp;
 

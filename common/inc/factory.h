@@ -35,7 +35,7 @@
 #include "terrainShader.h"
 
 #define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
-// 0] map in members (ClassName, constructorPtr(const str&, const str&)
+// 0] map in class members (ClassName, constructorPtr(const str&, const str&)
 // 1] register class in map with registerClassNew method
 #define REGISTER_CLASS_NEW(ConstructorName) Common::Factory::getInstance().registerClassNew<ConstructorName>(#ConstructorName)
 
@@ -211,7 +211,6 @@ public:
 
 		// ModelIf
 		REGISTER_CLASS(Model::StaticModel);
-		// 
 		REGISTER_CLASS(Model::TerrainModel);
 
 		// ShaderIf
@@ -233,10 +232,16 @@ public:
 
 		// ----
 		// LoaderIf
-		//REGISTER_CLASS_NEW(Loader::ModelLoader);
-		//REGISTER_CLASS_NEW(Loader::TextureLoader);
+		REGISTER_CLASS_NEW(Loader::ModelLoader);
+		REGISTER_CLASS_NEW(Loader::TextureLoader);
 		// ----
 		REGISTER_CLASS_NEW(Model::StaticModel);
+		REGISTER_CLASS_NEW(Model::TerrainModel);
+
+		// ShaderIf
+		REGISTER_CLASS_NEW(Shader::DefaultShader);
+		REGISTER_CLASS_NEW(Shader::NormalMapShader);
+		REGISTER_CLASS_NEW(Shader::TerrainShader);
 	}
 
 
@@ -339,24 +344,36 @@ public:
 				if (!dbPath1.compare("controls"))
 				{
 					std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					// TODO: remove
+					
 				}
 				else if (!dbPath1.compare("cameras"))
 				{
 					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					// TODO: remove
+					
 				}
 				else if (!dbPath1.compare("lights"))
 				{
-					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					// TODO: remove
+					std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					
+				}
+				else if (!dbPath1.compare("loaders"))
+				{
+					std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+				}
+				else if (!dbPath1.compare("gpuObjects"))
+				{
+					std::shared_ptr<GPUObject::GPUObjectIf> gpuObject((GPUObject::GPUObjectIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 				}
 				else if (!dbPath1.compare("models"))
 				{
 					// arg0: constructorName (to find in map), arg1: dbPath (models_staticModel_), arg2: instanceName (ex: vanquish)
 					std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					// TODO: remove
+					
 					model->preInitialization();
+				}
+				else if (!dbPath1.compare("shaders"))
+				{
+					std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 				}
 				else 
 				{

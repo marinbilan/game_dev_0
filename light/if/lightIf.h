@@ -10,7 +10,6 @@ class LightIf
 public:
 	~LightIf()
 	{
-		std::cout << "Error: LightIf::~LightIf() called from LightIf!" << '\n';
 	}
 
 	virtual const std::string& getName()
@@ -20,6 +19,12 @@ public:
 
 	virtual void preInit() {};
 	virtual void postInit() {};
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	virtual void preInitialization() {};
+	virtual void postInitialization() {};
 
 	virtual glm::vec3& getLightPosition() 
 	{ 

@@ -8,6 +8,7 @@ class TextureGPUObject : public GPUObjectIf
 {
 public:
 	TextureGPUObject(const std::string& name);
+	TextureGPUObject(const std::string& dbPath, const std::string& name);
 
 	~TextureGPUObject();
 
@@ -16,6 +17,12 @@ public:
 	void preInit();
 	void postInit();
 
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void preInitialization();
+	void postInitialization();
+
 	// Set
 	void setTextureStructInVec(const TextureStructure& textureStruct) override;
 
@@ -23,6 +30,8 @@ public:
 	std::vector<TextureStructure>& getTextureStructVec() override;
 
 private:
+	std::string m_dbPath;
+	std::string m_dbPathWithName;
 	std::string m_name;
 
 	std::vector<TextureStructure> m_vecOfTextures;

@@ -9,6 +9,15 @@ Loader::ModelLoader::ModelLoader(const std::string& name) : m_name(name)
 }
 
 
+Loader::ModelLoader::ModelLoader(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Loader::ModelLoader::~ModelLoader()
 {
 }
@@ -29,6 +38,19 @@ void Loader::ModelLoader::preInit()
 void Loader::ModelLoader::postInit()
 {
 	loadModel();
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Loader::ModelLoader::preInitialization()
+{
+}
+
+
+void Loader::ModelLoader::postInitialization()
+{
 }
 
 

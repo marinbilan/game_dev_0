@@ -182,17 +182,21 @@ NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE
  |  0th STAGE of creation - define clusters of objects (interfaces)
 ****************************************************************/
 
-clusters    string    controls cameras lights models
+clusters    string    controls cameras lights loaders gpuObjects models shaders
 
 
+======================= IF DERIVED CLASSES =====================
 /***************************************************************
  |  1st STAGE of clusters creation - tags
  |  ex [dbPath]: "models"
 ****************************************************************/
-controls  string    defaultControls
-cameras   string    defaultCamera
-lights    string    defaultLight
-models    string    staticModel
+controls      string    defaultControls
+cameras       string    defaultCamera
+lights        string    defaultLight
+loaders       string    modelLoader textureLoader
+gpuObjects    string    modelGPUObject textureGPUObject
+models        string    staticModel terrainModel
+shaders       string    defaultShader normalMapShader terrainShader
 
 
 /***************************************************************
@@ -201,23 +205,51 @@ models    string    staticModel
  |  NOTE:
  |  constructor and instanceNames - the same pattern
 ****************************************************************/
-[CONTROLS]
+- [CONTROLS] -
 controls_defaultControls_constructorName    string    Control::ControlDefault
 controls_defaultControls_instanceNames      string    defaultControls
 
-[CAMERAS]
+- [CAMERAS] -
 cameras_defaultCamera_constructorName    string    Camera::CameraDefault
 cameras_defaultCamera_instanceNames      string    defaultCamera
 
-[LIGHTS]
+- [LIGHTS] -
 lights_defaultLight_constructorName    string    Light::LightDefault
 lights_defaultLight_instanceNames      string    defaultLight
 
-[MODELS]
+- [LOADERS] -
+loaders_modelLoader_constructorName      string    Loader::ModelLoader
+loaders_modelLoader_instanceNames      string    defaultModelLoader
+
+loaders_textureLoader_constructorName    string    Loader::TextureLoader
+loaders_textureLoader_instanceNames      string    defaultTextureLoader
+
+- [GPUOBJECTS] -
+gpuObjects_modelGPUObject_constructorName      string    GPUObject::ModelGPUObject
+gpuObjects_modelGPUObject_instanceNames        string      modelGPUObject
+
+gpuObjects_textureGPUObject_constructorName    string    GPUObject::TextureGPUObject
+gpuObjects_textureGPUObject_instanceNames      string    textureGPUObject
+
+- [MODELS] -
 models_staticModel_constructorName    string    Model::StaticModel
 models_staticModel_instanceNames      string    vanquish
 
+models_terrainModel_constructorName    string    Model::TerrainModel
+models_terrainModel_instanceNames      string    terrain0
 
+- [SHADERS] -
+shaders_defaultShader_constructorName    string    Shader::DefaultShader
+shaders_defaultShader_instanceNames      string    defaultShader
+
+shaders_normalMapShader_constructorName    string    Shader::NormalMapShader
+shaders_normalMapShader_instanceNames      string    normalMapShader
+
+shaders_terrainShader_constructorName    string    Shader::TerrainShader
+shaders_terrainShader_instanceNames      string    terrainShader
+
+
+======================== PREINITIALIZATION =====================
 /***************************************************************
  |  3th STAGE of clusters creation - PREINITIALIZATION
  |  ex [dbPathName]: models_staticModel_vanquish

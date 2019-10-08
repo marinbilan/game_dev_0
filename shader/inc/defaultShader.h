@@ -80,11 +80,18 @@ const char* FragmentShaderPTN =
 
 public:
 	DefaultShader(const std::string& name);
+	DefaultShader(const std::string& dbPath, const std::string& name);
 	~DefaultShader();
 
 	// FUNCTIONs
 	void preInit();
 	void postInit();
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	void preInitialization();
+	void postInitialization();
 
 	const std::string& getName()
 	{
@@ -131,6 +138,8 @@ public:
 
 // Members
 //private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
 std::string m_name;
 
 glm::mat4   m_projectionMatrix;

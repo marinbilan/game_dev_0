@@ -28,7 +28,6 @@ class LoaderIf
 public:
 	~LoaderIf()
 	{
-		std::cout << "LoaderIf destructor called!" << '\n';
 	}
 	//
 	// Common
@@ -40,6 +39,12 @@ public:
 
 	virtual void preInit() {};
 	virtual void postInit() {};
+
+	// ========================================================================================
+	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+	// ========================================================================================
+	virtual void preInitialization() {};
+	virtual void postInitialization() {};
 
 	// ModelLoader
 

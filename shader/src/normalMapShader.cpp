@@ -8,6 +8,17 @@ Shader::NormalMapShader::NormalMapShader(const std::string& name) : m_name(name)
 }
 
 
+Shader::NormalMapShader::NormalMapShader(const std::string& dbPath, const std::string& name) : 
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	FACTORY.getLog()->LOGFILE(LOG "NormalMapShader: " + m_name + " created.");
+
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
+
 Shader::NormalMapShader::~NormalMapShader()
 {
 }
@@ -52,6 +63,19 @@ void Shader::NormalMapShader::preInit()
 
 
 void Shader::NormalMapShader::postInit()
+{
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Shader::NormalMapShader::preInitialization()
+{
+}
+
+
+void Shader::NormalMapShader::postInitialization()
 {
 }
 

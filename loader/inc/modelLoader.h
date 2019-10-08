@@ -49,6 +49,7 @@ class ModelLoader : public LoaderIf
 {
 public:
 	ModelLoader(const std::string& name);
+	ModelLoader(const std::string& dbPath, const std::string& name);
 
 	~ModelLoader();
 
@@ -57,13 +58,21 @@ public:
 	void preInit();
 	void postInit();
 
+	// ========================================================================================
+    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+    // ========================================================================================
+	void preInitialization();
+	void postInitialization();
+
 private:
+std::string m_dbPath;
+std::string m_dbPathWithName;
+std::string m_name;
+
 	void loadModel();	
 	void initScene(const aiScene* _pScene);
 	void initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
 	void initNormalMapMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
-	
-	std::string m_name;
 
 	std::vector<std::string> m_meshStructNameTempVec;
 	GLuint m_VAO;

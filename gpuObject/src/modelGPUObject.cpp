@@ -9,6 +9,14 @@ GPUObject::ModelGPUObject::ModelGPUObject(const std::string& name) : m_name(name
 }
 
 
+GPUObject::ModelGPUObject::ModelGPUObject(const std::string& dbPath, const std::string& name) :
+	m_dbPath(dbPath),
+	m_name(name)
+{
+	m_dbPathWithName = m_dbPath + m_name + "_";
+	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+}
+
 GPUObject::ModelGPUObject::~ModelGPUObject()
 {
 }
@@ -26,6 +34,19 @@ void GPUObject::ModelGPUObject::preInit()
 
 // Postinit
 void GPUObject::ModelGPUObject::postInit()
+{
+}
+
+
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void GPUObject::ModelGPUObject::preInitialization()
+{
+}
+
+
+void GPUObject::ModelGPUObject::postInitialization()
 {
 }
 

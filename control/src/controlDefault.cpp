@@ -68,12 +68,13 @@ void Control::ControlDefault::postInit()
 // ========================================================================================
 void Control::ControlDefault::preInitialization()
 {
-
+	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 }
 
 
 void Control::ControlDefault::postInitialization()
 {
+	std::cout << " postInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 	// GET CAMERA! "smartCamera_0" - get string via db
 }
 

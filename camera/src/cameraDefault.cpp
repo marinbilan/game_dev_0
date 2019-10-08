@@ -61,13 +61,13 @@ void Camera::CameraDefault::postInit()
 // ========================================================================================
 void Camera::CameraDefault::preInitialization()
 {
-
+	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+	// Get Camera position and create viewMatrix
 }
 
 
 void Camera::CameraDefault::postInitialization()
 {
-	// Get Camera position and create viewMatrix
 }
 
 
