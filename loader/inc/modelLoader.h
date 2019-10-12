@@ -64,10 +64,16 @@ public:
 	void preInitialization();
 	void postInitialization();
 
+	void loadModelNew(const std::vector<std::string>& vecModelsForLoad);
+	void initSceneNew(const aiScene* _pScene);
+
 private:
 std::string m_dbPath;
 std::string m_dbPathWithName;
 std::string m_name;
+
+std::vector<std::string> m_vecModelsPath;
+std::vector<std::string> m_vecMeshAttribs;
 
 	void loadModel();	
 	void initScene(const aiScene* _pScene);

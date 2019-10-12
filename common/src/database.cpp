@@ -333,7 +333,28 @@ void Common::Database::getStringsFromDB(const std::string& dbPath, std::vector<s
 
 	if (!wantedString.compare("")) // Raise error if no param in DB
 	{
-		// error = true;
+		std::string falseStr("false");
+		vectorOfStrings.push_back(falseStr);
+	}
+}
+
+
+void Common::Database::getFloat(const std::string& dbPath, GLfloat& getFloat)
+{
+	// dB File
+	std::ifstream dBFile(m_name);
+	// dB Line
+	std::string dBLine;
+	// db Regex
+	std::regex regexLine(dbPath + "\\s+" + "float" + "\\s+([-]?\\d+)(\\.\\d+)?");
+
+	std::smatch match;
+	while (std::getline(dBFile, dBLine))
+	{
+		if (std::regex_search(dBLine, match, regexLine))
+		{
+			getFloat = std::stof(match.str(1) + match.str(2)); // match.str(0) // Whole matched string
+		}
 	}
 }
 

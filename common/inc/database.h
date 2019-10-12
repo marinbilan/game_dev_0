@@ -55,6 +55,8 @@ namespace Common
         // ========================================================================================
 		void getStringsFromDB(const std::string& dbPath, std::vector<std::string>& vectorOfStrings);
 
+		void getFloat(const std::string& dbPath, GLfloat& getFloat);
+
 		void getVec3(const std::string& dbPath, glm::vec3& vec3);
 
 	private:

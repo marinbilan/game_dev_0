@@ -359,6 +359,8 @@ public:
 				else if (!dbPath1.compare("loaders"))
 				{
 					std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					loader->preInitialization();
+					loader->postInitialization();
 				}
 				else if (!dbPath1.compare("gpuObjects"))
 				{

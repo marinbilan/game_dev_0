@@ -46,11 +46,22 @@ void Loader::ModelLoader::postInit()
 // ========================================================================================
 void Loader::ModelLoader::preInitialization()
 {
+	// ex: _src/models/
+	std::string modelsPath = m_dbPathWithName + "modelsPath";
+	FACTORY.getDatabase()->getStringsFromDB(modelsPath, m_vecModelsPath);
+
+	// ex: vanquish.3ds model0.3ds model1.3ds ...
+	std::string modelsForLoad = m_dbPathWithName + "modelsForLoad";
+	std::vector<std::string> vecModelsForLoad;
+	FACTORY.getDatabase()->getStringsFromDB(modelsForLoad, vecModelsForLoad);
+
+	loadModelNew(vecModelsForLoad);
 }
 
 
 void Loader::ModelLoader::postInitialization()
 {
+
 }
 
 
@@ -123,6 +134,41 @@ void Loader::ModelLoader::loadModel()
 }
 
 
+// ========================================================================================
+// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
+// ========================================================================================
+void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModelsForLoad)
+{
+	for (auto s : vecModelsForLoad)
+	{
+		// ex: def nm def nm  def nm
+		std::string meshAtribsKey = m_dbPathWithName + s + "_meshAttribs";
+		FACTORY.getDatabase()->getStringsFromDB(meshAtribsKey, m_vecMeshAttribs);
+
+		Assimp::Importer Importer;
+		// ex: _src/models/vanquish.3ds
+		std::string modelPath = m_vecModelsPath[0] + s;
+		pScene = Importer.ReadFile(modelPath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+		if (pScene)
+		{
+			// CREATE GPU OBJECT //
+			m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(s);
+
+			// Store created GPU object in factory container
+			Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
+
+			initSceneNew(pScene);
+		}
+		else
+		{
+		}
+
+		m_vecMeshAttribs.clear();
+	}
+}
+
+
 void Loader::ModelLoader::initScene(const aiScene* _pScene)
 {
 	// CREATE GPU MODEL
@@ -164,6 +210,36 @@ void Loader::ModelLoader::initScene(const aiScene* _pScene)
 			++it0;
 		}
 
+	}
+}
+
+
+void Loader::ModelLoader::initSceneNew(const aiScene* _pScene)
+{
+	// CREATE GPU MODEL
+	GLuint VAO;
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	m_VAO = VAO;
+	// TODO: Change tempMeshName
+	std::string tempMeshName;
+	std::vector<std::string>::iterator it = m_vecMeshAttribs.begin();
+	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
+	{
+		if (!(*it).compare("def"))
+		{
+			const aiMesh* paiMesh = _pScene->mMeshes[i];
+			initMesh(tempMeshName, i, paiMesh);
+		}
+		else if (!(*it).compare("np"))
+		{
+			// Load NormalMap mesh
+			const aiMesh* paiMesh = _pScene->mMeshes[i];
+			initNormalMapMesh(tempMeshName, i, paiMesh);
+		}
+		++it;
 	}
 }
 
