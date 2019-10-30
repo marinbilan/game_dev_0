@@ -181,16 +181,14 @@ NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE
 ================================================================
 
 /***************************************************************
- |  0th STAGE of creation - define clusters of objects (interfaces)
+ |  0th STAGE of creation - Interfaces
 ****************************************************************/
-
 clusters    string    controls cameras lights loaders gpuObjects models shaders
 
 
 ======================= IF DERIVED CLASSES =====================
 /***************************************************************
- |  1st STAGE of clusters creation - tags
- |  ex [dbPath]: "models"
+ |  1st STAGE of clusters creation - Derived classes from If
 ****************************************************************/
 controls      string    defaultControls
 cameras       string    defaultCamera
@@ -203,46 +201,42 @@ shaders       string    defaultShader normalMapShader terrainShader
 
 /***************************************************************
  |  2st STAGE of clusters creation 
- |  ex [dbPath]: "models_staticModel"
- |  NOTE:
- |  constructor and instanceNames - the same pattern
+ |  Constructor names and Instance names
 ****************************************************************/
-- [CONTROLS] -
+[CONTROLS]
 controls_defaultControls_constructorName    string    Control::ControlDefault
 controls_defaultControls_instanceNames      string    defaultControls
 
-- [CAMERAS] -
+[CAMERAS]
 cameras_defaultCamera_constructorName    string    Camera::CameraDefault
 cameras_defaultCamera_instanceNames      string    defaultCamera
 
-- [LIGHTS] -
+[LIGHTS]
 lights_defaultLight_constructorName    string    Light::LightDefault
 lights_defaultLight_instanceNames      string    defaultLight
 
-
-- ==== [LOADERS] ==== -
+[LOADERS]
 loaders_modelLoader_constructorName    string    Loader::ModelLoader
 loaders_modelLoader_instanceNames      string    defaultModelLoader
 
 loaders_textureLoader_constructorName  string    Loader::TextureLoader
 loaders_textureLoader_instanceNames    string    defaultTextureLoader
 
-
-- [GPUOBJECTS] -
+[GPUOBJECTS] TODO Remove
 gpuObjects_modelGPUObject_constructorName      string    GPUObject::ModelGPUObject
-gpuObjects_modelGPUObject_instanceNames        string    modelGPUObject
+gpuObjects_modelGPUObject_instanceNames        string    modelGPUObject_Van
 
 gpuObjects_textureGPUObject_constructorName    string    GPUObject::TextureGPUObject
-gpuObjects_textureGPUObject_instanceNames      string    textureGPUObject
+gpuObjects_textureGPUObject_instanceNames      string    textureGPUObject_Van
 
-- [MODELS] -
+[MODELS]
 models_staticModel_constructorName    string    Model::StaticModel
 models_staticModel_instanceNames      string    vanquish
 
 models_terrainModel_constructorName   string    Model::TerrainModel
 models_terrainModel_instanceNames     string    terrain0
 
-- [SHADERS] -
+[SHADERS]
 shaders_defaultShader_constructorName    string    Shader::DefaultShader
 shaders_defaultShader_instanceNames      string    defaultShader
 
@@ -255,63 +249,82 @@ shaders_terrainShader_instanceNames      string    terrainShader
 
 ========================== INITIALIZATION ======================
 /***************************************************************
- |  3th STAGE of clusters creation - PREINITIALIZATION
- |  ex [dbPathName]: models_staticModel_vanquish
- |  NOTE:
- |  This stage is triggered in preInitialize method of each already created
- |  instance (object) - using instaceDbPath (ex: models_staticModel)
+ | 3th STAGE of clusters creation - Object initialization
+ | interface_derivedClass_instanceName_...
 ****************************************************************/
 [CONTROLS]
-controls_defaultControls_defaultControls string something
+controls_defaultControls_defaultControls_cameraToControl    string    defaultCamera
+
+
+[CAMERAS]
+cameras_defaultCamera_defaultCamera_cameraPosition    vec3    375.0 25.0 420.0
+cameras_defaultCamera_defaultCamera_cameraFront       vec3    0.0 0.0 -1.0
+cameras_defaultCamera_defaultCamera_cameraUp          vec3    0.0 1.0 0.0
+
+
+[LIGHTS]
+lights_defaultLight_defaultLight_lightPosition    vec3    385.0 77.0 385.0
+lights_defaultLight_defaultLight_lightColor       vec3    1.0 1.0 1.0
+
 
 [LOADERS]
-[ ==== defaultModelLoader ==== ]
 loaders_modelLoader_defaultModelLoader_modelsPath                  string    _src/models/
 loaders_modelLoader_defaultModelLoader_modelsForLoad               string    vanquish.3ds
 
 loaders_modelLoader_defaultModelLoader_vanquish.3ds_meshAttribs    string    def def def def def def
-
-
-[ ==== defaultTextureLoader ==== ]
+// ---- ----
 loaders_textureLoader_defaultTextureLoader_texturesPath                string    _src/textures/
 loaders_textureLoader_defaultTextureLoader_GPUMeshMaterials            string    vanquishGPUMeshMaterials
 
 loaders_textureLoader_defaultTextureLoader_vanquishGPUMeshMaterials    string    meshMaterial0 meshMaterial1 meshMaterial2 meshMaterial3 meshMaterial4 meshMaterial5
-// meshMaterial0
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial0_texture       string    texture0.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial0_textureNM     string    texture0NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial0_shineDumper   float     1.11
 loaders_textureLoader_defaultTextureLoader_meshMaterial0_reflectivity  float     1.21
-// meshMaterial1
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial1_texture       string    texture1.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial1_textureNM     string    texture1NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial1_shineDumper   float     1.12
 loaders_textureLoader_defaultTextureLoader_meshMaterial1_reflectivity  float     1.22
-// meshMaterial2
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_texture       string    texture2.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_textureNM     string    texture0NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_shineDumper   float     1.13
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_reflectivity  float     1.23
-// meshMaterial3
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_texture       string    texture3.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_textureNM     string    texture0NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_shineDumper   float     1.14
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_reflectivity  float     1.24
-// meshMaterial4
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_texture       string    texture4.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_textureNM     string    texture0NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_shineDumper   float     1.15
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_reflectivity  float     1.25
-// meshMaterial5
+
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_texture       string    texture5.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_textureNM     string    texture0NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_shineDumper   float     1.16
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_reflectivity  float     1.26
 
 
-[VANQUISH]
-models_staticModel_vanquish_position   vec3    385.0 0.0 375.0
+[MODELS]
+// vanquish preInit
+models_staticModel_vanquish_position       vec3    385.0 0.0 375.0
+models_staticModel_vanquish_rotateAround   vec3    1.0 0.0 0.0
+models_staticModel_vanquish_rotation       float   -1.57
+models_staticModel_vanquish_modelScale     vec3    10.0 10.0 10.0
 
+// vanquish postInit
+models_staticModel_vanquish_camera                string    defaultCamera
+models_staticModel_vanquish_light                 string    defaultLight
+models_staticModel_vanquish_gpuObjectModel        string    vanquish.3ds    
+models_staticModel_vanquish_textureObjectModel    string    vanquishGPUMeshMaterials
+models_staticModel_vanquish_shaders               string     defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
+
+
+[SHADERS]
 
 
 

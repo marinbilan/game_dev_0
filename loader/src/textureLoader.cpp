@@ -55,24 +55,25 @@ void Loader::TextureLoader::preInitialization()
 
 void Loader::TextureLoader::postInitialization()
 {
-	// texturesPath
 	std::string texturesPath = m_dbPathWithName + "texturesPath";
 	std::vector<std::string> vecTexturesPath;
+	// ex: _src/textures/
 	FACTORY.getDatabase()->getStringsFromDB(texturesPath, vecTexturesPath);
 
-	// GPUMeshMaterials
 	std::string GPUMeshMaterials = m_dbPathWithName + "GPUMeshMaterials";
 	std::vector<std::string> vecGPUMeshMaterials;
+	// ex: vanquishGPUMeshMaterials ...
 	FACTORY.getDatabase()->getStringsFromDB(GPUMeshMaterials, vecGPUMeshMaterials);
 
 	// vanquishGPUMeshMaterials ...
 	for (auto s : vecGPUMeshMaterials)
 	{
-		// Create: textureGPUobject
 		m_GPUObjectIfTemp = std::make_shared<GPUObject::TextureGPUObject>(s);
 
+		// vanquishGPUMeshMaterials ...
 		std::string meshMaterials = m_dbPathWithName + s;
 		std::vector<std::string> vecMeshMaterials;
+		// meshMaterial0 ...
 		FACTORY.getDatabase()->getStringsFromDB(meshMaterials, vecMeshMaterials);
 
 		// meshMaterial0 meshMaterial1 ...
@@ -87,21 +88,21 @@ void Loader::TextureLoader::postInitialization()
 			FACTORY.getDatabase()->getStringsFromDB(texture, vecTexture);
 			tempTextureStruct.m_textureId = createTexture(vecTexturesPath[0] + vecTexture[0]);
 
-			// textureNM;
+			// TODO after db ifExist implementation textureNM;
 			// ...
 
 			// shineDumper
 			std::string shineDumperPath = m_dbPathWithName + s + "_shineDumper";
 			GLfloat shineDumperFloat;
 			FACTORY.getDatabase()->getFloat(shineDumperPath, shineDumperFloat);
-			// std::cout << " ---- shineDumper: " << shineDumperFloat << '\n';
+			std::cout << " ---- shineDumper: " << shineDumperFloat << '\n';
 			tempTextureStruct.m_shineDamper = shineDumperFloat;
 
 			// reflectivity
 			std::string reflectivityPath = m_dbPathWithName + s + "_reflectivity";
 			GLfloat reflectivityFloat;
 			FACTORY.getDatabase()->getFloat(reflectivityPath, reflectivityFloat);
-			// std::cout << " ---- reflectivityFloat: " << reflectivityFloat << '\n';
+			std::cout << " ---- reflectivityFloat: " << reflectivityFloat << '\n';
 			tempTextureStruct.m_reflectivity = reflectivityFloat;
 
 			// Store tempTextureStruct in m_GPUObjectIfTemp

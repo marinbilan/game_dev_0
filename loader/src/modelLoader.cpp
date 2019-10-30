@@ -224,7 +224,7 @@ void Loader::ModelLoader::initSceneNew(const aiScene* _pScene)
 
 	m_VAO = VAO;
 	// TODO: Change tempMeshName
-	std::string tempMeshName;
+	std::string tempMeshName("NoName");
 	std::vector<std::string>::iterator it = m_vecMeshAttribs.begin();
 	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
 	{

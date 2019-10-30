@@ -69,6 +69,12 @@ void Control::ControlDefault::postInit()
 void Control::ControlDefault::preInitialization()
 {
 	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	// 1] Get Camera to Control
+	std::string dBKey = m_dbPathWithName + "cameraToControl";
+	std::vector<std::string> cameraToControl;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraToControl);
+	std::cout << " xxxxx cameraToControl : " << cameraToControl[0] << '\n';
 }
 
 

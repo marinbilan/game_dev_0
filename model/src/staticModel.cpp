@@ -103,16 +103,62 @@ void Model::StaticModel::preInitialization()
 	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
 	
 	// 2] Update model rotation around axes
-	// ...
+	dBKey = m_dbPathWithName + "rotation";
+	FACTORY.getDatabase()->getFloat(dBKey, m_angle);
+	dBKey = m_dbPathWithName + "rotateAround";
+	FACTORY.getDatabase()->getVec3(dBKey, m_modelRotateAround);
+	m_modelMatrix = glm::rotate(m_modelMatrix, m_angle, m_modelRotateAround);
 
 	// 3] Update model with scale factor
-	// ...
+	dBKey = m_dbPathWithName + "modelScale";
+	FACTORY.getDatabase()->getVec3(dBKey, m_modelScale);
+	m_modelMatrix = glm::scale(m_modelMatrix, m_modelScale);
 }
 
 
 void Model::StaticModel::postInitialization()
 {
-	// std::cout << " POSTITIALIZATION " << '\n';
+	// 1] Get Camera
+	std::string dBKey = m_dbPathWithName + "camera";
+	std::vector<std::string> cameraString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraString);
+	std::cout << " xxxx camera: " << cameraString[0] << '\n';
+	// TODO m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString[0]);
+
+	// 2] Get Light
+	dBKey = m_dbPathWithName + "light";
+	std::vector<std::string> lightString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, lightString);
+	std::cout << " xxxx light: " << lightString[0] << '\n';
+	// TODO m_lightIf = Common::Factory::getInstance().getLightIf(lightString[0]);
+
+	// 3] Get GPUObjectModel
+	dBKey = m_dbPathWithName + "gpuObjectModel";
+	std::vector<std::string> gpuObjectModelString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, gpuObjectModelString);
+	std::cout << " xxxx gpuObjectModel: " << gpuObjectModelString[0] << gpuObjectModelString[0].size() << '\n';
+	// TODO m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectModelString[0]);
+
+	// 4] Get TextureObject
+	dBKey = m_dbPathWithName + "textureObjectModel";
+	std::vector<std::string> textureObjectModelString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, textureObjectModelString);
+	std::cout << " xxxx textureObjectModel: " << textureObjectModelString[0] << '\n';
+	// TODO m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(textureObjectModelString[0]);
+
+	// 5] Get Shaders
+	dBKey = m_dbPathWithName + "shaders";
+	std::vector<std::string> shadersString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, shadersString);
+	// std::cout << " xxxx shadersString: " << shadersString[0] << '\n';
+	
+	// TODO assign shaders
+	for (auto s : shadersString)
+	{
+		std::cout << " xxxx shader : " << s << '\n';
+		// std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(s);
+		// m_vecOfdefaultShaderIf.push_back(m_meshIf);
+	}
 }
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 

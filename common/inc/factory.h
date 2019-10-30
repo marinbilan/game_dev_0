@@ -290,10 +290,10 @@ public:
 		/*
 			0st STAGE of creation
 			db ex:
-			clusters    string    models    somethingElse ...
+			clusters    string    models somethingElse ...
 		*/
 
-		// vecOfClustersStrings: "models    somethingElse"
+		// vecOfClustersStrings: "models somethingElse..."
 		Common::Factory::getInstance().getDatabase()->getStringsFromDB(clusters, vecOfClustersStrings);
 		for (auto s : vecOfClustersStrings)
 		{
@@ -301,13 +301,14 @@ public:
 			createModels(s);
 		}
 	}
+
 	void createModels(const std::string& cluster)
 	{
 		/*
 	        1st STAGE of models creation - object tags
 	        [dbPath]: models
 	        db ex: 
-			models    string    staticModel dynamicModels  otherModels ...
+			models    string    staticModel dynamicModels otherModels ...
         */	    
 		std::string dbPath1 = cluster;
 
@@ -315,6 +316,7 @@ public:
 
 		// vecOfModelsStrings: "staticModel dynamicModels  otherModels ..."
 		Common::Factory::getInstance().getDatabase()->getStringsFromDB(dbPath1, vecOfModelsStrings);
+
 		for (auto s : vecOfModelsStrings)
 		{
 			/*
@@ -344,46 +346,66 @@ public:
 				if (!dbPath1.compare("controls"))
 				{
 					std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					
+					control->preInitialization();
+					control->postInitialization();
+
+					storeInContainer("ControlIf", control); 
+					std::cout << ".";
 				}
 				else if (!dbPath1.compare("cameras"))
 				{
 					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					
+					camera->preInitialization();
+					camera->postInitialization();
+
+					storeInContainer("CameraIf", camera); 
+					std::cout << ".";
 				}
 				else if (!dbPath1.compare("lights"))
 				{
 					std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					light->preInitialization();
+					light->postInitialization();
 					
+					storeInContainer("LightIf", light); 
+					std::cout << ".";
 				}
 				else if (!dbPath1.compare("loaders"))
 				{
 					std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					loader->preInitialization();
 					loader->postInitialization();
+
+					storeInContainer("LoaderIf", loader); 
+					std::cout << ".";
 				}
-				else if (!dbPath1.compare("gpuObjects"))
-				{
-					std::shared_ptr<GPUObject::GPUObjectIf> gpuObject((GPUObject::GPUObjectIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-				}
+				//else if (!dbPath1.compare("gpuObjects"))
+				//{
+				//	std::shared_ptr<GPUObject::GPUObjectIf> gpuObject((GPUObject::GPUObjectIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+				//}
 				else if (!dbPath1.compare("models"))
 				{
-					// arg0: constructorName (to find in map), arg1: dbPath (models_staticModel_), arg2: instanceName (ex: vanquish)
 					std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					
 					model->preInitialization();
+					model->postInitialization();
+
+					storeInContainer("ModelIf", model);
+					std::cout << ".";
 				}
 				else if (!dbPath1.compare("shaders"))
 				{
 					std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
+					shader->preInitialization();
+
+					storeInContainer("ShaderIf", shader);
+					std::cout << ".";
 				}
 				else 
-				{
-					
+				{					
 				}
 			}
 		}
-
 	}
 
 

@@ -41,8 +41,18 @@ void Light::LightDefault::postInit()
 // ========================================================================================
 void Light::LightDefault::preInitialization()
 {
-	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+	// std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
 	// GET light position and light color from DB
+
+	// 1] Get Light Position
+	std::string dBKey = m_dbPathWithName + "lightPosition";
+	FACTORY.getDatabase()->getVec3(dBKey, m_lightPosition);
+	std::cout << " xxxx Loght Position : " << m_lightPosition[0] << m_lightPosition[1] << m_lightPosition[2] << '\n';
+
+	// 2] Get Light Color
+	dBKey = m_dbPathWithName + "lightColor";
+	FACTORY.getDatabase()->getVec3(dBKey, m_lightColors);
+	std::cout << " xxxx Loght Position : " << m_lightColors[0] << m_lightColors[1] << m_lightColors[2] << '\n';
 }
 
 
