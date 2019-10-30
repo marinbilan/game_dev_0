@@ -183,7 +183,7 @@ NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE    NEW DB ENGINE
 /***************************************************************
  |  0th STAGE of creation - Interfaces
 ****************************************************************/
-clusters    string    controls cameras lights loaders gpuObjects models shaders
+clusters    string    controls cameras lights loaders models shaders
 
 
 ======================= IF DERIVED CLASSES =====================
@@ -194,14 +194,13 @@ controls      string    defaultControls
 cameras       string    defaultCamera
 lights        string    defaultLight
 loaders       string    modelLoader textureLoader
-gpuObjects    string    modelGPUObject textureGPUObject
 models        string    staticModel terrainModel
 shaders       string    defaultShader normalMapShader terrainShader
 
 
 /***************************************************************
  |  2st STAGE of clusters creation 
- |  Constructor names and Instance names
+ |  Constructors names and Instances names
 ****************************************************************/
 [CONTROLS]
 controls_defaultControls_constructorName    string    Control::ControlDefault
@@ -221,13 +220,6 @@ loaders_modelLoader_instanceNames      string    defaultModelLoader
 
 loaders_textureLoader_constructorName  string    Loader::TextureLoader
 loaders_textureLoader_instanceNames    string    defaultTextureLoader
-
-[GPUOBJECTS] TODO Remove
-gpuObjects_modelGPUObject_constructorName      string    GPUObject::ModelGPUObject
-gpuObjects_modelGPUObject_instanceNames        string    modelGPUObject_Van
-
-gpuObjects_textureGPUObject_constructorName    string    GPUObject::TextureGPUObject
-gpuObjects_textureGPUObject_instanceNames      string    textureGPUObject_Van
 
 [MODELS]
 models_staticModel_constructorName    string    Model::StaticModel
@@ -268,11 +260,13 @@ lights_defaultLight_defaultLight_lightColor       vec3    1.0 1.0 1.0
 
 
 [LOADERS]
+// ---- Model Loader ----
 loaders_modelLoader_defaultModelLoader_modelsPath                  string    _src/models/
 loaders_modelLoader_defaultModelLoader_modelsForLoad               string    vanquish.3ds
 
 loaders_modelLoader_defaultModelLoader_vanquish.3ds_meshAttribs    string    def def def def def def
-// ---- ----
+
+// ---- Texture Loader ----
 loaders_textureLoader_defaultTextureLoader_texturesPath                string    _src/textures/
 loaders_textureLoader_defaultTextureLoader_GPUMeshMaterials            string    vanquishGPUMeshMaterials
 
@@ -321,11 +315,11 @@ models_staticModel_vanquish_camera                string    defaultCamera
 models_staticModel_vanquish_light                 string    defaultLight
 models_staticModel_vanquish_gpuObjectModel        string    vanquish.3ds    
 models_staticModel_vanquish_textureObjectModel    string    vanquishGPUMeshMaterials
-models_staticModel_vanquish_shaders               string     defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
+models_staticModel_vanquish_shaders               string    defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
 
 
 [SHADERS]
-
+-
 
 
 
