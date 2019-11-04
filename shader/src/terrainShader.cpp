@@ -13,10 +13,10 @@ Shader::TerrainShader::TerrainShader(const std::string& dbPath, const std::strin
 	m_dbPath(dbPath),
 	m_name(name)
 {
-	FACTORY.getLog()->LOGFILE(LOG "Terrain: " + m_name + " created.");
-
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "TerrainShader: " + m_name + " created.");
 }
 
 
@@ -25,54 +25,6 @@ Shader::TerrainShader::~TerrainShader()
 }
 
 
-// FUNCTIONs
-void Shader::TerrainShader::preInit()
-{
-	// TODO remove this
-	GLfloat projMatrixWidth = 800;
-	GLfloat projMatrixHeight = 600;
-
-	m_shaderProgramID = createShader(vertexShader, fragmentShader);
-	// [ VERTEX SHADER ]
-	//   ATTRIBUTEs
-	m_positionsID = glGetAttribLocation(m_shaderProgramID, "position");
-	m_textureCoordsID = glGetAttribLocation(m_shaderProgramID, "textureCoords");
-	m_normalsID = glGetAttribLocation(m_shaderProgramID, "normal");
-	//   UNIFORMs
-	m_projectionMatrixID = glGetUniformLocation(m_shaderProgramID, "projectionMatrix");
-	m_viewMatrixID = glGetUniformLocation(m_shaderProgramID, "viewMatrix");
-	m_viewMatrixInvID = glGetUniformLocation(m_shaderProgramID, "viewMatrixInv");
-	m_modelMatrixID = glGetUniformLocation(m_shaderProgramID, "transformationMatrix");
-
-	m_lightPositionID = glGetUniformLocation(m_shaderProgramID, "lightPosition");
-	// [ FRAGMENT SHADER ]
-	//   UNIFORMs
-	m_backgroundTextureID = glGetUniformLocation(m_shaderProgramID, "backgroundTexture");
-	m_rTextureID = glGetUniformLocation(m_shaderProgramID, "rTexture");
-	m_gTextureID = glGetUniformLocation(m_shaderProgramID, "gTexture");
-	m_bTextureID = glGetUniformLocation(m_shaderProgramID, "bTexture");
-	m_blendMapID = glGetUniformLocation(m_shaderProgramID, "blendMap");
-
-	m_lightColorID = glGetUniformLocation(m_shaderProgramID, "lightColor");
-	m_shineDamperID = glGetUniformLocation(m_shaderProgramID, "shineDamper");
-	m_reflectivityID = glGetUniformLocation(m_shaderProgramID, "reflectivity");
-
-	// Set Projection Matrix
-	m_projectionMatrix = glm::perspective(glm::radians(60.0f), projMatrixWidth / projMatrixHeight, 0.1f, 1000.f);
-	glUseProgram(m_shaderProgramID);
-	glUniformMatrix4fv(m_projectionMatrixID, 1, GL_FALSE, &m_projectionMatrix[0][0]);
-	glUseProgram(0);
-}
-
-
-void Shader::TerrainShader::postInit()
-{
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Shader::TerrainShader::preInitialization()
 {
 	// TODO remove this

@@ -4,7 +4,6 @@
 
 Shader::NormalMapShader::NormalMapShader(const std::string& name) : m_name(name)
 {
-	FACTORY.getLog()->LOGFILE(LOG "NormalMapShader: " + m_name + " created.");
 }
 
 
@@ -12,10 +11,10 @@ Shader::NormalMapShader::NormalMapShader(const std::string& dbPath, const std::s
 	m_dbPath(dbPath),
 	m_name(name)
 {
-	FACTORY.getLog()->LOGFILE(LOG "NormalMapShader: " + m_name + " created.");
-
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "NormalMapShader: " + m_name + " created.");
 }
 
 
@@ -24,52 +23,6 @@ Shader::NormalMapShader::~NormalMapShader()
 }
 
 
-// FUNCTIONs
-void Shader::NormalMapShader::preInit()
-{
-	// TODO remove this
-	GLfloat projMatrixWidth = 800;
-	GLfloat projMatrixHeight = 600;
-
-	m_shaderProgramID = createShader(VertexShaderNormalMapPTNT, FragmentShaderNormalMapPTNT);
-	// [ VERTEX SHADER ]
-	//   ATTRIBUTEs
-	m_positionsID = glGetAttribLocation(m_shaderProgramID, "position");
-	m_textureCoordsID = glGetAttribLocation(m_shaderProgramID, "textureCoordinates");
-	m_normalsID = glGetAttribLocation(m_shaderProgramID, "normal");
-	m_tangentsID = glGetAttribLocation(m_shaderProgramID, "tangent");
-	// [ UNIFORMs ]
-	m_projectionMatrixID = glGetUniformLocation(m_shaderProgramID, "projectionMatrix");
-	m_viewMatrixID = glGetUniformLocation(m_shaderProgramID, "viewMatrix");
-	//m_viewMatrixInvID = glGetUniformLocation(m_shaderProgramID, "viewMatrixInv");
-	m_modelMatrixID = glGetUniformLocation(m_shaderProgramID, "transformationMatrix");
-
-	m_lightPositionEyeSpaceID = glGetUniformLocation(m_shaderProgramID, "lightPositionEyeSpace");
-	// [ FRAGMENT SHADER ]
-	//   UNIFORMs
-	m_lightColourID = glGetUniformLocation(m_shaderProgramID, "lightColour");
-	m_shineDamperID = glGetUniformLocation(m_shaderProgramID, "shineDamper");
-	m_reflectivityID = glGetUniformLocation(m_shaderProgramID, "reflectivity");
-	m_modelTextureID = glGetUniformLocation(m_shaderProgramID, "modelTexture");
-	m_modelNormalMapID = glGetUniformLocation(m_shaderProgramID, "normalMap");
-	//
-	// Set Projection Matrix
-	// 
-	m_projectionMatrix = glm::perspective(glm::radians(60.0f), projMatrixWidth / projMatrixHeight, 0.1f, 1000.f);
-	glUseProgram(m_shaderProgramID);
-	glUniformMatrix4fv(m_projectionMatrixID, 1, GL_FALSE, &m_projectionMatrix[0][0]);
-	glUseProgram(0);
-}
-
-
-void Shader::NormalMapShader::postInit()
-{
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Shader::NormalMapShader::preInitialization()
 {
 	// TODO remove this

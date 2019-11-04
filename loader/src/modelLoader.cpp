@@ -14,7 +14,9 @@ Loader::ModelLoader::ModelLoader(const std::string& dbPath, const std::string& n
 	m_name(name)
 {
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "ModelLoader: " + m_name + " created.");
 }
 
 

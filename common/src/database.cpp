@@ -15,13 +15,13 @@ Common::Database::~Database()
 
 void Common::Database::preInit()
 {
-	std::cout << "Database::Database::preInit called!" << '\n';
+	// std::cout << "Database::Database::preInit called!" << '\n';
 }
 
 
 void Common::Database::postInit()
 {
-	std::cout << "Database::Database::postInit() called!" << '\n';
+	// std::cout << "Database::Database::postInit() called!" << '\n';
 }
 
 

@@ -18,8 +18,8 @@ public:
 	}
 
 	// ModelIf
-	void preInit();
-	void postInit();
+	//void preInit();
+	//void postInit();
 
 	// ========================================================================================
     // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION

@@ -32,7 +32,7 @@ void Init::InitDefault::preInit()
 
 	for (auto it : FACTORY.getControlIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -42,7 +42,7 @@ void Init::InitDefault::preInit()
 
 	for (auto it : FACTORY.getCameraIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -52,7 +52,7 @@ void Init::InitDefault::preInit()
 
 	for (auto it : FACTORY.getLightIfVec())
 	{
-		it->preInit();
+		//it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -62,7 +62,7 @@ void Init::InitDefault::preInit()
 
 	for (auto it : FACTORY.getLoaderIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -71,7 +71,7 @@ void Init::InitDefault::preInit()
 	std::cout << "    GPUObjects: ";
 	for (auto it : FACTORY.getGPUObjectIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -80,7 +80,7 @@ void Init::InitDefault::preInit()
 	std::cout << "    Models: ";
 	for (auto it : FACTORY.getModelIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -89,7 +89,7 @@ void Init::InitDefault::preInit()
 	std::cout << "    Shaders: ";
 	for (auto it : FACTORY.getShaderIfVec())
 	{
-		it->preInit();
+		// it->preInit();
 		std::cout << ".";
 	}
 	std::cout << " [DONE]" << '\n';
@@ -117,7 +117,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Controls: ");
 	for (auto it : FACTORY.getControlIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -126,7 +126,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Cameras: ");
 	for (auto it : FACTORY.getCameraIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -135,7 +135,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Lights: ");
 	for (auto it : FACTORY.getLightIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -144,7 +144,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Loaders: ");
 	for (auto it : FACTORY.getLoaderIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -153,7 +153,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    GPUObjects: ");
 	for (auto it : FACTORY.getGPUObjectIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -162,7 +162,7 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Models: ");
 	for (auto it : FACTORY.getModelIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
@@ -171,11 +171,12 @@ void Init::InitDefault::postInit()
 	FACTORY.getLog()->INFOCMDNONEWLINE(LOG "    Shaders: ");
 	for (auto it : FACTORY.getShaderIfVec())
 	{
-		it->postInit();
+		//it->postInit();
 		FACTORY.getLog()->INFOCMDNONEWLINE(LOG ".");
 	}
 	std::cout << " [DONE]" << '\n';
 	std::cout << "Time: " << '\n';
+
 
 	// NEW HANDLING
 	auto newControls = FACTORY.getControlIf("defaultControls");

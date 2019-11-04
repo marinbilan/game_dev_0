@@ -11,7 +11,7 @@ Model::TerrainModel::TerrainModel(const std::string& name) :
     m_angle(0.0f),
 	m_modelMatrix(glm::mat4(0.0f))
 {
-	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
+	FACTORY.getLog()->LOGFILE(LOG "TerrainModel " + m_name + " created!");
 }
 
 
@@ -24,10 +24,10 @@ Model::TerrainModel::TerrainModel(const std::string& dbPath, const std::string& 
 	m_angle(0.0f),
 	m_modelMatrix(glm::mat4(0.0f))
 {
-	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
-
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "TerrainModel: " + m_name + " created.");
 }
 
 
@@ -262,5 +262,5 @@ GLuint Model::TerrainModel::loadTexturePNG(const char* filename) {
 
 void Model::TerrainModel::cmdPrompt(const std::string& arg0)
 {
-	std::cout << "TerrainModel: " << m_name << std::endl;
+	// std::cout << "TerrainModel: " << m_name << std::endl;
 }

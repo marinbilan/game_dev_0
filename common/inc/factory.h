@@ -254,24 +254,24 @@ public:
 	{
 		std::cout << " [CREATING OBJECTs] ";
 		// Create Cameras
-		createObjects("Control::", "ControlIf");
+		//createObjects("Control::", "ControlIf");
 
 		// Create Cameras
-		createObjects("Camera::", "CameraIf");
+		//createObjects("Camera::", "CameraIf");
 
 		// Create Lights
-		createObjects("Light::", "LightIf");
+		//createObjects("Light::", "LightIf");
 
 		// ----
 		// Create Loaders
-		createObjects("Loader::", "LoaderIf");
+		//createObjects("Loader::", "LoaderIf");
 		// ----
 
 		// Create Models
-		createObjects("Model::", "ModelIf");
+		//createObjects("Model::", "ModelIf");
 
 		// Create Shaders
-		createObjects("Shader::", "ShaderIf");
+		//createObjects("Shader::", "ShaderIf");
 
 		// ========================================================================================
         // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION

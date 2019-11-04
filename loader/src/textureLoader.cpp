@@ -13,7 +13,9 @@ Loader::TextureLoader::TextureLoader(const std::string& dbPath, const std::strin
 	m_name(name)
 {
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "TextureLoader: " + m_name + " created.");
 }
 
 
@@ -90,14 +92,12 @@ void Loader::TextureLoader::preInitialization()
 			std::string shineDumperPath = m_dbPathWithName + s + "_shineDumper";
 			GLfloat shineDumperFloat;
 			FACTORY.getDatabase()->getFloat(shineDumperPath, shineDumperFloat);
-			std::cout << " ---- shineDumper: " << shineDumperFloat << '\n';
 			tempTextureStruct.m_shineDamper = shineDumperFloat;
 
 			// reflectivity
 			std::string reflectivityPath = m_dbPathWithName + s + "_reflectivity";
 			GLfloat reflectivityFloat;
 			FACTORY.getDatabase()->getFloat(reflectivityPath, reflectivityFloat);
-			std::cout << " ---- reflectivityFloat: " << reflectivityFloat << '\n';
 			tempTextureStruct.m_reflectivity = reflectivityFloat;
 
 			// Store tempTextureStruct in m_GPUObjectIfTemp
@@ -373,8 +373,6 @@ GLuint Loader::TextureLoader::createTexture(const std::string& _textureName)
 	bits = 0;
 
 	fif = FreeImage_GetFileType(_textureName.c_str(), 0);
-
-	std::cout << " xxxxxxxxxx CREATING TEXTURE: " << _textureName << '\n';
 
 	if (fif == FIF_UNKNOWN)
 	{

@@ -87,16 +87,8 @@ class TerrainShader : public ShaderIf
 public:
 	TerrainShader(const std::string& name);
 	TerrainShader(const std::string& dbPath, const std::string& name);
-
 	~TerrainShader();
 
-	// FUNCTIONs
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

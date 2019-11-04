@@ -23,19 +23,13 @@ public:
 		std::cout << "ShaderIf destructor called!" << std::endl;
 	}
 
+	virtual void preInitialization() {};
+	virtual void postInitialization() {};
+
 	virtual const std::string& getName()
 	{
 		return "not implemented in MeshIf";
 	}
-
-	virtual void preInit() {};
-	virtual void postInit() {};
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
-	virtual void preInitialization() {};
-	virtual void postInitialization() {};
 
 	// FUNCTIONs
 	virtual GLuint createShader(const char* vertexShader, const char* fragmentShader)
@@ -63,7 +57,6 @@ public:
 		const std::shared_ptr<Camera::CameraIf>& camera,
 		const std::shared_ptr<Light::LightIf>& light) {};
 
-	//
 	virtual void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd) {};
 
 	// OPERATORs

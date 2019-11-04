@@ -83,13 +83,6 @@ public:
 	DefaultShader(const std::string& dbPath, const std::string& name);
 	~DefaultShader();
 
-	// FUNCTIONs
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

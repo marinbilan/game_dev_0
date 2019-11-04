@@ -117,13 +117,6 @@ public:
 	NormalMapShader(const std::string& dbPath, const std::string& name);
 	~NormalMapShader();
 
-	// FUNCTIONs
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	void preInitialization();
 	void postInitialization();
 
@@ -131,7 +124,6 @@ public:
 	{
 		return m_name;
 	}
-
 
 	void render(const glm::mat4& modelMatrix,
 		const GPUObject::MeshStructure modelMesh,
