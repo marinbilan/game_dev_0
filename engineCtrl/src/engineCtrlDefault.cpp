@@ -39,6 +39,8 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 	// TODO: thread 1
 	m_cmdPrompt0->runCmdPrompt();
 
+	std::cout << " --------- ENGINE CTRL: " << FACTORY.getModelIf("vanquish")->getName();
+
 	// START RENDERing
 	// TODO: thread 2
 	render();
@@ -102,8 +104,6 @@ void EngineCtrl::EngineCtrlDefault::glfwInitialization()
 		// std::cout << "Failed to initialize GLEW" << std::endl;
 	}
 
-
-
 	// Set some vaules
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -121,7 +121,8 @@ void EngineCtrl::EngineCtrlDefault::gameLoop()
 
 void EngineCtrl::EngineCtrlDefault::render()
 {
-	std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("smartControl_0");
+	// std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("smartControl_0");
+	std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("defaultControls");
 	control->postInit();
 
 	/* Loop until the user closes the window */
@@ -145,8 +146,9 @@ void EngineCtrl::EngineCtrlDefault::render()
 		// Camera movement
 		control->updateCameraPosition(m_deltaTime);
 
-		Common::Factory::getInstance().getModelIf("vanquishModel")->render();
-		Common::Factory::getInstance().getModelIf("terrainModel_0")->render();
+		// Common::Factory::getInstance().getModelIf("vanquishModel")->render();
+		FACTORY.getModelIf("vanquish")->render();
+		// Common::Factory::getInstance().getModelIf("terrainModel_0")->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_window);

@@ -4,7 +4,6 @@
 
 Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
 {
-	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
 }
 
 
@@ -12,10 +11,10 @@ Shader::DefaultShader::DefaultShader(const std::string& dbPath, const std::strin
 	m_dbPath(dbPath),
 	m_name(name)
 {
-	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
-
 	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
+
+	std::string instName = m_dbPathWithName + m_name;
+	FACTORY.getLog()->LOGFILE(LOG "DefaultShader: " + m_name + " created.");
 }
 
 

@@ -51,15 +51,15 @@ Control::ControlDefault::~ControlDefault()
 
 void Control::ControlDefault::preInit()
 {
-	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " preInit().");
+	// FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " preInit().");
 }
 
 
 void Control::ControlDefault::postInit()
 {
-	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " postInit().");
-	// TODO: Get this from DB
-	m_camera = FACTORY.getCameraIf("smartCamera_0");
+	//FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " postInit().");
+	//// TODO: Get this from DB
+	//m_camera = FACTORY.getCameraIf("smartCamera_0");
 }
 
 
@@ -69,19 +69,17 @@ void Control::ControlDefault::postInit()
 void Control::ControlDefault::preInitialization()
 {
 	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
-
-	// 1] Get Camera to Control
-	std::string dBKey = m_dbPathWithName + "cameraToControl";
-	std::vector<std::string> cameraToControl;
-	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraToControl);
-	std::cout << " xxxxx cameraToControl : " << cameraToControl[0] << '\n';
 }
 
 
 void Control::ControlDefault::postInitialization()
 {
-	std::cout << " postInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
-	// GET CAMERA! "smartCamera_0" - get string via db
+	// 1] Get Camera to Control
+	std::string dBKey = m_dbPathWithName + "cameraToControl";
+	std::vector<std::string> cameraToControl;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraToControl);
+	m_camera = FACTORY.getCameraIf(cameraToControl[0]);
+	std::cout << " ----> CAMERA CTRL NAME: " << m_camera->getName() << '\n';
 }
 
 

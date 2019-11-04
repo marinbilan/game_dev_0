@@ -309,11 +309,11 @@ void Common::Database::getStringsFromDB(const std::string& dbPath, std::vector<s
 	// DB ex:
 	//                   dbPath                       "\\s+(.+)"
 	//                   models             string     staticModel dynamicModels  otherModels
-	std::regex regexLine(dbPath + "\\s+" + "string" + "\\s+(.+)");
+	std::regex regexLine("^" + dbPath + "\\s+" + "string" + "\\s+(.+)");
 
 	std::smatch match;
 	std::string wantedString;
-
+	
 	while (std::getline(dBFile, dBLine))
 	{
 		if (std::regex_search(dBLine, match, regexLine))

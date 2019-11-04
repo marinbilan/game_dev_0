@@ -29,6 +29,8 @@ public:
 	// Get
 	std::vector<TextureStructure>& getTextureStructVec() override;
 
+	void info();
+
 private:
 	std::string m_dbPath;
 	std::string m_dbPathWithName;

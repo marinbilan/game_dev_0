@@ -101,6 +101,7 @@ void Init::InitDefault::preInit()
 	// auto elapsed = end - start;
 
 	std::cout << " Elapsed Time: " << elapsed.count()  << " [ms]" << '\n';
+
 }
 
 
@@ -176,4 +177,13 @@ void Init::InitDefault::postInit()
 	std::cout << " [DONE]" << '\n';
 	std::cout << "Time: " << '\n';
 
+	// NEW HANDLING
+	auto newControls = FACTORY.getControlIf("defaultControls");
+	newControls->postInitialization();
+
+	auto newCamera = FACTORY.getCameraIf("defaultCamera");
+	newCamera->postInitialization();
+
+	auto newModel = FACTORY.getModelIf("vanquish");
+	newModel->postInitialization();
 }

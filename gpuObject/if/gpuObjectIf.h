@@ -57,6 +57,20 @@ struct TextureStructure
 {
 	TextureStructure(const std::string& name) : m_name(name) {};
 
+	void dump()
+	{
+		std::cout << " Texture   name : " << m_name << " TextureId    : " << m_textureId << '\n';
+		//std::cout << " TextureNM name : " << m_name << " TextureNMId    : " << m_textureNormalMapId << '\n';
+
+		//std::cout << " Texture1 name : " << m_nameName1 << " Texture1Id    : " << m_texture1 << '\n';
+		//std::cout << " Texture2 name : " << m_nameName2 << " Texture2Id    : " << m_texture2 << '\n';
+		//std::cout << " Texture3 name : " << m_nameName3 << " Texture3Id    : " << m_texture3 << '\n';
+		//std::cout << " Texture4 name : " << m_nameName4 << " Texture4Id    : " << m_texture4 << '\n';
+
+		std::cout << " Shine Dumper  : " << m_shineDamper << '\n';
+		std::cout << " Reflectivity  : " << m_reflectivity << '\n';
+	}
+
 std::string m_name;
 GLuint m_textureId;
 // NormalMap Texture
@@ -72,8 +86,8 @@ GLuint m_texture3;
 std::string m_nameName4;
 GLuint m_texture4;
 
-GLuint m_shineDamper;
-GLuint m_reflectivity;
+GLfloat m_shineDamper;
+GLfloat m_reflectivity;
 };
 
 

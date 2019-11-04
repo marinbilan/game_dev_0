@@ -50,11 +50,6 @@ void Loader::TextureLoader::postInit()
 // ========================================================================================
 void Loader::TextureLoader::preInitialization()
 {
-}
-
-
-void Loader::TextureLoader::postInitialization()
-{
 	std::string texturesPath = m_dbPathWithName + "texturesPath";
 	std::vector<std::string> vecTexturesPath;
 	// ex: _src/textures/
@@ -83,7 +78,7 @@ void Loader::TextureLoader::postInitialization()
 			GPUObject::TextureStructure tempTextureStruct(s);
 
 			// texture;
-			std::string texture = m_dbPathWithName + s +"_texture";
+			std::string texture = m_dbPathWithName + s + "_texture";
 			std::vector<std::string> vecTexture;
 			FACTORY.getDatabase()->getStringsFromDB(texture, vecTexture);
 			tempTextureStruct.m_textureId = createTexture(vecTexturesPath[0] + vecTexture[0]);
@@ -111,6 +106,11 @@ void Loader::TextureLoader::postInitialization()
 
 		FACTORY.storeInContainer("GPUObjectIf", m_GPUObjectIfTemp);
 	}
+}
+
+
+void Loader::TextureLoader::postInitialization()
+{
 }
 
 
@@ -373,6 +373,8 @@ GLuint Loader::TextureLoader::createTexture(const std::string& _textureName)
 	bits = 0;
 
 	fif = FreeImage_GetFileType(_textureName.c_str(), 0);
+
+	std::cout << " xxxxxxxxxx CREATING TEXTURE: " << _textureName << '\n';
 
 	if (fif == FIF_UNKNOWN)
 	{

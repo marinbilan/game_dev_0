@@ -38,57 +38,57 @@ Model::StaticModel::~StaticModel()
 
 void Model::StaticModel::preInit()
 {
-	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " preInit method called!");
+	//FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " preInit method called!");
 
-	// MODEL VARIABLES - TODO: get this init model values from DB
-    // 1] Update model position
-	m_modelPosition = glm::vec3(385.0f, 0.0f, 375.0f);
-	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
+	//// MODEL VARIABLES - TODO: get this init model values from DB
+ //   // 1] Update model position
+	//m_modelPosition = glm::vec3(385.0f, 0.0f, 375.0f);
+	//m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
 
-	// 2] Update model rotation around axes
-	m_angle = -1.57f;
-	m_modelRotateAround = glm::vec3(1.0f, 0.0f, 0.0f);
-	m_modelMatrix = glm::rotate(m_modelMatrix, m_angle, m_modelRotateAround);
+	////// 2] Update model rotation around axes
+	//m_angle = -1.57f;
+	//m_modelRotateAround = glm::vec3(1.0f, 0.0f, 0.0f);
+	//m_modelMatrix = glm::rotate(m_modelMatrix, m_angle, m_modelRotateAround);
 
-	// 3] Update model with scale factor
-	m_modelScale = glm::vec3(10.0f, 10.0f, 10.0f);
-	m_modelMatrix = glm::scale(m_modelMatrix, m_modelScale);
+	////// 3] Update model with scale factor
+	//m_modelScale = glm::vec3(10.0f, 10.0f, 10.0f);
+	//m_modelMatrix = glm::scale(m_modelMatrix, m_modelScale);
 }
 
 
 void Model::StaticModel::postInit()
 {
-	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " postInit method called!");
+	//FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " postInit method called!");
 
-	std::string gpuObjectString;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectModel", gpuObjectString);
+	//std::string gpuObjectString;
+	//FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectModel", gpuObjectString);
 
-	std::string gpuObjectTextureString;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
+	//std::string gpuObjectTextureString;
+	//FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
 
-	std::string cameraString;
-	FACTORY.getDatabase()->getRest(m_name, "camera", cameraString);
+	//std::string cameraString;
+	//FACTORY.getDatabase()->getRest(m_name, "camera", cameraString);
 
-	std::string lightString;
-	FACTORY.getDatabase()->getRest(m_name, "light", lightString);
+	//std::string lightString;
+	//FACTORY.getDatabase()->getRest(m_name, "light", lightString);
 
-	// 1] Get gpuObject instance from Factory
-	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
-	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
+	//// 1] Get gpuObject instance from Factory
+	//m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectString);
+	//m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
 
-	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString);
-	m_lightIf = Common::Factory::getInstance().getLightIf(lightString);
+	//m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString);
+	//m_lightIf = Common::Factory::getInstance().getLightIf(lightString);
 
-	// 2] Get vector (column) of Shader instances names from DB
-	std::vector<std::string> vecOfStringShaderNames;
-	FACTORY.getDatabase()->get(m_name, "shader", vecOfStringShaderNames);
+	//// 2] Get vector (column) of Shader instances names from DB
+	//std::vector<std::string> vecOfStringShaderNames;
+	//FACTORY.getDatabase()->get(m_name, "shader", vecOfStringShaderNames);
 
-	// 3] Set shaderIf pointers in vector of shader interfaces
-	for (auto it = vecOfStringShaderNames.begin(); it < vecOfStringShaderNames.end(); ++it)
-	{
-		std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(*it);
-		m_vecOfdefaultShaderIf.push_back(m_meshIf);
-	}
+	//// 3] Set shaderIf pointers in vector of shader interfaces
+	//for (auto it = vecOfStringShaderNames.begin(); it < vecOfStringShaderNames.end(); ++it)
+	//{
+	//	std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(*it);
+	//	m_vecOfdefaultShaderIf.push_back(m_meshIf);
+	//}
 }
 
 
@@ -122,42 +122,45 @@ void Model::StaticModel::postInitialization()
 	std::string dBKey = m_dbPathWithName + "camera";
 	std::vector<std::string> cameraString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraString);
-	std::cout << " xxxx camera: " << cameraString[0] << '\n';
-	// TODO m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString[0]);
+	// m_cameraIf = Common::Factory::getInstance().getCameraIf("smartCamera_0");
+	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString[0]);
+	std::cout << " xxxx camera: " << m_cameraIf->getName() << '\n';
 
 	// 2] Get Light
 	dBKey = m_dbPathWithName + "light";
 	std::vector<std::string> lightString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, lightString);
-	std::cout << " xxxx light: " << lightString[0] << '\n';
-	// TODO m_lightIf = Common::Factory::getInstance().getLightIf(lightString[0]);
+	m_lightIf = Common::Factory::getInstance().getLightIf(lightString[0]);
+	std::cout << " xxxx light: " << m_lightIf->getName() << '\n';
 
 	// 3] Get GPUObjectModel
 	dBKey = m_dbPathWithName + "gpuObjectModel";
 	std::vector<std::string> gpuObjectModelString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, gpuObjectModelString);
-	std::cout << " xxxx gpuObjectModel: " << gpuObjectModelString[0] << gpuObjectModelString[0].size() << '\n';
-	// TODO m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectModelString[0]);
+	m_gpuObjectIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectModelString[0]);
+	std::cout << " ---- GPU object dump ---- " << '\n';
+	m_gpuObjectIf->info();
 
 	// 4] Get TextureObject
 	dBKey = m_dbPathWithName + "textureObjectModel";
 	std::vector<std::string> textureObjectModelString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, textureObjectModelString);
-	std::cout << " xxxx textureObjectModel: " << textureObjectModelString[0] << '\n';
-	// TODO m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(textureObjectModelString[0]);
+	// m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf("vanquishGPUObjectTexture");
+	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(textureObjectModelString[0]);
+	std::cout << " ---- GPU texture object dump ---- " << '\n';
+	m_gpuObjectTextureIf->info();
 
 	// 5] Get Shaders
 	dBKey = m_dbPathWithName + "shaders";
 	std::vector<std::string> shadersString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, shadersString);
-	// std::cout << " xxxx shadersString: " << shadersString[0] << '\n';
 	
 	// TODO assign shaders
 	for (auto s : shadersString)
 	{
-		std::cout << " xxxx shader : " << s << '\n';
-		// std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(s);
-		// m_vecOfdefaultShaderIf.push_back(m_meshIf);
+	    std::shared_ptr<Shader::ShaderIf>& m_meshIf = FACTORY.getShaderIf(s);
+		std::cout << " xxxx shader : " << m_meshIf->getName() << '\n';
+		m_vecOfdefaultShaderIf.push_back(m_meshIf);
 	}
 }
 

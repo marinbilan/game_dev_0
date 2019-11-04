@@ -235,6 +235,8 @@ public:
 		REGISTER_CLASS_NEW(Loader::ModelLoader);
 		REGISTER_CLASS_NEW(Loader::TextureLoader);
 		// ----
+
+		// ModelIf
 		REGISTER_CLASS_NEW(Model::StaticModel);
 		REGISTER_CLASS_NEW(Model::TerrainModel);
 
@@ -287,59 +289,39 @@ public:
 	{
 		std::string clusters("clusters");
 		std::vector<std::string> vecOfClustersStrings;
-		/*
-			0st STAGE of creation
-			db ex:
-			clusters    string    models somethingElse ...
-		*/
 
-		// vecOfClustersStrings: "models somethingElse..."
-		Common::Factory::getInstance().getDatabase()->getStringsFromDB(clusters, vecOfClustersStrings);
+		// DB: clusters    string    controls cameras lights loaders models shaders ...
+		FACTORY.getDatabase()->getStringsFromDB(clusters, vecOfClustersStrings);
 		for (auto s : vecOfClustersStrings)
 		{
-			// std::cout << " CLUSTERS: " << s << '\n';
 			createModels(s);
 		}
 	}
 
 	void createModels(const std::string& cluster)
-	{
-		/*
-	        1st STAGE of models creation - object tags
-	        [dbPath]: models
-	        db ex: 
-			models    string    staticModel dynamicModels otherModels ...
-        */	    
+	{   
 		std::string dbPath1 = cluster;
-
 		std::vector<std::string> vecOfModelsStrings;
 
-		// vecOfModelsStrings: "staticModel dynamicModels  otherModels ..."
-		Common::Factory::getInstance().getDatabase()->getStringsFromDB(dbPath1, vecOfModelsStrings);
+		// DB ex: models    string    staticModel terrainModel ...
+		FACTORY.getDatabase()->getStringsFromDB(dbPath1, vecOfModelsStrings);
 
 		for (auto s : vecOfModelsStrings)
 		{
-			/*
-	            2st STAGE of models creation - constructor and instanceNames
-                ex [dbPath]: models_staticModel
-                db ex:
-				models_staticModel_constructorName    string    Model::StaticModel
-                models_staticModel_instanceNames      string    vanquish ...
-            */
-			// dB ex:
-			// instanceDbPath: "models_staticModel_"
-			std::string instanceDbPath = dbPath1 + "_" + s + "_"; // arg0 of constructor
-			
+			// dB ex: instanceDbPath: "models_staticModel_"
+			std::string instanceDbPath = dbPath1 + "_" + s + "_"; // arg0 of constructor - Instance dB locator
+
 			std::string constructorNameDbPath = dbPath1 + "_" + s + "_" + "constructorName";
 			std::vector<std::string> vecOfConstructorString;
 			// ex vecOfConstructorString[0]: "Model::StaticModel"
-			Common::Factory::getInstance().getDatabase()->getStringsFromDB(constructorNameDbPath, vecOfConstructorString);
+			FACTORY.getDatabase()->getStringsFromDB(constructorNameDbPath, vecOfConstructorString);
 
 			std::string instanceNameDbPath = dbPath1 + "_" + s + "_" + "instanceNames";
 			std::vector<std::string> vecOfInstanceString;
-			// ex vecOfInstanceString: "vanquish ..."
-			Common::Factory::getInstance().getDatabase()->getStringsFromDB(instanceNameDbPath, vecOfInstanceString);
+			// ex vecOfInstanceString: "vanquish"
+			FACTORY.getDatabase()->getStringsFromDB(instanceNameDbPath, vecOfInstanceString);
 
+			// Create each instance
 			// ex: vanquish ...
 			for (auto s : vecOfInstanceString)
 			{
@@ -347,7 +329,6 @@ public:
 				{
 					std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					control->preInitialization();
-					control->postInitialization();
 
 					storeInContainer("ControlIf", control); 
 					std::cout << ".";
@@ -356,7 +337,6 @@ public:
 				{
 					std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					camera->preInitialization();
-					camera->postInitialization();
 
 					storeInContainer("CameraIf", camera); 
 					std::cout << ".";
@@ -365,7 +345,6 @@ public:
 				{
 					std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					light->preInitialization();
-					light->postInitialization();
 					
 					storeInContainer("LightIf", light); 
 					std::cout << ".";
@@ -374,21 +353,14 @@ public:
 				{
 					std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
 					loader->preInitialization();
-					loader->postInitialization();
 
 					storeInContainer("LoaderIf", loader); 
 					std::cout << ".";
 				}
-				//else if (!dbPath1.compare("gpuObjects"))
-				//{
-				//	std::shared_ptr<GPUObject::GPUObjectIf> gpuObject((GPUObject::GPUObjectIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-				//}
 				else if (!dbPath1.compare("models"))
 				{
-					std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));
-					
+					std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObjectNew(vecOfConstructorString[0], instanceDbPath, s));					
 					model->preInitialization();
-					model->postInitialization();
 
 					storeInContainer("ModelIf", model);
 					std::cout << ".";

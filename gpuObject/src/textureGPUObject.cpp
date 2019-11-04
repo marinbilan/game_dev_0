@@ -62,3 +62,12 @@ std::vector<GPUObject::TextureStructure>& GPUObject::TextureGPUObject::getTextur
 {
 	return m_vecOfTextures;
 }
+
+void GPUObject::TextureGPUObject::info()
+{
+	std::cout << " GPUObject Name: " << m_name << '\n';
+	for (auto texture : m_vecOfTextures)
+	{
+		texture.dump();
+	}
+}
