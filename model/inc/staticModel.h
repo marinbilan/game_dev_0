@@ -17,17 +17,12 @@ public:
 		return m_name; 
 	}
 
-	// ModelIf
-	//void preInit();
-	//void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 
     void render();
+
+	void dump();
 
 	void cmdPrompt(const std::string& arg0);
 

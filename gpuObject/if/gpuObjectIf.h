@@ -20,11 +20,7 @@ public:
 
 	void dump()
 	{
-		std::cout << " mesh name  : " << m_name << '\n';
-		std::cout << "  VAO       : " << m_VAO << '\n';
-		std::cout << "   VBO      : " << m_VBO << '\n';
-		std::cout << "   IBO      : " << m_IBO << '\n';
-		std::cout << "   numOfInds: " << m_NumOfInds << '\n';
+		std::cout << "|| Mesh Name: " << m_name << " |VAO: " << m_VAO << " |VBO: " << m_VBO << " |IBO: " << m_IBO << " |numOfInds: " << m_NumOfInds << '\n';
 	}
 
 std::string m_name;
@@ -55,36 +51,52 @@ GLuint m_textureId;
 // For each mesh
 struct TextureStructure
 {
-	TextureStructure(const std::string& name) : m_name(name) {};
+	TextureStructure(const std::string& name) : 
+		m_name(name), 
+		m_textureId(0),
+		m_textureNormalMapId(0),
+		m_texture1Id(0),
+		m_texture2Id(0),
+		m_texture3Id(0),
+		m_texture4Id(0),
+		m_shineDamper(0.0),
+		m_reflectivity(0.0) {};
 
 	void dump()
 	{
-		std::cout << " Texture   name : " << m_name << " TextureId    : " << m_textureId << '\n';
-		//std::cout << " TextureNM name : " << m_name << " TextureNMId    : " << m_textureNormalMapId << '\n';
+		if (m_textureId != 0) std::cout << "|| Texture Name: " << m_textureIdName << " |TextureId: " << m_textureId << '\n';
+		if(m_textureNormalMapId != 0) std::cout << "|| TextureNM name: " << m_name << " |TextureNMId: " << m_textureNormalMapId << '\n';
+	
+		if (m_texture1Id != 0) std::cout << "|| m_texture1 name: " << m_nameName1 << " |m_texture1Id: " << m_texture1Id << '\n';
+		if (m_texture2Id != 0) std::cout << "|| m_texture2 name: " << m_nameName2 << " |m_texture2Id: " << m_texture2Id << '\n';
+		if (m_texture3Id != 0) std::cout << "|| m_texture3 name: " << m_nameName3 << " |m_texture3Id: " << m_texture3Id << '\n';
+		if (m_texture4Id != 0) std::cout << "|| m_texture4 name: " << m_nameName4 << " |m_texture4Id: " << m_texture4Id << '\n';
 
-		//std::cout << " Texture1 name : " << m_nameName1 << " Texture1Id    : " << m_texture1 << '\n';
-		//std::cout << " Texture2 name : " << m_nameName2 << " Texture2Id    : " << m_texture2 << '\n';
-		//std::cout << " Texture3 name : " << m_nameName3 << " Texture3Id    : " << m_texture3 << '\n';
-		//std::cout << " Texture4 name : " << m_nameName4 << " Texture4Id    : " << m_texture4 << '\n';
-
-		std::cout << " Shine Dumper  : " << m_shineDamper << '\n';
-		std::cout << " Reflectivity  : " << m_reflectivity << '\n';
+		if (m_shineDamper != 0)  std::cout << "|| m_shineDamper: " << m_shineDamper << '\n';
+		if (m_reflectivity != 0) std::cout << "|| m_reflectivity: " << m_reflectivity << '\n';
 	}
 
 std::string m_name;
+
+// Texture
+std::string m_textureIdName;
 GLuint m_textureId;
 // NormalMap Texture
+std::string m_textureNormalMapIdName;
 GLuint m_textureNormalMapId;
 
 // Terrain Texture Ids
 std::string m_nameName1;
-GLuint m_texture1;
+GLuint m_texture1Id;
+
 std::string m_nameName2;
-GLuint m_texture2;
+GLuint m_texture2Id;
+
 std::string m_nameName3;
-GLuint m_texture3;
+GLuint m_texture3Id;
+
 std::string m_nameName4;
-GLuint m_texture4;
+GLuint m_texture4Id;
 
 GLfloat m_shineDamper;
 GLfloat m_reflectivity;

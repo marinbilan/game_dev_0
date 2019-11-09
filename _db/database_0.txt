@@ -284,22 +284,22 @@ loaders_textureLoader_defaultTextureLoader_meshMaterial1_shineDumper   float    
 loaders_textureLoader_defaultTextureLoader_meshMaterial1_reflectivity  float     0.1
 
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_texture       string    texture2.png
-loaders_textureLoader_defaultTextureLoader_meshMaterial2_textureNM     string    texture0NP.png
+loaders_textureLoader_defaultTextureLoader_meshMaterial2_texture1     string     texture111.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshMaterial2_reflectivity  float     0.1
 
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_texture       string    texture3.png
-loaders_textureLoader_defaultTextureLoader_meshMaterial3_textureNM     string    texture0NP.png
+loaders_textureLoader_defaultTextureLoader_meshMaterial3_textureNM     string    texture3NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshMaterial3_reflectivity  float     0.1
 
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_texture       string    texture4.png
-loaders_textureLoader_defaultTextureLoader_meshMaterial4_textureNM     string    texture0NP.png
+loaders_textureLoader_defaultTextureLoader_meshMaterial4_textureNM     string    texture4NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshMaterial4_reflectivity  float     0.1
 
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_texture       string    texture5.png
-loaders_textureLoader_defaultTextureLoader_meshMaterial5_textureNM     string    texture0NP.png
+loaders_textureLoader_defaultTextureLoader_meshMaterial5_textureNM     string    texture5NP.png
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_reflectivity  float     0.1
 

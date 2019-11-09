@@ -95,6 +95,9 @@ void Model::StaticModel::postInitialization()
 		m_vecOfdefaultShaderIf.push_back(m_meshIf);
 		
 	}
+
+	// TODO: remove
+	dump();
 }
 
 // 1 ] Bind VAO        (glBindVertexArray (VAO)); 
@@ -127,6 +130,41 @@ void Model::StaticModel::render()
 		++it1;
 	}
 };
+
+
+void Model::StaticModel::dump()
+{
+	std::cout << "| ---- | MODEL INFO | ---- " << std::endl;
+	std::cout << "| Model Name:           " << m_name << std::endl;
+	std::cout << "| Model VAO:            " << m_VAO << std::endl;
+	std::cout << "|  Model Position:      " << m_modelPosition[0] << " " << m_modelPosition[1] << " " << m_modelPosition[2] << '\n';
+	std::cout << "|  Model Scale:         " << m_modelScale[0] << " " << m_modelScale[1] << " " << m_modelScale[2] << '\n';
+	std::cout << "|  Model Rotate Around: " << m_modelRotateAround[0] << " " << m_modelRotateAround[1] << " " << m_modelRotateAround[2] << '\n';
+	std::cout << "|  Model Angle:         " << m_angle << '\n';
+	std::cout << "|- " << '\n';
+	std::cout << "| ---- | CAMERA INFO | ---- " << '\n';
+	m_cameraIf->dump();
+	std::cout << "|- " << '\n';
+	std::cout << "| ---- | LIGHT INFO | ---- " << '\n';
+	m_lightIf->dump();
+
+	auto it0 = m_gpuObjectIf->getMeshVec().begin();
+	auto it1 = m_gpuObjectTextureIf->getTextureStructVec().begin();
+
+	std::cout << "| ---- | MESH MATERIAL INFO | ---- " << '\n';
+	for (auto it = m_vecOfdefaultShaderIf.begin(); it != m_vecOfdefaultShaderIf.end(); ++it)
+	{
+		std::cout << "| ---- < " << it1->m_name << " > ---- " << '\n';
+		(*it0).dump(); 
+		std::cout << "|- " << '\n';
+		(*it1).dump();
+		std::cout << "|- " << '\n';
+		std::cout << "|| Shader: " << (*it)->getName() << '\n';
+
+		++it0;
+		++it1;
+	}
+}
 
 
 void Model::StaticModel::cmdPrompt(const std::string& arg0)

@@ -17,17 +17,14 @@ public:
 		return m_name;
 	}
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 
 	glm::vec3& getLightPosition();
 	glm::vec3& getLightColors();
+
+	virtual void dump();
+	virtual void cmdPrompt(const std::string& arg0);
 
 private:
 std::string m_dbPath;

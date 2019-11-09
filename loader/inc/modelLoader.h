@@ -55,12 +55,6 @@ public:
 
 	const std::string& getName();
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

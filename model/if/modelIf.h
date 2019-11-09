@@ -36,6 +36,8 @@ public:
 
 	virtual void render() {};
 
+	virtual void dump() {};
+
 	virtual void cmdPrompt(const std::string& arg0)
 	{
 	}

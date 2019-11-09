@@ -30,26 +30,6 @@ const std::string& Loader::TextureLoader::getName()
 }
 
 
-void Loader::TextureLoader::preInit()
-{
-}
-
-
-void Loader::TextureLoader::postInit()
-{
-	// ---- [ 1] LOAD ALL TEXTUREs AND CREATE RAW TEXTURE OBJECTs] ----
-	loadAllTexturesAndCreateRawTextureStructs();
-
-	loadTerrainTexturesAndCreateRawTextureStructs();
-
-	// ---- [ 2] COMBINE ALL TEXTUREs ] ----
-	createGPUObjectTextures();
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Loader::TextureLoader::preInitialization()
 {
 	std::string texturesPath = m_dbPathWithName + "texturesPath";
@@ -78,15 +58,46 @@ void Loader::TextureLoader::preInitialization()
 		{
 			// Create: temp TextureStructure
 			GPUObject::TextureStructure tempTextureStruct(s);
+			tempTextureStruct.m_name = s;
 
 			// texture;
 			std::string texture = m_dbPathWithName + s + "_texture";
 			std::vector<std::string> vecTexture;
 			FACTORY.getDatabase()->getStringsFromDB(texture, vecTexture);
+			tempTextureStruct.m_textureIdName = vecTexture[0];
 			tempTextureStruct.m_textureId = createTexture(vecTexturesPath[0] + vecTexture[0]);
 
-			// TODO after db ifExist implementation textureNM;
-			// ...
+			// ---- textureNM ----;
+			std::string textureNM = m_dbPathWithName + s + "_textureNM";
+			std::vector<std::string> vecTextureNM;
+			FACTORY.getDatabase()->getStringsFromDB(textureNM, vecTextureNM);
+
+			if (vecTextureNM[0].compare("N/A")) // If dbEntry != "N/M"
+			{
+				tempTextureStruct.m_textureNormalMapIdName = vecTextureNM[0];
+				tempTextureStruct.m_textureNormalMapId = createTexture(vecTexturesPath[0] + vecTextureNM[0]);
+			}
+			else
+			{
+				std::cout << "ERROR: " << textureNM << " no entry in DB: " << vecTextureNM[0] << std::endl;
+			}
+			// ---- ----
+
+			// ---- texture1 ----;
+			std::string texture1 = m_dbPathWithName + s + "_texture1";
+			std::vector<std::string> vecTexture1;
+			FACTORY.getDatabase()->getStringsFromDB(texture1, vecTexture1);
+
+			if (vecTexture1[0].compare("N/A")) // If dbEntry != "N/M"
+			{
+				tempTextureStruct.m_nameName1 = vecTexture1[0];
+				tempTextureStruct.m_texture1Id = createTexture(vecTexturesPath[0] + vecTexture1[0]);
+			}
+			else
+			{
+				std::cout << "ERROR: " << texture1 << " no entry in DB: " << vecTexture1[0] << std::endl;
+			}
+			// ---- ----
 
 			// shineDumper
 			std::string shineDumperPath = m_dbPathWithName + s + "_shineDumper";
@@ -343,16 +354,16 @@ void Loader::TextureLoader::createTerrainShader(const std::string& defaultShader
 	tempTextureStruct.m_textureId = tempRawTextureStruct0->m_textureId;
 	// Terrain stuff
 	tempTextureStruct.m_nameName1 = tempRawTextureStruct1->m_name;
-	tempTextureStruct.m_texture1 = tempRawTextureStruct1->m_textureId;
+	tempTextureStruct.m_texture1Id = tempRawTextureStruct1->m_textureId;
 
 	tempTextureStruct.m_nameName2 = tempRawTextureStruct2->m_name;
-	tempTextureStruct.m_texture2 = tempRawTextureStruct2->m_textureId;
+	tempTextureStruct.m_texture2Id = tempRawTextureStruct2->m_textureId;
 
 	tempTextureStruct.m_nameName3 = tempRawTextureStruct3->m_name;
-	tempTextureStruct.m_texture3 = tempRawTextureStruct3->m_textureId;
+	tempTextureStruct.m_texture3Id = tempRawTextureStruct3->m_textureId;
 
 	tempTextureStruct.m_nameName4 = tempRawTextureStruct4->m_name;
-	tempTextureStruct.m_texture4 = tempRawTextureStruct4->m_textureId;
+	tempTextureStruct.m_texture4Id = tempRawTextureStruct4->m_textureId;
 
 	// Terrain property
 	tempTextureStruct.m_shineDamper = shineDumper;

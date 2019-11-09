@@ -333,7 +333,7 @@ void Common::Database::getStringsFromDB(const std::string& dbPath, std::vector<s
 
 	if (!wantedString.compare("")) // Raise error if no param in DB
 	{
-		std::string falseStr("false");
+		std::string falseStr("N/A");
 		vectorOfStrings.push_back(falseStr);
 	}
 }

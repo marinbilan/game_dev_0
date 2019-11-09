@@ -22,12 +22,6 @@ public:
 		return returnErrorStr;
 	}
 
-	virtual void preInit() {};
-	virtual void postInit() {};
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	virtual void preInitialization() {};
 	virtual void postInitialization() {};
 
@@ -44,9 +38,7 @@ public:
 		return tempMatrix;
 	}
 
-	virtual void invertCameraMatrix() 
-	{
-	}
+	virtual void invertCameraMatrix() {}
 
 	// Keyboard part
 	virtual void moveCameraForward(GLfloat deltaTime) {};
@@ -56,9 +48,10 @@ public:
 
 	// Mouse part
 	virtual void cameraFront(glm::vec3 cameraFront) {};
-
 	virtual void updateCameraPosition() {};
-	// OPERATORs	
+
+	virtual void dump() {};
+	virtual void cmdPrompt(const std::string& arg0){}
 
 private:
 	std::string returnErrorStr = "Error: CameraIf::getName() called from CameraIf!";

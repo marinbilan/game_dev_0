@@ -37,58 +37,23 @@ Camera::CameraDefault::~CameraDefault()
 }
 
 
-void Camera::CameraDefault::preInit()
-{
-	// Read this from DB
-	m_cameraPos = glm::vec3(375, 25, 420);
-	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-	m_viewMatrix = glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
-
-	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " preInit().");
-}
-
-
-void Camera::CameraDefault::postInit()
-{
-	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " postInit().");
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Camera::CameraDefault::preInitialization()
 {
-	//std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
-	//// Get Camera position and create viewMatrix
+	// 1] Get Camera Position
+	std::string dBKey = m_dbPathWithName + "cameraPosition";
+	FACTORY.getDatabase()->getVec3(dBKey, m_cameraPos);
 
-	//// 1] Get Camera Position
-	//std::string dBKey = m_dbPathWithName + "cameraPosition";
-	//FACTORY.getDatabase()->getVec3(dBKey, m_cameraPos);
-	//std::cout << " xxxxx " << m_cameraPos[0] << " " << m_cameraPos[1] << " " << m_cameraPos[2] << '\n';
+	// 2] Get Camera Front
+	dBKey = m_dbPathWithName + "cameraFront";
+	FACTORY.getDatabase()->getVec3(dBKey, m_cameraFront);
 
-	//// 2] Get Camera Front
-	//dBKey = m_dbPathWithName + "cameraFront";
-	//FACTORY.getDatabase()->getVec3(dBKey, m_cameraFront);
-	//std::cout << " xxxxx " << m_cameraFront[0] << " " << m_cameraFront[1] << " " << m_cameraFront[2] << '\n';
-
-	//// 3] Get Camera Up
-	//dBKey = m_dbPathWithName + "cameraUp";
-	//FACTORY.getDatabase()->getVec3(dBKey, m_cameraUp);
-	//std::cout << " xxxxx " << m_cameraUp[0] << " " << m_cameraUp[1] << " " << m_cameraUp[2] << '\n';
-
-	//m_viewMatrix = glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
-
-	// Read this from DB
-	m_cameraPos = glm::vec3(375, 25, 420);
-	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	// 3] Get Camera Up
+	dBKey = m_dbPathWithName + "cameraUp";
+	FACTORY.getDatabase()->getVec3(dBKey, m_cameraUp);
 
 	m_viewMatrix = glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
 
-	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " preInit().");
+	FACTORY.getLog()->LOGFILE(LOG "CameraDefault: " + m_name + " preInitialization().");
 }
 
 
@@ -154,4 +119,20 @@ void Camera::CameraDefault::updateCameraPosition()
 void Camera::CameraDefault::cameraFront(glm::vec3 cameraFront)
 {
 	m_cameraFront = cameraFront;
+}
+
+
+void Camera::CameraDefault::dump()
+{
+	std::cout << "| Camera Name:      " << m_name << std::endl;
+	std::cout << "|  Camera Position: " << m_cameraPos[0] << " " << m_cameraPos[1] << " " << m_cameraPos[2] << '\n';
+	std::cout << "|  Camera Front:    " << m_cameraFront[0] << " " << m_cameraFront[1] << " " << m_cameraFront[2] << '\n';
+	std::cout << "|  Camera Up:       " << m_cameraUp[0] << " " << m_cameraUp[1] << " " << m_cameraUp[2] << '\n';
+	std::cout << "|  Camera Velocity: " << velocityFactor << '\n';
+}
+
+
+void Camera::CameraDefault::cmdPrompt(const std::string& arg0)
+{
+
 }

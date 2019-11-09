@@ -31,21 +31,6 @@ const std::string& Loader::ModelLoader::getName()
 }
 
 
-void Loader::ModelLoader::preInit()
-{
-	// Get from DB
-}
-
-
-void Loader::ModelLoader::postInit()
-{
-	loadModel();
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Loader::ModelLoader::preInitialization()
 {
 	// ex: _src/models/
@@ -66,7 +51,7 @@ void Loader::ModelLoader::postInitialization()
 
 }
 
-
+// TODO: remove
 void Loader::ModelLoader::loadModel()
 {
 	std::vector<std::string> vec0;
@@ -136,9 +121,6 @@ void Loader::ModelLoader::loadModel()
 }
 
 
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModelsForLoad)
 {
 	for (auto s : vecModelsForLoad)
@@ -170,7 +152,7 @@ void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModels
 	}
 }
 
-
+// TODO: remove
 void Loader::ModelLoader::initScene(const aiScene* _pScene)
 {
 	// CREATE GPU MODEL

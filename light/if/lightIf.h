@@ -17,12 +17,6 @@ public:
 		return "Not implemented in Light";
 	}
 
-	virtual void preInit() {};
-	virtual void postInit() {};
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	virtual void preInitialization() {};
 	virtual void postInitialization() {};
 
@@ -35,6 +29,9 @@ public:
 	{
 		return dummy;
 	};
+
+	virtual void dump() {};
+	virtual void cmdPrompt(const std::string& arg0) {};
 
 private:
 	glm::vec3 dummy = glm::vec3(0, 0, 0);

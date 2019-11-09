@@ -17,12 +17,6 @@ public:
 		return m_name;
 	}
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 
@@ -41,10 +35,10 @@ public:
 
 	// Mouse part
 	void cameraFront(glm::vec3 cameraFront);
-
 	void updateCameraPosition();
 
-	// OPERATORs
+	void dump();
+	void cmdPrompt(const std::string& arg0);
 
 private:
 std::string m_dbPath;
