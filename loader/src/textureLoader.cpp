@@ -60,29 +60,39 @@ void Loader::TextureLoader::preInitialization()
 			GPUObject::TextureStructure tempTextureStruct(s);
 			tempTextureStruct.m_name = s;
 
-			// texture;
-			std::string texture = m_dbPathWithName + s + "_texture";
+			// Filling TextureStructure instance for each material/mesh
+
+			// ---- texture ----;
+			std::string texturePath = m_dbPathWithName + s + "_texture";
 			std::vector<std::string> vecTexture;
-			FACTORY.getDatabase()->getStringsFromDB(texture, vecTexture);
-			tempTextureStruct.m_textureIdName = vecTexture[0];
-			tempTextureStruct.m_textureId = createTexture(vecTexturesPath[0] + vecTexture[0]);
+			FACTORY.getDatabase()->getStringsFromDB(texturePath, vecTexture);
+			if (vecTexture[0].compare("N/A")) // If dbEntry != "N/M"
+			{
+				tempTextureStruct.m_textureIdName = vecTexture[0];
+				tempTextureStruct.m_textureId = createTexture(vecTexturesPath[0] + vecTexture[0]);
+			}
+			else
+			{
+				std::cout << "ERROR: " << texturePath << " no entry in DB. " << '\n';
+			}
+			// ---- ----
 
 			// ---- textureNM ----;
-			std::string textureNM = m_dbPathWithName + s + "_textureNM";
+			std::string textureNMPath = m_dbPathWithName + s + "_textureNM";
 			std::vector<std::string> vecTextureNM;
-			FACTORY.getDatabase()->getStringsFromDB(textureNM, vecTextureNM);
-
+			FACTORY.getDatabase()->getStringsFromDB(textureNMPath, vecTextureNM);
 			if (vecTextureNM[0].compare("N/A")) // If dbEntry != "N/M"
 			{
-				tempTextureStruct.m_textureNormalMapIdName = vecTextureNM[0];
+				tempTextureStruct.m_textureNormalMapName = vecTextureNM[0];
 				tempTextureStruct.m_textureNormalMapId = createTexture(vecTexturesPath[0] + vecTextureNM[0]);
 			}
 			else
 			{
-				std::cout << "ERROR: " << textureNM << " no entry in DB: " << vecTextureNM[0] << std::endl;
+				std::cout << "ERROR: " << textureNMPath << " no entry in DB. " << '\n';
 			}
 			// ---- ----
 
+			// Terrain
 			// ---- texture1 ----;
 			std::string texture1 = m_dbPathWithName + s + "_texture1";
 			std::vector<std::string> vecTexture1;
@@ -90,8 +100,8 @@ void Loader::TextureLoader::preInitialization()
 
 			if (vecTexture1[0].compare("N/A")) // If dbEntry != "N/M"
 			{
-				tempTextureStruct.m_nameName1 = vecTexture1[0];
-				tempTextureStruct.m_texture1Id = createTexture(vecTexturesPath[0] + vecTexture1[0]);
+				tempTextureStruct.m_terrainTexture1Name = vecTexture1[0];
+				tempTextureStruct.m_terrainTexture1Id = createTexture(vecTexturesPath[0] + vecTexture1[0]);
 			}
 			else
 			{
@@ -99,17 +109,22 @@ void Loader::TextureLoader::preInitialization()
 			}
 			// ---- ----
 
+			// ...
+
 			// shineDumper
 			std::string shineDumperPath = m_dbPathWithName + s + "_shineDumper";
 			GLfloat shineDumperFloat;
 			FACTORY.getDatabase()->getFloat(shineDumperPath, shineDumperFloat);
+			// check...
 			tempTextureStruct.m_shineDamper = shineDumperFloat;
 
 			// reflectivity
 			std::string reflectivityPath = m_dbPathWithName + s + "_reflectivity";
 			GLfloat reflectivityFloat;
 			FACTORY.getDatabase()->getFloat(reflectivityPath, reflectivityFloat);
+			// check ...
 			tempTextureStruct.m_reflectivity = reflectivityFloat;
+
 
 			// Store tempTextureStruct in m_GPUObjectIfTemp
 			m_GPUObjectIfTemp->setTextureStructInVec(tempTextureStruct);
@@ -353,17 +368,17 @@ void Loader::TextureLoader::createTerrainShader(const std::string& defaultShader
 	tempTextureStruct.m_name = tempRawTextureStruct0->m_name;
 	tempTextureStruct.m_textureId = tempRawTextureStruct0->m_textureId;
 	// Terrain stuff
-	tempTextureStruct.m_nameName1 = tempRawTextureStruct1->m_name;
-	tempTextureStruct.m_texture1Id = tempRawTextureStruct1->m_textureId;
+	tempTextureStruct.m_terrainTexture1Name = tempRawTextureStruct1->m_name;
+	tempTextureStruct.m_terrainTexture1Id = tempRawTextureStruct1->m_textureId;
 
-	tempTextureStruct.m_nameName2 = tempRawTextureStruct2->m_name;
-	tempTextureStruct.m_texture2Id = tempRawTextureStruct2->m_textureId;
+	tempTextureStruct.m_terrainTexture2Name = tempRawTextureStruct2->m_name;
+	tempTextureStruct.m_terrainTexture2Id = tempRawTextureStruct2->m_textureId;
 
-	tempTextureStruct.m_nameName3 = tempRawTextureStruct3->m_name;
-	tempTextureStruct.m_texture3Id = tempRawTextureStruct3->m_textureId;
+	//tempTextureStruct.m_terrainTexture3Name = tempRawTextureStruct3->m_name;
+	//tempTextureStruct.m_texture3Id = tempRawTextureStruct3->m_textureId;
 
-	tempTextureStruct.m_nameName4 = tempRawTextureStruct4->m_name;
-	tempTextureStruct.m_texture4Id = tempRawTextureStruct4->m_textureId;
+	//tempTextureStruct.m_terrainTexture3Name = tempRawTextureStruct4->m_name;
+	//tempTextureStruct.m_texture4Id = tempRawTextureStruct4->m_textureId;
 
 	// Terrain property
 	tempTextureStruct.m_shineDamper = shineDumper;

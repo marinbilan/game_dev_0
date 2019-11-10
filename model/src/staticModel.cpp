@@ -96,6 +96,11 @@ void Model::StaticModel::postInitialization()
 		
 	}
 
+	// TODO: Check equality!
+	std::cout << " Number of meshes: " << m_gpuObjectIf->getMeshVec().size() << '\n';
+	std::cout << " Number of material objects: " << m_gpuObjectTextureIf->getTextureStructVec().size() << '\n';
+	std::cout << " Number of shaders: " << shadersString.size() << '\n';
+
 	// TODO: remove
 	dump();
 }
@@ -134,7 +139,7 @@ void Model::StaticModel::render()
 
 void Model::StaticModel::dump()
 {
-	std::cout << "| ---- | MODEL INFO | ---- " << std::endl;
+	std::cout << "|| MODEL INFO |" << std::endl;
 	std::cout << "| Model Name:           " << m_name << std::endl;
 	std::cout << "| Model VAO:            " << m_VAO << std::endl;
 	std::cout << "|  Model Position:      " << m_modelPosition[0] << " " << m_modelPosition[1] << " " << m_modelPosition[2] << '\n';
@@ -142,19 +147,19 @@ void Model::StaticModel::dump()
 	std::cout << "|  Model Rotate Around: " << m_modelRotateAround[0] << " " << m_modelRotateAround[1] << " " << m_modelRotateAround[2] << '\n';
 	std::cout << "|  Model Angle:         " << m_angle << '\n';
 	std::cout << "|- " << '\n';
-	std::cout << "| ---- | CAMERA INFO | ---- " << '\n';
+	std::cout << "|| CAMERA INFO |" << '\n';
 	m_cameraIf->dump();
 	std::cout << "|- " << '\n';
-	std::cout << "| ---- | LIGHT INFO | ---- " << '\n';
+	std::cout << "|| LIGHT INFO |" << '\n';
 	m_lightIf->dump();
 
 	auto it0 = m_gpuObjectIf->getMeshVec().begin();
 	auto it1 = m_gpuObjectTextureIf->getTextureStructVec().begin();
 
-	std::cout << "| ---- | MESH MATERIAL INFO | ---- " << '\n';
+	std::cout << "|| MESH MATERIAL INFO |" << '\n';
 	for (auto it = m_vecOfdefaultShaderIf.begin(); it != m_vecOfdefaultShaderIf.end(); ++it)
 	{
-		std::cout << "| ---- < " << it1->m_name << " > ---- " << '\n';
+		std::cout << "| < " << it1->m_name << " >" << '\n';
 		(*it0).dump(); 
 		std::cout << "|- " << '\n';
 		(*it1).dump();

@@ -104,19 +104,19 @@ void Shader::TerrainShader::render(GLuint VAO, std::shared_ptr<Camera::CameraIf>
 
 	glUniform1i(m_rTextureID, 1);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, textureStruct.m_texture1Id);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture1Id);
 
 	glUniform1i(m_gTextureID, 2);
 	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, textureStruct.m_texture2Id);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture2Id);
 
 	glUniform1i(m_bTextureID, 3);
 	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, textureStruct.m_texture3Id);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture3Id);
 
 	glUniform1i(m_blendMapID, 4);
 	glActiveTexture(GL_TEXTURE4);
-	glBindTexture(GL_TEXTURE_2D, textureStruct.m_texture4Id);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture4Id);
 
 	glm::vec3 lightColorTerrain(1.0f, 1.0f, 1.0f);
 	glUniform3f(m_lightColorID, lightColorTerrain[0], lightColorTerrain[1], lightColorTerrain[2]);
