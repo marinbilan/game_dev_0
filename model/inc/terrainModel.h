@@ -53,7 +53,7 @@ std::shared_ptr<Camera::CameraIf> m_cameraIf;
 std::shared_ptr<Light::LightIf>   m_lightIf;
 
 std::shared_ptr<Shader::ShaderIf> m_terrainShaderIf;
-std::shared_ptr<GPUObject::GPUObjectIf>    m_gpuObjectTextureIf;
+std::shared_ptr<GPUObject::GPUObjectIf> m_gpuObjectTextureIf;
 
 GLuint numInd;
 

@@ -59,6 +59,7 @@ struct TextureStructure
 		m_terrainTexture2Id(0),
 		m_terrainTexture3Id(0),
 		m_terrainTexture4Id(0),
+		m_terrainTexture5Id(0),
 		m_shineDamper(0.0),
 		m_reflectivity(0.0) {};
 
@@ -71,6 +72,7 @@ struct TextureStructure
 		if (m_terrainTexture2Id != 0) std::cout << "|| m_terrainTexture2Name name: " << m_terrainTexture2Name << " |m_terrainTexture2Id: " << m_terrainTexture2Id << '\n';
 		if (m_terrainTexture3Id != 0) std::cout << "|| m_terrainTexture3Name name: " << m_terrainTexture3Name << " |m_terrainTexture3Id: " << m_terrainTexture3Id << '\n';
 		if (m_terrainTexture4Id != 0) std::cout << "|| m_terrainTexture4Name name: " << m_terrainTexture4Name << " |m_terrainTexture4Id: " << m_terrainTexture4Id << '\n';
+		if (m_terrainTexture5Id != 0) std::cout << "|| m_terrainTexture5Name name: " << m_terrainTexture5Name << " |m_terrainTexture5Id: " << m_terrainTexture5Id << '\n';
 
 		if (m_shineDamper != 0)  std::cout << "|| m_shineDamper: " << m_shineDamper << '\n';
 		if (m_reflectivity != 0) std::cout << "|| m_reflectivity: " << m_reflectivity << '\n';
@@ -97,6 +99,9 @@ GLuint m_terrainTexture3Id;
 
 std::string m_terrainTexture4Name;
 GLuint m_terrainTexture4Id;
+
+std::string m_terrainTexture5Name;
+GLuint m_terrainTexture5Id;
 // --
 
 GLfloat m_shineDamper;

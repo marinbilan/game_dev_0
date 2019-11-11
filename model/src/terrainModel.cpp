@@ -178,11 +178,24 @@ void Model::TerrainModel::postInit()
 // ========================================================================================
 void Model::TerrainModel::preInitialization()
 {
+	std::cout << " xxx TerrainModel preInitialization called " << '\n';
 }
 
 
 void Model::TerrainModel::postInitialization()
 {
+	std::cout << " xxx TerrainModel postInitialization called " << '\n';
+
+	// Get TextureObject
+	std::string dBKey = m_dbPathWithName + "textureObjectModel";
+	std::vector<std::string> textureTerrainModelString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, textureTerrainModelString);
+
+	std::cout << " m_dbPathWithName: " << m_dbPathWithName << '\n';
+	std::cout << " dbVAlue: " << textureTerrainModelString[0] << '\n';
+
+	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(textureTerrainModelString[0]);
+	m_gpuObjectTextureIf->info();
 }
 
 

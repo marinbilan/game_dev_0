@@ -132,7 +132,10 @@ void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModels
 		Assimp::Importer Importer;
 		// ex: _src/models/vanquish.3ds
 		std::string modelPath = m_vecModelsPath[0] + s;
-		pScene = Importer.ReadFile(modelPath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+		pScene = Importer.ReadFile(modelPath.c_str(), aiProcess_Triangulate | 
+			                                          aiProcess_GenSmoothNormals | 
+			                                          aiProcess_FlipUVs | 
+			                                          aiProcess_CalcTangentSpace);
 
 		if (pScene)
 		{

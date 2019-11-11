@@ -187,4 +187,7 @@ void Init::InitDefault::postInit()
 
 	auto newModel = FACTORY.getModelIf("vanquish");
 	newModel->postInitialization();
+
+	auto newTerrain = FACTORY.getModelIf("terrain0");
+	newTerrain->postInitialization();
 }

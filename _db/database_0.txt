@@ -269,8 +269,10 @@ loaders_modelLoader_defaultModelLoader_vanquish.3ds_meshAttribs    string    def
 // ---- Texture Loader ----
 loaders_textureLoader_defaultTextureLoader_texturesPath                string    _src/textures/
 
-loaders_textureLoader_defaultTextureLoader_GPUMeshMaterials            string    vanquishGPUMeshMaterials
+loaders_textureLoader_defaultTextureLoader_GPUMeshMaterials            string    vanquishGPUMeshMaterials terrainMaterials
+
 loaders_textureLoader_defaultTextureLoader_vanquishGPUMeshMaterials    string    meshMaterial0 meshMaterial1 meshMaterial2 meshMaterial3 meshMaterial4 meshMaterial5
+loaders_textureLoader_defaultTextureLoader_terrainMaterials            string    meshTerrainMat0
 
 // ----
 loaders_textureLoader_defaultTextureLoader_meshMaterial0_texture       string    texture0.png
@@ -303,6 +305,14 @@ loaders_textureLoader_defaultTextureLoader_meshMaterial5_textureNM     string   
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_reflectivity  float     0.1
 
+// Terrain
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture1         string    terrainTexture1.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture2         string    terrainTexture2.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture3         string    terrainTexture3.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture4         string    terrainTexture4.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture5         string    terrainTexture5.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_shineDumper   float     5.0
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_reflectivity  float     0.1
 // ----
 
 [MODELS]
@@ -319,6 +329,8 @@ models_staticModel_vanquish_gpuObjectModel        string    vanquish.3ds
 models_staticModel_vanquish_textureObjectModel    string    vanquishGPUMeshMaterials
 models_staticModel_vanquish_shaders               string    defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
 
+// terrain
+models_terrainModel_terrain0_textureObjectModel    string    terrainMaterials
 
 [SHADERS]
 -
