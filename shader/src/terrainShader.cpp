@@ -78,7 +78,7 @@ void Shader::TerrainShader::render(const glm::mat4& modelMatrix,
 
 };
 
-
+/*
 void Shader::TerrainShader::render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd)
 {
 	glUseProgram(m_shaderProgramID);
@@ -120,8 +120,72 @@ void Shader::TerrainShader::render(GLuint VAO, std::shared_ptr<Camera::CameraIf>
 
 	glm::vec3 lightColorTerrain(1.0f, 1.0f, 1.0f);
 	glUniform3f(m_lightColorID, lightColorTerrain[0], lightColorTerrain[1], lightColorTerrain[2]);
-	glUniform1f(m_shineDamperID, 30.0f);
-	glUniform1f(m_reflectivityID, 0.1f);
+	//glUniform1f(m_shineDamperID, 30.0f);
+	//glUniform1f(m_reflectivityID, 0.1f);
+	glUniform1f(m_shineDamperID, textureStruct.m_shineDamper);
+	glUniform1f(m_reflectivityID, textureStruct.m_reflectivity);
+
+	glDrawElements(GL_TRIANGLES, numInd, GL_UNSIGNED_INT, 0);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+
+	glBindVertexArray(0); // Unbind VAO
+	glUseProgram(0);
+};
+*/
+
+void Shader::TerrainShader::render(GLuint VAO,
+	std::shared_ptr<Camera::CameraIf>& m_cameraIf,
+	const std::shared_ptr<Light::LightIf>& light,
+	glm::mat4& m_modelMatrix,
+	const GPUObject::TextureStructure textureStruct,
+	GLuint numInd)
+{
+	glUseProgram(m_shaderProgramID);
+	glBindVertexArray(VAO);
+
+	glEnableVertexAttribArray(0); // VERTEXs
+	glEnableVertexAttribArray(1); // TEXTURECOORDs
+	glEnableVertexAttribArray(2); // NORMALs
+
+	glUniformMatrix4fv(m_viewMatrixID, 1, GL_FALSE, &m_cameraIf->getViewMatrix()[0][0]);
+	m_cameraIf->invertCameraMatrix();
+	glUniformMatrix4fv(m_viewMatrixInvID, 1, GL_FALSE, &m_cameraIf->getInvViewMatrix()[0][0]);
+	glUniformMatrix4fv(m_modelMatrixID, 1, GL_FALSE, &m_modelMatrix[0][0]);
+
+	// glm::vec3 lightPositionTerrain(380.0f, 77.0f, 380.0f);
+	glUniform3f(m_lightPositionID, light->getLightPosition()[0], light->getLightPosition()[1], light->getLightPosition()[2]);
+
+	// FRAGMENT SHADER
+	// TEXTUREs
+	glUniform1i(m_backgroundTextureID, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture1Id);
+
+	glUniform1i(m_rTextureID, 1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture2Id);
+
+	glUniform1i(m_gTextureID, 2);
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture3Id);
+
+	glUniform1i(m_bTextureID, 3);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture4Id);
+
+	glUniform1i(m_blendMapID, 4);
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, textureStruct.m_terrainTexture5Id);
+
+	glm::vec3 lightColorTerrain(1.0f, 1.0f, 1.0f);
+	glUniform3f(m_lightColorID, lightColorTerrain[0], lightColorTerrain[1], lightColorTerrain[2]);
+	//glUniform1f(m_shineDamperID, 30.0f);
+	//glUniform1f(m_reflectivityID, 0.1f);
+	glUniform1f(m_shineDamperID, textureStruct.m_shineDamper);
+	glUniform1f(m_reflectivityID, textureStruct.m_reflectivity);
 
 	glDrawElements(GL_TRIANGLES, numInd, GL_UNSIGNED_INT, 0);
 

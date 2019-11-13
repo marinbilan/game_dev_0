@@ -154,21 +154,21 @@ void Model::TerrainModel::preInit()
 
 void Model::TerrainModel::postInit()
 {
-	FACTORY.getLog()->LOGFILE(LOG "TerrainModel " + m_name + " postInit method called!");
+	//FACTORY.getLog()->LOGFILE(LOG "TerrainModel " + m_name + " postInit method called!");
 
-	// Get Shader
-	std::string shaderName;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderName);
-	m_terrainShaderIf = FACTORY.getShaderIf(shaderName);
+	//// Get Shader
+	//std::string shaderName;
+	//FACTORY.getDatabase()->getStringFromDB(m_name, "shader", shaderName);
+	//m_terrainShaderIf = FACTORY.getShaderIf(shaderName);
 
-	std::string gpuObjectTextureString;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
-	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
+	//std::string gpuObjectTextureString;
+	//FACTORY.getDatabase()->getStringFromDB(m_name, "GPUObjectTexture", gpuObjectTextureString);
+	//m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(gpuObjectTextureString);
 
-	// Get Camera
-	std::string cameraName;
-	FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraName);
-	m_cameraIf = FACTORY.getCameraIf(cameraName);
+	//// Get Camera
+	//std::string cameraName;
+	//FACTORY.getDatabase()->getStringFromDB(m_name, "camera", cameraName);
+	//m_cameraIf = FACTORY.getCameraIf(cameraName);
 
 }
 
@@ -179,23 +179,143 @@ void Model::TerrainModel::postInit()
 void Model::TerrainModel::preInitialization()
 {
 	std::cout << " xxx TerrainModel preInitialization called " << '\n';
+
+	FACTORY.getLog()->LOGFILE(LOG "TerrainModel " + m_name + " preInit method called!");
+
+	// LOAD TERRAIN
+	// -------------
+	GLfloat SIZE = 800;
+	GLuint VERTEX_COUNT = 128;
+
+	GLuint count = VERTEX_COUNT * VERTEX_COUNT;
+
+	GLfloat* vertices;
+	GLfloat* normals;
+	GLfloat* textureCoords;
+	GLuint* indices;
+
+	vertices = new GLfloat[count * 3];
+	textureCoords = new GLfloat[count * 2];
+	normals = new GLfloat[count * 3];
+	indices = new GLuint[6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1)];
+
+	numInd = 6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1);
+	std::cout << " xxx numInd: " << numInd << '\n';
+
+	GLuint vertexPointer = 0;
+
+	for (int i = 0; i < VERTEX_COUNT; i++) {
+		for (int j = 0; j < VERTEX_COUNT; j++) {
+
+			vertices[vertexPointer * 3] = (float)j / ((float)VERTEX_COUNT - 1) * SIZE;
+			vertices[vertexPointer * 3 + 1] = 0; // H[i][j]; // getHeight(120, 20, &fif, dib); //  40 * sin(0.1*i) + 40 * sin(0.1*j);
+			vertices[vertexPointer * 3 + 2] = (float)i / ((float)VERTEX_COUNT - 1) * SIZE;
+
+			textureCoords[vertexPointer * 2] = (float)j / ((float)VERTEX_COUNT - 1);
+			textureCoords[vertexPointer * 2 + 1] = (float)i / ((float)VERTEX_COUNT - 1);
+
+			normals[vertexPointer * 3] = 0;
+			normals[vertexPointer * 3 + 1] = 1;
+			normals[vertexPointer * 3 + 2] = 0;
+
+			vertexPointer++;
+		}
+	}
+
+	GLuint pointer = 0;
+
+	for (int gz = 0; gz < VERTEX_COUNT - 1; gz++) {
+		for (int gx = 0; gx < VERTEX_COUNT - 1; gx++) {
+
+			int topLeft = (gz * VERTEX_COUNT) + gx;
+			int topRight = topLeft + 1;
+			int bottomLeft = ((gz + 1) * VERTEX_COUNT) + gx;
+			int bottomRight = bottomLeft + 1;
+
+			indices[pointer++] = topLeft;
+			indices[pointer++] = bottomLeft;
+			indices[pointer++] = topRight;
+			indices[pointer++] = topRight;
+			indices[pointer++] = bottomLeft;
+			indices[pointer++] = bottomRight;
+		}
+	}
+	// ----
+
+	// ----
+	// CREATE VAO 
+	glGenVertexArrays(1, &m_VAO);
+	glBindVertexArray(m_VAO);
+
+	// CREATE VBOs
+	vboID1;
+	glGenBuffers(1, &vboID1);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID1);
+	glBufferData(GL_ARRAY_BUFFER, 3 * count * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	vboID2;
+	glGenBuffers(1, &vboID2);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID2);
+	glBufferData(GL_ARRAY_BUFFER, 2 * count * sizeof(GLfloat), textureCoords, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	vboID3;
+	glGenBuffers(1, &vboID3);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID3);
+	glBufferData(GL_ARRAY_BUFFER, 3 * count * sizeof(GLfloat), normals, GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	indexBufferID;
+	glGenBuffers(1, &indexBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numInd * sizeof(GLuint), indices, GL_STATIC_DRAW);
+	// ----
+
+
+	// MODEL VARIABLES
+	m_modelPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_modelRotateAround = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_modelScale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	m_angle = 0.0;
+
+	m_modelMatrix = glm::mat4(1.0f);
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_modelPosition);
+	m_modelMatrix = glm::rotate(m_modelMatrix, m_angle, m_modelRotateAround);
+	m_modelMatrix = glm::scale(m_modelMatrix, m_modelScale);
 }
 
 
 void Model::TerrainModel::postInitialization()
 {
-	std::cout << " xxx TerrainModel postInitialization called " << '\n';
+	// 1] Get Camera
+	std::string dBKey = m_dbPathWithName + "camera";
+	std::vector<std::string> cameraString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraString);
+	m_cameraIf = Common::Factory::getInstance().getCameraIf(cameraString[0]);
+	std::cout << " xxx terrain camera: " << m_cameraIf->getName() << '\n';
 
-	// Get TextureObject
-	std::string dBKey = m_dbPathWithName + "textureObjectModel";
+	// 2] Get Light
+	dBKey = m_dbPathWithName + "light";
+	std::vector<std::string> lightString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, lightString);
+	m_lightIf = Common::Factory::getInstance().getLightIf(lightString[0]);
+	std::cout << " xxx terrain light: " << m_lightIf->getName() << '\n';
+
+	// 3] Get TextureObject
+	dBKey = m_dbPathWithName + "textureObjectModel";
 	std::vector<std::string> textureTerrainModelString;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, textureTerrainModelString);
 
-	std::cout << " m_dbPathWithName: " << m_dbPathWithName << '\n';
-	std::cout << " dbVAlue: " << textureTerrainModelString[0] << '\n';
-
 	m_gpuObjectTextureIf = Common::Factory::getInstance().getGPUObjectIf(textureTerrainModelString[0]);
 	m_gpuObjectTextureIf->info();
+
+	// 4] Get Shader(s)
+	dBKey = m_dbPathWithName + "shaders";
+	std::vector<std::string> shadersString;
+	FACTORY.getDatabase()->getStringsFromDB(dBKey, shadersString);
+	m_terrainShaderIf = FACTORY.getShaderIf(shadersString[0]);
 }
 
 
@@ -217,7 +337,8 @@ void Model::TerrainModel::postInitialization()
 // 5 ] Disable everything
 void Model::TerrainModel::render()
 {
-	m_terrainShaderIf->render(m_VAO, m_cameraIf, m_modelMatrix, m_gpuObjectTextureIf->getTextureStructVec()[0], numInd);
+	// m_terrainShaderIf->render(m_VAO, m_cameraIf, m_modelMatrix, m_gpuObjectTextureIf->getTextureStructVec()[0], numInd);
+	m_terrainShaderIf->render(m_VAO, m_cameraIf, m_lightIf, m_modelMatrix, m_gpuObjectTextureIf->getTextureStructVec()[0], numInd);
 };
 
 

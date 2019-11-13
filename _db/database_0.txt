@@ -306,31 +306,34 @@ loaders_textureLoader_defaultTextureLoader_meshMaterial5_shineDumper   float    
 loaders_textureLoader_defaultTextureLoader_meshMaterial5_reflectivity  float     0.1
 
 // Terrain
-loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture1         string    terrainTexture1.png
-loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture2         string    terrainTexture2.png
-loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture3         string    terrainTexture3.png
-loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture4         string    terrainTexture4.png
-loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture5         string    terrainTexture5.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture1         string    grass.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture2         string    dirt.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture3         string    sand.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture4         string    hardwood.png
+loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_terrainTexture5         string    blendMap2.png
 loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_shineDumper   float     5.0
 loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_reflectivity  float     0.1
 // ----
 
 [MODELS]
-// vanquish preInit
+// vanquish preInitialization
 models_staticModel_vanquish_position       vec3    385.0 0.0 375.0
 models_staticModel_vanquish_rotation       float   -1.57
 models_staticModel_vanquish_rotateAround   vec3    1.0 0.0 0.0
 models_staticModel_vanquish_modelScale     vec3    10.0 10.0 10.0
 
-// vanquish postInit
+// vanquish postInitialization
 models_staticModel_vanquish_camera                string    defaultCamera
 models_staticModel_vanquish_light                 string    defaultLight
 models_staticModel_vanquish_gpuObjectModel        string    vanquish.3ds    
 models_staticModel_vanquish_textureObjectModel    string    vanquishGPUMeshMaterials
 models_staticModel_vanquish_shaders               string    defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
 
-// terrain
+// terrain postInitialization
+models_terrainModel_terrain0_camera                string    defaultCamera
+models_terrainModel_terrain0_light                 string    defaultLight
 models_terrainModel_terrain0_textureObjectModel    string    terrainMaterials
+models_terrainModel_terrain0_shaders               string    terrainShader
 
 [SHADERS]
 -

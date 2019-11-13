@@ -73,7 +73,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << texturePath << " no entry in DB. " << '\n';
+				//std::cout << "ERROR: " << texturePath << " no entry in DB. " << '\n';
 			}
 			// ---- ----
 
@@ -88,7 +88,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << textureNMPath << " no entry in DB. " << '\n';
+				//std::cout << "ERROR: " << textureNMPath << " no entry in DB. " << '\n';
 			}
 			// ---- ----
 
@@ -105,7 +105,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << terrainTexture1 << " no entry in DB: " << vecTerrainTexture1[0] << std::endl;
+				//std::cout << "ERROR: " << terrainTexture1 << " no entry in DB: " << vecTerrainTexture1[0] << std::endl;
 			}
 			// ---- ----
 
@@ -121,7 +121,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << terrainTexture2 << " no entry in DB: " << vecTerrainTexture2[0] << std::endl;
+				//std::cout << "ERROR: " << terrainTexture2 << " no entry in DB: " << vecTerrainTexture2[0] << std::endl;
 			}
 			// ---- ----
 
@@ -137,7 +137,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << terrainTexture3 << " no entry in DB: " << vecTerrainTexture3[0] << std::endl;
+				//std::cout << "ERROR: " << terrainTexture3 << " no entry in DB: " << vecTerrainTexture3[0] << std::endl;
 			}
 			// ---- ----
 
@@ -153,7 +153,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << terrainTexture4 << " no entry in DB: " << vecTerrainTexture4[0] << std::endl;
+				//std::cout << "ERROR: " << terrainTexture4 << " no entry in DB: " << vecTerrainTexture4[0] << std::endl;
 			}
 			// ---- ----
 
@@ -169,7 +169,7 @@ void Loader::TextureLoader::preInitialization()
 			}
 			else
 			{
-				std::cout << "ERROR: " << terrainTexture5 << " no entry in DB: " << vecTerrainTexture5[0] << std::endl;
+				//std::cout << "ERROR: " << terrainTexture5 << " no entry in DB: " << vecTerrainTexture5[0] << std::endl;
 			}
 			// ---- ----
 
@@ -513,7 +513,10 @@ GLuint Loader::TextureLoader::createTerrainTexture(const std::string& _textureNa
 
 	fif = FreeImage_GetFileType(_textureName.c_str(), 0);
 	if (fif == FIF_UNKNOWN)
+	{
+		std::cout << " Terrain Texture FIF unknown! " << '\n';
 		fif = FreeImage_GetFIFFromFilename(_textureName.c_str());
+	}
 
 	//check that the plugin has reading capabilities and load the file
 	if (FreeImage_FIFSupportsReading(fif))

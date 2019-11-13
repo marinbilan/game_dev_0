@@ -148,7 +148,7 @@ void EngineCtrl::EngineCtrlDefault::render()
 
 		// Common::Factory::getInstance().getModelIf("vanquishModel")->render();
 		FACTORY.getModelIf("vanquish")->render();
-		// Common::Factory::getInstance().getModelIf("terrainModel_0")->render();
+		Common::Factory::getInstance().getModelIf("terrain0")->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_window);

@@ -190,33 +190,33 @@ public:
      */
 	void registerClass()
 	{
-		// ControlIf
-		REGISTER_CLASS(Control::ControlDefault);
+		//// ControlIf
+		//REGISTER_CLASS(Control::ControlDefault);
 
-		// CameraIf
-		REGISTER_CLASS(Camera::CameraDefault);
+		//// CameraIf
+		//REGISTER_CLASS(Camera::CameraDefault);
 
-		// LightIf
-		REGISTER_CLASS(Light::LightDefault);
+		//// LightIf
+		//REGISTER_CLASS(Light::LightDefault);
 
-		// ----
-		// LoaderIf
-		REGISTER_CLASS(Loader::ModelLoader);
-		REGISTER_CLASS(Loader::TextureLoader);
-		// ----
+		//// ----
+		//// LoaderIf
+		//REGISTER_CLASS(Loader::ModelLoader);
+		//REGISTER_CLASS(Loader::TextureLoader);
+		//// ----
 
-		// GPUObjectIf - Created by loaders (not DB driven)
-		REGISTER_CLASS(GPUObject::ModelGPUObject);
-		REGISTER_CLASS(GPUObject::TextureGPUObject);
+		//// GPUObjectIf - Created by loaders (not DB driven)
+		//REGISTER_CLASS(GPUObject::ModelGPUObject);
+		//REGISTER_CLASS(GPUObject::TextureGPUObject);
 
-		// ModelIf
-		REGISTER_CLASS(Model::StaticModel);
-		REGISTER_CLASS(Model::TerrainModel);
+		//// ModelIf
+		//REGISTER_CLASS(Model::StaticModel);
+		//REGISTER_CLASS(Model::TerrainModel);
 
-		// ShaderIf
-		REGISTER_CLASS(Shader::DefaultShader);
-		REGISTER_CLASS(Shader::NormalMapShader);
-		REGISTER_CLASS(Shader::TerrainShader);
+		//// ShaderIf
+		//REGISTER_CLASS(Shader::DefaultShader);
+		//REGISTER_CLASS(Shader::NormalMapShader);
+		//REGISTER_CLASS(Shader::TerrainShader);
 
 		// ========================================================================================
         // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
@@ -386,64 +386,64 @@ public:
 	 *  @param - interFace
      *  @return void
      */
-	void createObjects(const std::string& nameSpace, const std::string& interFace)
-	{
-		Common::Error err;
+	//void createObjects(const std::string& nameSpace, const std::string& interFace)
+	//{
+	//	Common::Error err;
 
-		std::vector<std::string> vecClassNames;
-		std::vector<std::string> vecObjectNames;
+	//	std::vector<std::string> vecClassNames;
+	//	std::vector<std::string> vecObjectNames;
 
-		// GET ALL DERIVED CLASSes FROM SAME IF
-		Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecClassNames, vecObjectNames);
+	//	// GET ALL DERIVED CLASSes FROM SAME IF
+	//	Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecClassNames, vecObjectNames);
 
-		// Iterate over colums and create objects with the same interface
-		// vecClassNames - vector (column) of derived classes
-		// vecObjectNames - vector (column) of object names
-		auto it1 = vecObjectNames.begin();
-		for (auto it0 = vecClassNames.begin(); it0 != vecClassNames.end(); ++it0)
-		{
-			if (!interFace.compare("ControlIf"))
-			{
-				std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, control);
-				std::cout << ".";
-			}
-			if (!interFace.compare("CameraIf"))
-			{
-				std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, camera);
-				std::cout << ".";
-			}
-			else if (!interFace.compare("LightIf"))
-			{
-				std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, light);
-				std::cout << ".";
-			}
-			// ----
-			else if (!interFace.compare("LoaderIf"))
-			{
-				std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, loader);
-				std::cout << ".";
-			}
-			// ----
-			else if (!interFace.compare("ModelIf"))
-			{
-				std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, model);
-				std::cout << ".";
-			}
-			else if (!interFace.compare("ShaderIf"))
-			{
-				std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(nameSpace + *it0, *it1));
-				storeInContainer(interFace, shader);
-				std::cout << ".";
-			}
+	//	// Iterate over colums and create objects with the same interface
+	//	// vecClassNames - vector (column) of derived classes
+	//	// vecObjectNames - vector (column) of object names
+	//	auto it1 = vecObjectNames.begin();
+	//	for (auto it0 = vecClassNames.begin(); it0 != vecClassNames.end(); ++it0)
+	//	{
+	//		if (!interFace.compare("ControlIf"))
+	//		{
+	//			std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, control);
+	//			std::cout << ".";
+	//		}
+	//		if (!interFace.compare("CameraIf"))
+	//		{
+	//			std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, camera);
+	//			std::cout << ".";
+	//		}
+	//		else if (!interFace.compare("LightIf"))
+	//		{
+	//			std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, light);
+	//			std::cout << ".";
+	//		}
+	//		// ----
+	//		else if (!interFace.compare("LoaderIf"))
+	//		{
+	//			std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, loader);
+	//			std::cout << ".";
+	//		}
+	//		// ----
+	//		else if (!interFace.compare("ModelIf"))
+	//		{
+	//			std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, model);
+	//			std::cout << ".";
+	//		}
+	//		else if (!interFace.compare("ShaderIf"))
+	//		{
+	//			std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(nameSpace + *it0, *it1));
+	//			storeInContainer(interFace, shader);
+	//			std::cout << ".";
+	//		}
 
-			++it1;
-		}
-	}
+	//		++it1;
+	//	}
+	//}
 
 
 	/*! @brief Show classes registered in map m_classesMap(constructorName, construcor pointer)

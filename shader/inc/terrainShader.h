@@ -104,7 +104,14 @@ public:
 		const std::shared_ptr<Camera::CameraIf>& camera,
 		const std::shared_ptr<Light::LightIf>& light);
 
-	void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd);
+	// void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd);
+
+	void render(GLuint VAO,
+		std::shared_ptr<Camera::CameraIf>& m_cameraIf,
+		const std::shared_ptr<Light::LightIf>& light,
+		glm::mat4& m_modelMatrix,
+		const GPUObject::TextureStructure textureStruct,
+		GLuint numInd);
 
 	// OPERATORs
 	void printINFO();

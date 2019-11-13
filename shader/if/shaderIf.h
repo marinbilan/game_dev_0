@@ -58,7 +58,15 @@ public:
 		const std::shared_ptr<Light::LightIf>& light) {};
 
 	// TODO: Remove this after terrain shader in place
-	virtual void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd) {};
+	// virtual void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd) {};
+
+	// Terrain Renderer
+	virtual void render(GLuint VAO, 
+		std::shared_ptr<Camera::CameraIf>& m_cameraIf, 
+		const std::shared_ptr<Light::LightIf>& light, 
+		glm::mat4& m_modelMatrix, 
+		const GPUObject::TextureStructure textureStruct, 
+		GLuint numInd) {};
 
 	// OPERATORs
 	virtual void printINFO() {};
