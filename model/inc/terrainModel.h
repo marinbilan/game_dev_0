@@ -7,9 +7,7 @@ namespace Model
 class TerrainModel : public ModelIf
 {
 public:
-	TerrainModel(const std::string& name);
 	TerrainModel(const std::string& dbPath, const std::string& name);
-
 	~TerrainModel();
 
 	const std::string& getName() 
@@ -17,18 +15,10 @@ public:
 		return m_name; 
 	}
 
-	// ModelIf
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 
-	// TODO: remove
-	GLuint loadTexturePNG(const char* filename);
+	void createTerrainAndVAO();
 
     void render();
 
@@ -57,16 +47,11 @@ std::shared_ptr<Shader::ShaderIf> m_terrainShaderIf;
 
 GLuint numInd;
 
-// OpenGL
-GLuint vboID1;
-GLuint vboID2;
-GLuint vboID3;
-GLuint indexBufferID;
+// OpenGL stuff
+GLuint m_vboID1;
+GLuint m_vboID2;
+GLuint m_vboID3;
+GLuint m_indexBufferID;
 
-GLuint backgroundTextureID;
-GLuint rTextureID;
-GLuint gTextureID;
-GLuint bTextureID;
-GLuint blendMapID;
 };
 } // end of namespace

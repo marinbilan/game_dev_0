@@ -7,9 +7,7 @@ namespace Light
 class LightDefault : public LightIf
 {
 public:
-	LightDefault(const std::string& name);
 	LightDefault(const std::string& dbPath, const std::string& name);
-
 	~LightDefault();
 
 	const std::string& getName()

@@ -1,10 +1,6 @@
 #include "lightDefault.h"
 #include "factory.h"
 
-Light::LightDefault::LightDefault(const std::string& name) : m_name(name)
-{
-}
-
 
 Light::LightDefault::LightDefault(const std::string& dbPath, const std::string& name) :
 	m_dbPath(dbPath),
@@ -43,6 +39,7 @@ glm::vec3& Light::LightDefault::getLightPosition()
 {
 	return m_lightPosition;
 }
+
 
 glm::vec3& Light::LightDefault::getLightColors()
 {

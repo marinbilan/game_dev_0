@@ -3,12 +3,6 @@
 #include "factory.h"
 
 
-Loader::ModelLoader::ModelLoader(const std::string& name) : m_name(name)
-{
-
-}
-
-
 Loader::ModelLoader::ModelLoader(const std::string& dbPath, const std::string& name) :
 	m_dbPath(dbPath),
 	m_name(name)
@@ -51,75 +45,6 @@ void Loader::ModelLoader::postInitialization()
 
 }
 
-// TODO: remove
-void Loader::ModelLoader::loadModel()
-{
-	std::vector<std::string> vec0;
-	std::vector<std::string> vec1;
-	FACTORY.getDatabase()->getColumnOfStrings22(m_name, "GPUObjectModel", vec0, vec1);
-	/*
-	                                   vec0                  vec1
-	modelLoader_0    GPUObjectModel    (vanquishGPUModel)    (_vanquish/vanquish.3ds)
-	modelLoader_0    GPUObjectModel    (cubeGPUModel)        (_src/models/cube.3ds)
-	...
-    */
-	// PRINT
-	// ----
-		std::vector<std::string>::iterator it1 = vec1.begin();
-		for (auto s : vec0)
-		{
-			FACTORY.getLog()->LOGFILE(LOG "> " + m_name + "    GPUObjectModel    " + s + "    " + *it1);
-			++it1;
-		}
-	// ----
-
-	std::vector<std::string>::iterator itVec1 = vec1.begin(); // vec1
-	/*
-		Iterate ovec vec0 and load vec1 models
-	*/
-	for (auto GPUObjectModelString : vec0) // vec0
-	{
-		// Get column
-		FACTORY.getDatabase()->getColumn21(GPUObjectModelString, "meshStructure", m_meshStructNameTempVec);
-		/*
-		    vec0                                 m_meshStructNameTempVec
-		    vanquishGPUModel    meshStructure    (vanName0)
-            vanquishGPUModel    meshStructure    (vanName1)
-			...
-		*/
-		// PRINT
-        // ----
-			for (auto s : m_meshStructNameTempVec)
-			{
-				FACTORY.getLog()->LOGFILE(LOG "> " + GPUObjectModelString + "    meshStructure    " + s);
-			}
-		// ----
-
-		// FOREACH MODEL STRING
-		Assimp::Importer Importer;
-		pScene = Importer.ReadFile((*itVec1).c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
-		if (pScene)
-		{
-			// CREATE GPU OBJECT //
-			m_GPUObjectIf = std::make_shared<GPUObject::ModelGPUObject>(GPUObjectModelString);
-
-			// Store created GPU object in factory container
-			Common::Factory::getInstance().storeInContainer("GPUObjectIf", m_GPUObjectIf);
-
-			initScene(pScene);
-		}
-		else
-		{
-		}
-
-		++itVec1;
-		// std::cout << " MESH VECTOR SIZE BEFORE: " << m_meshStructNameTempVec.size() << '\n';
-		m_meshStructNameTempVec.clear();
-		// std::cout << " MESH VECTOR SIZE AFTER: " << m_meshStructNameTempVec.size() << '\n';
-	}
-}
-
 
 void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModelsForLoad)
 {
@@ -152,51 +77,6 @@ void Loader::ModelLoader::loadModelNew(const std::vector<std::string>& vecModels
 		}
 
 		m_vecMeshAttribs.clear();
-	}
-}
-
-// TODO: remove
-void Loader::ModelLoader::initScene(const aiScene* _pScene)
-{
-	// CREATE GPU MODEL
-	GLuint VAO;
-
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	m_VAO = VAO;
-
-	// START CREATING MESHes
-	// Create VBO and IBO for each Mesh in Model
-	std::vector<std::string>::iterator it0 = m_meshStructNameTempVec.begin();
-
-	std::string normalMapString;
-	for (unsigned int i = 0; i < _pScene->mNumMeshes; ++i)
-	{
-		FACTORY.getDatabase()->getStringFromDB(*it0, "normalMap", normalMapString);
-		/*
-		                             normalMapString
-			vanName0    normalMap    (false)
-			...
-			vanName1    normalMap    (true)
-			...
-		*/
-		FACTORY.getLog()->LOGFILE(LOG "> " + *it0 + "    normalMap    " + normalMapString);
-
-		if (!normalMapString.compare("false"))
-		{
-		    const aiMesh* paiMesh = _pScene->mMeshes[i];
-			initMesh(*it0, i, paiMesh);
-			++it0;
-		}
-		else if(!normalMapString.compare("true"))
-		{
-			// Load NormalMap mesh
-			const aiMesh* paiMesh = _pScene->mMeshes[i];
-			initNormalMapMesh(*it0, i, paiMesh);
-			++it0;
-		}
-
 	}
 }
 

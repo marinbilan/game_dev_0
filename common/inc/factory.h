@@ -34,21 +34,20 @@
 #include "normalMapShader.h"
 #include "terrainShader.h"
 
-#define REGISTER_CLASS(ConstructorName) Common::Factory::getInstance().registerClass<ConstructorName>(#ConstructorName)
-// 0] map in class members (ClassName, constructorPtr(const str&, const str&)
-// 1] register class in map with registerClassNew method
+// Map in class members (ClassName, constructorPtr(const str&, const str&)
+// Register class in map with registerClassNew method
 #define REGISTER_CLASS_NEW(ConstructorName) Common::Factory::getInstance().registerClassNew<ConstructorName>(#ConstructorName)
 
 /*
 Factory:
 Class Registration
-1] class registration (insert in map)
+- Class registration (insert in map)
 
 Object Creation
-1] create object (find in map and create instance)
+- Create object (find in map and create instance)
 
 Other
-1] Error, Log, Database
+- Error, Log, Database
 */
 
 namespace Common
@@ -57,14 +56,7 @@ namespace Common
 *   @param objectName Name (ID) of particaular instance
 *   @return void pointer on particular created object
 */
-template <class T> void* constructor(const std::string& objectName)
-{
-	return (void*)new T(objectName);
-}
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
-// 3] constructor type (const str&, const str&)
+// - Constructor type (const str&, const str&)
 // arg0 - instanceDbPath (without instance name)
 // arg1 - instanceName
 template <class T> void* constructorNew(const std::string& arg0, const std::string& arg1)
@@ -94,15 +86,7 @@ public:
 	*   @param constructorName Namespace::constructorName
 	*   @return void
 	*/
-	template <class T>
-	void registerClass(std::string const& constructorName)
-	{
-		m_classesMap.insert(std::make_pair(constructorName, &constructor<T>));
-	}
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
-	// 2] constructorName (ex: Model::StaticModel) 
+	// - ConstructorName (ex: Model::StaticModel) 
 	template <class T>
 	void registerClassNew(std::string const& constructorName)
 	{
@@ -113,17 +97,7 @@ public:
 	*   @param arg0 object name
 	*   @return void
 	*/
-	void* constructObject(std::string const& constructorName, const std::string& arg0)
-	{
-		mapType::iterator i = m_classesMap.find(constructorName);
-		if (i == m_classesMap.end()) return 0; // or throw or whatever you want  
-		return i->second(arg0);
-	}
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
-	// 4] Find constructor pointer with constructorName and create object using that constructor pointer
+	// - Find constructor pointer with constructorName and create object using that constructor pointer
 	void* constructObjectNew(std::string const& constructorName, const std::string& arg0, const std::string& arg1)
 	{
 		mapTypeNew::iterator i = m_classesMapNew.find(constructorName);
@@ -190,37 +164,6 @@ public:
      */
 	void registerClass()
 	{
-		//// ControlIf
-		//REGISTER_CLASS(Control::ControlDefault);
-
-		//// CameraIf
-		//REGISTER_CLASS(Camera::CameraDefault);
-
-		//// LightIf
-		//REGISTER_CLASS(Light::LightDefault);
-
-		//// ----
-		//// LoaderIf
-		//REGISTER_CLASS(Loader::ModelLoader);
-		//REGISTER_CLASS(Loader::TextureLoader);
-		//// ----
-
-		//// GPUObjectIf - Created by loaders (not DB driven)
-		//REGISTER_CLASS(GPUObject::ModelGPUObject);
-		//REGISTER_CLASS(GPUObject::TextureGPUObject);
-
-		//// ModelIf
-		//REGISTER_CLASS(Model::StaticModel);
-		//REGISTER_CLASS(Model::TerrainModel);
-
-		//// ShaderIf
-		//REGISTER_CLASS(Shader::DefaultShader);
-		//REGISTER_CLASS(Shader::NormalMapShader);
-		//REGISTER_CLASS(Shader::TerrainShader);
-
-		// ========================================================================================
-        // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-        // ========================================================================================
 		// ControlIf
 		REGISTER_CLASS_NEW(Control::ControlDefault);
 
@@ -253,38 +196,12 @@ public:
 	void createObjects()
 	{
 		std::cout << " [CREATING OBJECTs] ";
-		// Create Cameras
-		//createObjects("Control::", "ControlIf");
-
-		// Create Cameras
-		//createObjects("Camera::", "CameraIf");
-
-		// Create Lights
-		//createObjects("Light::", "LightIf");
-
-		// ----
-		// Create Loaders
-		//createObjects("Loader::", "LoaderIf");
-		// ----
-
-		// Create Models
-		//createObjects("Model::", "ModelIf");
-
-		// Create Shaders
-		//createObjects("Shader::", "ShaderIf");
-
-		// ========================================================================================
-        // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-        // ========================================================================================
 		createAllClusters();
 
 		std::cout << '\n';
 	}
 
 
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void createAllClusters()
 	{
 		std::string clusters("clusters");
@@ -381,78 +298,13 @@ public:
 	}
 
 
-	/*! @brief Create objects Namespace::ClassName, objectName
-     *  @param - nameSpace
-	 *  @param - interFace
-     *  @return void
-     */
-	//void createObjects(const std::string& nameSpace, const std::string& interFace)
-	//{
-	//	Common::Error err;
-
-	//	std::vector<std::string> vecClassNames;
-	//	std::vector<std::string> vecObjectNames;
-
-	//	// GET ALL DERIVED CLASSes FROM SAME IF
-	//	Common::Factory::getInstance().getDatabase()->create("Create", interFace, vecClassNames, vecObjectNames);
-
-	//	// Iterate over colums and create objects with the same interface
-	//	// vecClassNames - vector (column) of derived classes
-	//	// vecObjectNames - vector (column) of object names
-	//	auto it1 = vecObjectNames.begin();
-	//	for (auto it0 = vecClassNames.begin(); it0 != vecClassNames.end(); ++it0)
-	//	{
-	//		if (!interFace.compare("ControlIf"))
-	//		{
-	//			std::shared_ptr<Control::ControlIf> control((Control::ControlIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, control);
-	//			std::cout << ".";
-	//		}
-	//		if (!interFace.compare("CameraIf"))
-	//		{
-	//			std::shared_ptr<Camera::CameraIf> camera((Camera::CameraIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, camera);
-	//			std::cout << ".";
-	//		}
-	//		else if (!interFace.compare("LightIf"))
-	//		{
-	//			std::shared_ptr<Light::LightIf> light((Light::LightIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, light);
-	//			std::cout << ".";
-	//		}
-	//		// ----
-	//		else if (!interFace.compare("LoaderIf"))
-	//		{
-	//			std::shared_ptr<Loader::LoaderIf> loader((Loader::LoaderIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, loader);
-	//			std::cout << ".";
-	//		}
-	//		// ----
-	//		else if (!interFace.compare("ModelIf"))
-	//		{
-	//			std::shared_ptr<Model::ModelIf> model((Model::ModelIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, model);
-	//			std::cout << ".";
-	//		}
-	//		else if (!interFace.compare("ShaderIf"))
-	//		{
-	//			std::shared_ptr<Shader::ShaderIf> shader((Shader::ShaderIf*)constructObject(nameSpace + *it0, *it1));
-	//			storeInContainer(interFace, shader);
-	//			std::cout << ".";
-	//		}
-
-	//		++it1;
-	//	}
-	//}
-
-
 	/*! @brief Show classes registered in map m_classesMap(constructorName, construcor pointer)
 	 *  @return void
 	 */
 	void showMeSeededClasses()
 	{
-		mapType::iterator it;
-		for (it = m_classesMap.begin(); it != m_classesMap.end(); ++it)
+		mapTypeNew::iterator it;
+		for (it = m_classesMapNew.begin(); it != m_classesMapNew.end(); ++it)
 		{
 			std::cout << " - " << it->first << "\n";
 		}
@@ -685,14 +537,7 @@ private:
 	};
 
 	// Factory Stuff 
-	typedef void*(*constructor_t)(const std::string&);
-	typedef std::map<std::string, constructor_t> mapType;
-	mapType m_classesMap;
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
-	// 0] Create map(ConstructorName, constructorPtr) constructorPtr(str, str)
+	// - Create map(ConstructorName, constructorPtr) constructorPtr(str, str)
 	typedef void* (*constructor_NEW)(const std::string&, const std::string&);
 	typedef std::map<std::string, constructor_NEW> mapTypeNew;
 	mapTypeNew m_classesMapNew;

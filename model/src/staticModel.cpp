@@ -3,18 +3,6 @@
 #include "factory.h"
 
 
-Model::StaticModel::StaticModel(const std::string& name) : 
-	m_name(name), 
-	m_modelPosition(glm::vec3(0.0f, 0.0f, 0.0f)),
-	m_modelScale(glm::vec3(0.0f, 0.0f, 0.0f)),
-	m_modelRotateAround(glm::vec3(0.0f, 0.0f, 0.0f)),
-    m_angle(0.0f),
-	m_modelMatrix(glm::mat4(0.0f))
-{
-	FACTORY.getLog()->LOGFILE(LOG "StaticModel " + m_name + " created!");
-}
-
-
 Model::StaticModel::StaticModel(const std::string& dbPath, const std::string& name) :
 	m_dbPath(dbPath),
 	m_name(name),
@@ -102,25 +90,10 @@ void Model::StaticModel::postInitialization()
 	std::cout << " Number of shaders: " << shadersString.size() << '\n';
 
 	// TODO: remove
-	dump();
+	// dump();
 }
 
-// 1 ] Bind VAO        (glBindVertexArray (VAO)); 
-// 2 ] Bind VBO        (glBindBuffer (VBO)); 
-// 3 ] Bind IBO        (glBindBuffer (IBO)); 
 
-// 4 ] Set Pointers    (glVertexAttribPointer); 
-
-// 5 ] Enable Pointers (glEnableVertexAttribArray); 
-
-// 6 ] Active shader glUseProgram(ShaderID);
-// For each mesh:
-	// 4.4 ] Update Uniform(s)
-
-	// 4.5 ] Active Textures
-	// 4.6 ] Bind Textures
-	// 4.7 ] Render mesh (model) (glDrawElements ili another method)
-// 5 ] Disable everything
 void Model::StaticModel::render() 
 {
 	auto it0 = m_gpuObjectIf->getMeshVec().begin();
@@ -178,6 +151,4 @@ void Model::StaticModel::cmdPrompt(const std::string& arg0)
 	// std::cout << " Model < model name > { info | set | get | help } " << std::endl;
 
 	std::cout << "m_gpuObjectIf name: " << m_gpuObjectIf->getName() << std::endl;
-	// std::cout << "VAO: " << m_VAO << std::endl;
-	// m_gpuObjectIf->info();
 }

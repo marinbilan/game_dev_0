@@ -48,7 +48,6 @@ private:
 class ModelLoader : public LoaderIf
 {
 public:
-	ModelLoader(const std::string& name);
 	ModelLoader(const std::string& dbPath, const std::string& name);
 
 	~ModelLoader();
@@ -62,6 +61,9 @@ public:
 	void initSceneNew(const aiScene* _pScene);
 
 private:
+void initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
+void initNormalMapMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
+
 std::string m_dbPath;
 std::string m_dbPathWithName;
 std::string m_name;
@@ -69,16 +71,11 @@ std::string m_name;
 std::vector<std::string> m_vecModelsPath;
 std::vector<std::string> m_vecMeshAttribs;
 
-	void loadModel();	
-	void initScene(const aiScene* _pScene);
-	void initMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
-	void initNormalMapMesh(const std::string& meshName, GLuint _index, const aiMesh* _paiMesh);
+std::vector<std::string> m_meshStructNameTempVec;
+GLuint m_VAO;
 
-	std::vector<std::string> m_meshStructNameTempVec;
-	GLuint m_VAO;
+const aiScene*    pScene;
 
-	const aiScene*    pScene;
-
-	std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;
+std::shared_ptr<GPUObject::GPUObjectIf> m_GPUObjectIf;
 };
 }

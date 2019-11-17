@@ -7,9 +7,7 @@ namespace Model
 class StaticModel : public ModelIf
 {
 public:
-	StaticModel(const std::string& name);
 	StaticModel(const std::string& dbPath, const std::string& name);
-
 	~StaticModel();
 
 	const std::string& getName() 
@@ -23,7 +21,6 @@ public:
     void render();
 
 	void dump();
-
 	void cmdPrompt(const std::string& arg0);
 
 private:

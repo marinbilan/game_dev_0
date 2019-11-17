@@ -9,27 +9,13 @@ namespace Loader
 class TextureLoader : public LoaderIf
 {
 public:
-	TextureLoader(const std::string& name);
 	TextureLoader(const std::string& dbPath, const std::string& name);
-
 	~TextureLoader();
 
 	const std::string& getName();
 
 	void preInitialization();
 	void postInitialization();
-
-	// Step 1.1
-	void loadAllTexturesAndCreateRawTextureStructs();
-	// Step 1.2
-	void loadTerrainTexturesAndCreateRawTextureStructs();
-
-	// Step 2.1
-	void createGPUObjectTextures();
-
-	void createDefaultShader(const std::string& defaultShaderName);
-	void createNormalMapShader(const std::string& defaultShaderName);
-	void createTerrainShader(const std::string& defaultShaderName);
 	
 	// Default Texture
 	GLuint createTexture(const std::string& _textureName);
