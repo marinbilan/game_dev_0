@@ -9,15 +9,6 @@ GPUObject::TextureGPUObject::TextureGPUObject(const std::string& name) : m_name(
 }
 
 
-GPUObject::TextureGPUObject::TextureGPUObject(const std::string& dbPath, const std::string& name) : 
-	m_dbPath(dbPath),
-	m_name(name)
-{
-	m_dbPathWithName = m_dbPath + m_name + "_";
-	std::cout << " CREATION INSTANCE - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
-}
-
-
 GPUObject::TextureGPUObject::~TextureGPUObject()
 {
 }
@@ -29,19 +20,6 @@ const std::string& GPUObject::TextureGPUObject::getName()
 }
 
 
-void GPUObject::TextureGPUObject::preInit()
-{
-}
-
-
-void GPUObject::TextureGPUObject::postInit()
-{
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void GPUObject::TextureGPUObject::preInitialization()
 {
 }

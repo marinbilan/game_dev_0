@@ -10,9 +10,7 @@ namespace Control
 class ControlDefault : public ControlIf
 {
 public:
-	ControlDefault(const std::string& name);
 	ControlDefault(const std::string& dbPath, const std::string& name);
-
 	~ControlDefault();
 
 	const std::string& getName()
@@ -20,12 +18,6 @@ public:
 		return m_name;
 	}
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-    // NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-    // ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

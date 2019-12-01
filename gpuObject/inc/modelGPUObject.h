@@ -10,18 +10,10 @@ class ModelGPUObject : public GPUObjectIf
 {
 public:
 	ModelGPUObject(const std::string& name);
-	ModelGPUObject(const std::string& dbPath, const std::string& name);
-
 	~ModelGPUObject();
 	
 	const std::string& getName();
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

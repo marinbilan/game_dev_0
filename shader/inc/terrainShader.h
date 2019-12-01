@@ -85,7 +85,6 @@ class TerrainShader : public ShaderIf
 		"	}";
 
 public:
-	TerrainShader(const std::string& name);
 	TerrainShader(const std::string& dbPath, const std::string& name);
 	~TerrainShader();
 
@@ -103,8 +102,6 @@ public:
 		const GPUObject::TextureStructure textureStruct,
 		const std::shared_ptr<Camera::CameraIf>& camera,
 		const std::shared_ptr<Light::LightIf>& light);
-
-	// void render(GLuint VAO, std::shared_ptr<Camera::CameraIf>& m_cameraIf, glm::mat4& m_modelMatrix, const GPUObject::TextureStructure textureStruct, GLuint numInd);
 
 	void render(GLuint VAO,
 		std::shared_ptr<Camera::CameraIf>& m_cameraIf,

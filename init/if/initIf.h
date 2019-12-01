@@ -1,9 +1,6 @@
 #pragma once
 #include <string>
 
-//#include "controlIf.h"
-//#include "controlDefault.h"
-
 
 namespace Init
 {

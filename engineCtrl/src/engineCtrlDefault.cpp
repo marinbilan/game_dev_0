@@ -9,8 +9,6 @@ EngineCtrl::EngineCtrlDefault::EngineCtrlDefault(const std::string& name) :
 	m_lastFrame(0.0f)
 {
 	std::cout << "EngineCtrlDefault " << m_name << " created." << '\n';
-
-	// Database initialization because of second main parameter from main.cpp
 }
 
 
@@ -123,7 +121,6 @@ void EngineCtrl::EngineCtrlDefault::render()
 {
 	// std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("smartControl_0");
 	std::shared_ptr<Control::ControlIf> control = FACTORY.getControlIf("defaultControls");
-	control->postInit();
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(m_window))

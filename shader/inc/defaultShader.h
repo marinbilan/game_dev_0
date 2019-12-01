@@ -79,7 +79,6 @@ const char* FragmentShaderPTN =
 "}";
 
 public:
-	DefaultShader(const std::string& name);
 	DefaultShader(const std::string& dbPath, const std::string& name);
 	~DefaultShader();
 

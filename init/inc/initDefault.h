@@ -14,7 +14,6 @@ public:
 	void preInit();
 	void postInit();
 
-
 private:
 
 std::string m_name;

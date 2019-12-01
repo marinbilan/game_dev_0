@@ -2,10 +2,6 @@
 
 #include "factory.h"
 
-Shader::DefaultShader::DefaultShader(const std::string& name) : m_name(name)
-{
-}
-
 
 Shader::DefaultShader::DefaultShader(const std::string& dbPath, const std::string& name) : 
 	m_dbPath(dbPath),

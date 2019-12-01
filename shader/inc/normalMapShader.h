@@ -113,7 +113,6 @@ class NormalMapShader : public ShaderIf
 		"}";
 
 public:
-	NormalMapShader(const std::string& name);
 	NormalMapShader(const std::string& dbPath, const std::string& name);
 	~NormalMapShader();
 

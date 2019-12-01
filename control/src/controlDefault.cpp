@@ -25,13 +25,6 @@ glm::vec3 front;
 // ---- ----
 
 
-Control::ControlDefault::ControlDefault(const std::string& name) : m_name(name)
-{
-	FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " created.");
-	WIDTH = 1024;
-}
-
-
 Control::ControlDefault::ControlDefault(const std::string& dbPath, const std::string& name) : 
 	m_dbPath(dbPath),
 	m_name(name)
@@ -49,23 +42,6 @@ Control::ControlDefault::~ControlDefault()
 }
 
 
-void Control::ControlDefault::preInit()
-{
-	// FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " preInit().");
-}
-
-
-void Control::ControlDefault::postInit()
-{
-	//FACTORY.getLog()->LOGFILE(LOG "ControlDefault: " + m_name + " postInit().");
-	//// TODO: Get this from DB
-	//m_camera = FACTORY.getCameraIf("smartCamera_0");
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
 void Control::ControlDefault::preInitialization()
 {
 	std::cout << " preInitialization - m_dbPathWithName: " << m_dbPathWithName << " modelName: " << m_name << '\n';
@@ -79,7 +55,6 @@ void Control::ControlDefault::postInitialization()
 	std::vector<std::string> cameraToControl;
 	FACTORY.getDatabase()->getStringsFromDB(dBKey, cameraToControl);
 	m_camera = FACTORY.getCameraIf(cameraToControl[0]);
-	std::cout << " ----> CAMERA CTRL NAME: " << m_camera->getName() << '\n';
 }
 
 

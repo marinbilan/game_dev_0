@@ -38,7 +38,6 @@ GLfloat                   m_angle;
 
 glm::mat4                 m_modelMatrix;
 
-
 std::shared_ptr<Camera::CameraIf> m_cameraIf;
 std::shared_ptr<Light::LightIf>   m_lightIf;
 

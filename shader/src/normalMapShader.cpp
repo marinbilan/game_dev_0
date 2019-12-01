@@ -2,10 +2,6 @@
 
 #include "factory.h"
 
-Shader::NormalMapShader::NormalMapShader(const std::string& name) : m_name(name)
-{
-}
-
 
 Shader::NormalMapShader::NormalMapShader(const std::string& dbPath, const std::string& name) : 
 	m_dbPath(dbPath),
