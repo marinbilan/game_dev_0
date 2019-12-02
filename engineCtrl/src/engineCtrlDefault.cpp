@@ -17,7 +17,7 @@ EngineCtrl::EngineCtrlDefault::~EngineCtrlDefault()
 }
 
 
-void EngineCtrl::EngineCtrlDefault::preInit()
+void EngineCtrl::EngineCtrlDefault::preInitialization()
 {
 	// Create defaultInit 
 	m_defaultInit0 = std::make_unique<Init::InitDefault>("DefaultInit0");
@@ -29,7 +29,7 @@ void EngineCtrl::EngineCtrlDefault::preInit()
 }
 
 
-void EngineCtrl::EngineCtrlDefault::postInit()
+void EngineCtrl::EngineCtrlDefault::postInitialization()
 {
 	m_defaultInit0->postInit();
 
@@ -42,21 +42,6 @@ void EngineCtrl::EngineCtrlDefault::postInit()
 	// START RENDERing
 	// TODO: thread 2
 	render();
-}
-
-
-// ========================================================================================
-// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-// ========================================================================================
-void EngineCtrl::EngineCtrlDefault::preInitialization()
-{
-
-}
-
-
-void EngineCtrl::EngineCtrlDefault::postInitialization()
-{
-	// std::cout << " POSTITIALIZATION " << '\n';
 }
 
 void EngineCtrl::EngineCtrlDefault::databaseInit(const std::string& dbName)

@@ -10,12 +10,6 @@ public:
 	EngineCtrlDefault(const std::string& name);
 	~EngineCtrlDefault();
 
-	void preInit();
-	void postInit();
-
-	// ========================================================================================
-	// NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION    NEW OBJECT CREATION
-	// ========================================================================================
 	void preInitialization();
 	void postInitialization();
 

@@ -16,10 +16,8 @@ int main (int argc, char** argv)
 	// Init
 	engineCtrl0.glfwInitialization();
 
-	engineCtrl0.preInit(); 
-	engineCtrl0.postInit();
-
-
+	engineCtrl0.preInitialization();
+	engineCtrl0.postInitialization();
 
 	// current date/time based on current system
 	// #include <ctime>

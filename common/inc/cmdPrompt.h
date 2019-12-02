@@ -17,6 +17,10 @@ public:
 
 	void runCmdPrompt();
 
+	// cmd handling
+	void cmdModels(const std::string& str);
+	void cmdHelp();
+
 private:
 std::string m_name;
 };

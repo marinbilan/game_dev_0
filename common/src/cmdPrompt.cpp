@@ -34,19 +34,62 @@ void Common::CmdPrompt::runCmdPrompt()
 		// Waiting for command
 		std::getline(std::cin, commandLineString);
 
-		std::regex models("models");
-		if (std::regex_search(commandLineString, match, models))
-		{
-			//Common::Factory::getInstance().showMeObjects("ModelIf");
-			Common::Factory::getInstance().getModelIf("vanquishModel")->cmdPrompt("dummy");
-			Common::Factory::getInstance().getModelIf("cubeModel_0")->cmdPrompt("cubeModel_0");
-		}
-		std::regex shaders("shaders");
-		if (std::regex_search(commandLineString, match, shaders))
-		{
-			// Common::Factory::getInstance().showMeObjects("ShaderIf");
-			FACTORY.getInstance().getShaderIf("normalMapShader_0")->printINFO();
-		}
+		std::regex oneWordLine("(\\w+)");
 
+		// One word match
+		if (std::regex_search(commandLineString, match, oneWordLine))
+		{
+			if (!match.str(1).compare("models"))
+			{
+				cmdModels(commandLineString);
+			}
+			if (!match.str(1).compare("help"))
+			{
+				cmdHelp();
+			}
+		}
 	} while (commandLineString != "run");
+}
+
+
+void Common::CmdPrompt::cmdModels(const std::string& str)
+{
+	std::smatch match;
+
+	if (!str.compare("models"))
+	{
+		std::cout << " models <modelName | all>" << std::endl;
+	}
+
+	std::regex twoWordLine("models\\s+(\\w+)");
+	if (std::regex_search(str, match, twoWordLine))
+	{
+		if (!match.str(1).compare("all"))
+		{
+			for (auto s : FACTORY.getModelIfVec())
+			{
+			    std::cout << " - " << (*s).getName() << '\n';
+			}
+		}
+		else
+		{
+			std::cout << " Print something second word: " << match.str(1) << '\n';
+		}
+	}
+
+}
+
+
+void Common::CmdPrompt::cmdHelp()
+{
+	std::cout << "" << std::endl;
+	std::cout << " ----==== HELP ====---- " << std::endl;
+	std::cout << "" << std::endl;
+	std::cout << " cameras   Info about cameras In scene " << std::endl;
+	std::cout << " controls  Info about controls (Keys)" << std::endl;
+	std::cout << " models    Info about Models, Meshes and Textures in scene" << std::endl;
+	std::cout << " shaders   Info about Shaders and Shader Parameters" << std::endl;
+	std::cout << " read      Read from File" << std::endl;
+	std::cout << "" << std::endl;
+	std::cout << " ---------------------" << std::endl;
 }
