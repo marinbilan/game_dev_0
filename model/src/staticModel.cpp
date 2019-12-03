@@ -147,8 +147,36 @@ void Model::StaticModel::dump()
 
 void Model::StaticModel::cmdPrompt(const std::string& arg0)
 {
-	std::cout << "StaticModel: " << m_name << std::endl;
-	// std::cout << " Model < model name > { info | set | get | help } " << std::endl;
+	// ----
+	std::istringstream stringOfElements(arg0);
+	std::vector<std::string> vectorOfLocalStrings((std::istream_iterator<std::string>(stringOfElements)), std::istream_iterator<std::string>());
 
-	std::cout << "m_gpuObjectIf name: " << m_gpuObjectIf->getName() << std::endl;
+	std::string regexPattern;
+	if (vectorOfLocalStrings.size() == 2)
+	{
+		regexPattern = "models\\s+" + m_name;
+	}
+	else if (vectorOfLocalStrings.size() == 3)
+	{
+		regexPattern = "models\\s+" + m_name + "\\s+(\\w+)";
+	}
+	// ----
+
+	std::smatch match;
+	std::regex _regex(regexPattern);
+	if (std::regex_search(arg0, match, _regex))
+	{
+		if (vectorOfLocalStrings.size() == 2)
+		{
+			std::cout << " Cmd prompt size 2 : " << vectorOfLocalStrings.size() << '\n';
+		}
+		else if (vectorOfLocalStrings.size() == 3)
+		{
+			if (!match.str(1).compare("dump"))
+			{
+				std::cout << " Cmd prompt size 3 : " << vectorOfLocalStrings.size() << '\n';
+				dump();
+			}
+		}		
+	}
 }

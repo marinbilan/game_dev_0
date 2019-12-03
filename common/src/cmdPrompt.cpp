@@ -68,12 +68,18 @@ void Common::CmdPrompt::cmdModels(const std::string& str)
 		{
 			for (auto s : FACTORY.getModelIfVec())
 			{
-			    std::cout << " - " << (*s).getName() << '\n';
+			    std::cout << " - " << s->getName() << '\n';
 			}
 		}
 		else
 		{
-			std::cout << " Print something second word: " << match.str(1) << '\n';
+			for (auto s : FACTORY.getModelIfVec())
+			{
+				if (!match.str(1).compare(s->getName()))
+				{
+					s->cmdPrompt(str);
+				}
+			}
 		}
 	}
 
@@ -82,14 +88,10 @@ void Common::CmdPrompt::cmdModels(const std::string& str)
 
 void Common::CmdPrompt::cmdHelp()
 {
-	std::cout << "" << std::endl;
-	std::cout << " ----==== HELP ====---- " << std::endl;
-	std::cout << "" << std::endl;
+	std::cout << " [ HELP ] " << std::endl;
 	std::cout << " cameras   Info about cameras In scene " << std::endl;
 	std::cout << " controls  Info about controls (Keys)" << std::endl;
 	std::cout << " models    Info about Models, Meshes and Textures in scene" << std::endl;
 	std::cout << " shaders   Info about Shaders and Shader Parameters" << std::endl;
 	std::cout << " read      Read from File" << std::endl;
-	std::cout << "" << std::endl;
-	std::cout << " ---------------------" << std::endl;
 }

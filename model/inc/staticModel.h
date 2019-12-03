@@ -1,6 +1,7 @@
 #pragma once
 #include "modelIf.h"
 
+#include <regex>
 
 namespace Model
 {
