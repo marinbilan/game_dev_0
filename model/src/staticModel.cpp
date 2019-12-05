@@ -168,13 +168,12 @@ void Model::StaticModel::cmdPrompt(const std::string& arg0)
 	{
 		if (vectorOfLocalStrings.size() == 2)
 		{
-			std::cout << " Cmd prompt size 2 : " << vectorOfLocalStrings.size() << '\n';
+			std::cout << " models " << m_name << " <set | dump>" << std::endl;
 		}
 		else if (vectorOfLocalStrings.size() == 3)
 		{
 			if (!match.str(1).compare("dump"))
 			{
-				std::cout << " Cmd prompt size 3 : " << vectorOfLocalStrings.size() << '\n';
 				dump();
 			}
 		}		

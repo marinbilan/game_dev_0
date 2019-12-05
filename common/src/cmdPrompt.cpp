@@ -35,7 +35,6 @@ void Common::CmdPrompt::runCmdPrompt()
 		std::getline(std::cin, commandLineString);
 
 		std::regex oneWordLine("(\\w+)");
-
 		// One word match
 		if (std::regex_search(commandLineString, match, oneWordLine))
 		{
@@ -54,35 +53,57 @@ void Common::CmdPrompt::runCmdPrompt()
 
 void Common::CmdPrompt::cmdModels(const std::string& str)
 {
-	std::smatch match;
+	// ----
+	std::istringstream stringOfElements(str);
+	std::vector<std::string> vectorOfLocalStrings((std::istream_iterator<std::string>(stringOfElements)), std::istream_iterator<std::string>());
 
-	if (!str.compare("models"))
+	std::string regexPattern;
+	if (vectorOfLocalStrings.size() == 1)
 	{
-		std::cout << " models <modelName | all>" << std::endl;
+		regexPattern = "models";
 	}
-
-	std::regex twoWordLine("models\\s+(\\w+)");
-	if (std::regex_search(str, match, twoWordLine))
+	if (vectorOfLocalStrings.size() == 2)
 	{
-		if (!match.str(1).compare("all"))
+		regexPattern = "models\\s+(\\w+)";
+	}
+	else if (vectorOfLocalStrings.size() == 3)
+	{
+		regexPattern = "models\\s+(\\w+)\\s+(\\w+)";
+	}
+	// ----
+
+	std::smatch match;
+	std::regex _regex(regexPattern);
+	if (std::regex_search(str, match, _regex))
+	{
+		// One word in cmd line
+		if (vectorOfLocalStrings.size() == 1)
 		{
-			for (auto s : FACTORY.getModelIfVec())
-			{
-			    std::cout << " - " << s->getName() << '\n';
-			}
+			std::cout << " models <modelName | all>" << std::endl;
 		}
-		else
+		// Two words in cmd line or Three words in cmd line
+		else if (vectorOfLocalStrings.size() == 2 | 
+			     vectorOfLocalStrings.size() == 3)
 		{
-			for (auto s : FACTORY.getModelIfVec())
+			if (!match.str(1).compare("all"))
 			{
-				if (!match.str(1).compare(s->getName()))
+				for (auto s : FACTORY.getModelIfVec())
 				{
-					s->cmdPrompt(str);
+				    std::cout << " - " << s->getName() << '\n';
+				}
+			}
+			else 
+			{
+				for (auto s : FACTORY.getModelIfVec())
+				{
+					if (!match.str(1).compare(s->getName()))
+					{
+						s->cmdPrompt(str);
+					}
 				}
 			}
 		}
 	}
-
 }
 
 

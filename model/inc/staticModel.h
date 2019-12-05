@@ -47,3 +47,4 @@ std::shared_ptr<GPUObject::GPUObjectIf>        m_gpuObjectTextureIf;
 std::vector<std::shared_ptr<Shader::ShaderIf>> m_vecOfdefaultShaderIf;
 };
 } // end of namespace
+
