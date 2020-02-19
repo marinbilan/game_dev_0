@@ -80,6 +80,7 @@ lights_defaultLight_defaultLight_lightColor       vec3    1.0 1.0 1.0
 
 
 [LOADERS]
+// --------------------------
 // ---- Model Loader ----
 loaders_modelLoader_defaultModelLoader_modelsPath                  string    _src/models/
 loaders_modelLoader_defaultModelLoader_modelsForLoad               string    vanquish.3ds
@@ -136,6 +137,7 @@ loaders_textureLoader_defaultTextureLoader_meshTerrainMat0_reflectivity  float  
 // ----
 
 [MODELS]
+// --------------------------
 // vanquish preInitialization
 models_staticModel_vanquish_position       vec3    385.0 0.0 375.0
 models_staticModel_vanquish_rotation       float   -1.57
@@ -149,7 +151,7 @@ models_staticModel_vanquish_gpuObjectModel        string    vanquish.3ds
 models_staticModel_vanquish_textureObjectModel    string    vanquishGPUMeshMaterials
 models_staticModel_vanquish_shaders               string    defaultShader defaultShader defaultShader defaultShader defaultShader defaultShader
 
-// -
+// ----
 // terrain preInitialization
 models_terrainModel_terrain0_position       vec3    0.0 0.0 0.0
 models_terrainModel_terrain0_angle          float   0.0

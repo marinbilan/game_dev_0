@@ -124,11 +124,11 @@ void Camera::CameraDefault::cameraFront(glm::vec3 cameraFront)
 
 void Camera::CameraDefault::dump()
 {
-	std::cout << "| Camera Name:      " << m_name << std::endl;
-	std::cout << "|  Camera Position: " << m_cameraPos[0] << " " << m_cameraPos[1] << " " << m_cameraPos[2] << '\n';
-	std::cout << "|  Camera Front:    " << m_cameraFront[0] << " " << m_cameraFront[1] << " " << m_cameraFront[2] << '\n';
-	std::cout << "|  Camera Up:       " << m_cameraUp[0] << " " << m_cameraUp[1] << " " << m_cameraUp[2] << '\n';
-	std::cout << "|  Camera Velocity: " << velocityFactor << '\n';
+	std::cout << "| Camera Name.......: " << m_name << '\n';
+	std::cout << "|  Camera Position..: " << m_cameraPos[0] << " " << m_cameraPos[1] << " " << m_cameraPos[2] << '\n';
+	std::cout << "|  Camera Front.....: " << m_cameraFront[0] << " " << m_cameraFront[1] << " " << m_cameraFront[2] << '\n';
+	std::cout << "|  Camera Up........: " << m_cameraUp[0] << " " << m_cameraUp[1] << " " << m_cameraUp[2] << '\n';
+	std::cout << "|  Camera Velocity..: " << velocityFactor << '\n';
 }
 
 

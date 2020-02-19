@@ -53,20 +53,24 @@ void Common::CmdPrompt::runCmdPrompt()
 
 void Common::CmdPrompt::cmdModels(const std::string& str)
 {
+	int ONE = 1;
+	int TWO = 2;
+	int THREE = 3;
 	// ----
 	std::istringstream stringOfElements(str);
 	std::vector<std::string> vectorOfLocalStrings((std::istream_iterator<std::string>(stringOfElements)), std::istream_iterator<std::string>());
 
 	std::string regexPattern;
-	if (vectorOfLocalStrings.size() == 1)
+	// Default (Start string)
+	if (vectorOfLocalStrings.size() == ONE)
 	{
-		regexPattern = "models";
+		std::cout << " models <modelName | all>" << std::endl;
 	}
-	if (vectorOfLocalStrings.size() == 2)
+	if (vectorOfLocalStrings.size() == TWO)
 	{
 		regexPattern = "models\\s+(\\w+)";
 	}
-	else if (vectorOfLocalStrings.size() == 3)
+	else if (vectorOfLocalStrings.size() == THREE)
 	{
 		regexPattern = "models\\s+(\\w+)\\s+(\\w+)";
 	}
@@ -77,13 +81,12 @@ void Common::CmdPrompt::cmdModels(const std::string& str)
 	if (std::regex_search(str, match, _regex))
 	{
 		// One word in cmd line
-		if (vectorOfLocalStrings.size() == 1)
+		if (vectorOfLocalStrings.size() == ONE)
 		{
-			std::cout << " models <modelName | all>" << std::endl;
 		}
-		// Two words in cmd line or Three words in cmd line
-		else if (vectorOfLocalStrings.size() == 2 | 
-			     vectorOfLocalStrings.size() == 3)
+		// Two words in cmd line or Three words in cmd line (all or modelName)
+		else if (vectorOfLocalStrings.size() == TWO |
+			     vectorOfLocalStrings.size() == THREE)
 		{
 			if (!match.str(1).compare("all"))
 			{
@@ -92,7 +95,7 @@ void Common::CmdPrompt::cmdModels(const std::string& str)
 				    std::cout << " - " << s->getName() << '\n';
 				}
 			}
-			else 
+			else // If second word is not "all" (it should be model name or something else (unknown))
 			{
 				for (auto s : FACTORY.getModelIfVec())
 				{
@@ -110,9 +113,9 @@ void Common::CmdPrompt::cmdModels(const std::string& str)
 void Common::CmdPrompt::cmdHelp()
 {
 	std::cout << " [ HELP ] " << std::endl;
-	std::cout << " cameras   Info about cameras In scene " << std::endl;
-	std::cout << " controls  Info about controls (Keys)" << std::endl;
-	std::cout << " models    Info about Models, Meshes and Textures in scene" << std::endl;
-	std::cout << " shaders   Info about Shaders and Shader Parameters" << std::endl;
-	std::cout << " read      Read from File" << std::endl;
+	std::cout << " | cameras   Info about cameras In scene " << std::endl;
+	std::cout << " | controls  Info about controls (Keys)" << std::endl;
+	std::cout << " | models    Info about Models, Meshes and Textures in scene" << std::endl;
+	std::cout << " | shaders   Info about Shaders and Shader Parameters" << std::endl;
+	std::cout << " | read      Read from File" << std::endl;
 }
